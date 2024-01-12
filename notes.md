@@ -10,4 +10,12 @@ Git documentation:
 	- `git branch <name>` creates a branch
 	- `git checkout` moves you to a different branch
 	- `git merge <name>` merges the named branch with your current branch
+Different languages:
+	- HTML is structure (building the bones)
+	- CSS style, (Add some meat to that)
+	- JavaScript is interaction, (Add ligaments, nerves, muscles)
+	- Service - web service endpoints (Add a personality, give it existence, make it real)
+	- Database/Login - persisted app and auth data (Mongo, this is memory)
+	- WebSocket - Data pushed from server, chat, notifications! Chat! This is really important for my startup! (Language)
+	- React - Web framework, modern design to wrap components and make them easier (I can't find a body analogy for this...)
 
