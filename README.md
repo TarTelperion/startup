@@ -18,4 +18,4 @@ Choose your story.
 
 
 
-![]image('startupspecimages.pdf') 
+![An image of the layout of my startup]image(startupspecimages.pdf) 
