@@ -11,4 +11,11 @@ In Writer's Block, you can join with a group of friends to co-author a story. Se
 Choose your adventure,
 Choose your story.
 
- 
+
+
+
+
+
+
+
+![]image(startupspecimages.pdf) 
