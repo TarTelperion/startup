@@ -18,4 +18,4 @@ Choose your story.
 
 
 
-![]image(startupspecimages.pdf) 
+![]image('startupspecimages.pdf') 
