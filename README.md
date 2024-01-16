@@ -18,4 +18,5 @@ Choose your story.
 
 
 ## Design
-![An image of the layout of my startup](startupspecimages.pdf) 
+![An image of the layout of my startup](design1of2.jpg)
+![Images continued](design2of2.jpg)
