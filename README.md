@@ -1,4 +1,4 @@
-#### Writer's Block
+# Writer's Block
 
 Have you *ever* felt abandoned by your muse? Like all of a sudden, ***all*** of your inspiration was drained from your head, and bottled, used by some unseen writer simply for amusement? Have you ever wished  you could just pound out *part* of a story, and have the rest finished for you? 
 
@@ -17,5 +17,5 @@ Choose your story.
 
 
 
-
-! [An image of the layout of my startup]image(startupspecimages.pdf) 
+## Design
+![An image of the layout of my startup](startupspecimages.pdf) 
