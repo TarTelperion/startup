@@ -18,4 +18,8 @@ Different languages:
 	- Database/Login - persisted app and auth data (Mongo, this is memory)
 	- WebSocket - Data pushed from server, chat, notifications! Chat! This is really important for my startup! (Language)
 	- React - Web framework, modern design to wrap components and make them easier (I can't find a body analogy for this...)
+ AWS:
+ 	- AWS is a webservice hosted by amazon that can run websites, you host them on a service
+  	- Route 58 allows you to connect a name from DNS to your IP address
+  
 
