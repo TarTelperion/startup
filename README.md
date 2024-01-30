@@ -45,7 +45,7 @@ The following technologies will be utilized in my design
 
 In this deliverable I designed an HTML structure for the following:
 
-- **HTML Pages** - I built nine HTML pages for the basic flow of the webpage, including a profile and writing page, with others such as login and error.
+- **HTML Pages** - I built ten HTML pages for the basic flow of the webpage, including a profile and writing page, with others such as login and error.
 - **Links** - All pages link to other pages though hyperlinked text. Login is initialized on first entry, but is not accessible unless you log out. 
 - **Text** - Descriptions for technologies and proper use is outlined through text that is placed throughout the website.
 - **Images** - Image placed on the about page as a placeholder for a javascript image library.
