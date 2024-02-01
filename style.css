@@ -10,6 +10,9 @@ body {
 a {
     color: inherit;
 }
+h1 {
+    font-family: 'Germania One', 'Cambria';
+}
 h1 > a{
     font-family: 'Germania One', 'Cambria';
     font-weight: bold;
