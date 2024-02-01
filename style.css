@@ -9,10 +9,10 @@ body {
 }
 a {
     color: inherit;
-    font-size: 5vh;
 }
 h1 {
     font-family: 'Germania One', 'Cambria';
+    font-size: 5vh;
 }
 h1 > a{
     font-family: 'Germania One', 'Cambria';
