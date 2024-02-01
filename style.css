@@ -10,19 +10,26 @@ nav {
     flex-wrap: nowrap;
     padding: 1%;
 }
-ul {
+nav ul {
     list-style-type: none;
-    margin: none;
-    padding: none;
-}
-li {
-    float: left;
-}
-nav > ul > li > a {
-    display: block;
-    padding: 1vw;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
     background-color: #778da9;
 }
-nav > ul > li > a::hover {
+nav ul li {
+    float: left;
+}
+nav ul li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+  }
+nav ul li a:hover {
     background-color: #415a77;
+}
+.active {
+    background-color: #1b263b;
 }
