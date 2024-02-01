@@ -7,6 +7,9 @@ body {
     flex-direction: column;
     min-height: 100vh;
 }
+a {
+    color: inherit;
+}
 h1 > a{
     font-family: 'Germania One', 'Cambria';
     font-weight: bold;
