@@ -1,0 +1,28 @@
+body {
+    font-family: 'Spectral', 'Cambria';
+    background-repeat: repeat;
+    background-image: url('funky-lines.png');
+    text-align: center;
+    flex: content;
+}
+nav {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    padding: 1%;
+}
+ul {
+    list-style-type: none;
+    margin: none;
+    padding: none;
+}
+li {
+    float: left;
+}
+nav > ul > li > a {
+    display: block;
+    padding: 1vw;
+    background-color: #778da9;
+}
+nav > ul > li > a::hover {
+    background-color: #415a77;
+}
