@@ -19,6 +19,7 @@ h1 {
     font-family: 'Germania One', 'Cambria';
     font-size: 5vh;
     text-shadow: 1px 1px 1px #ccc;
+    color: #2F3E46;
 }
 h1 > a{
     font-family: 'Germania One', 'Cambria';
@@ -46,9 +47,11 @@ nav ul {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
+    transition: color 0.3s ease;
 }
 nav ul li {
     float: left;
+    flex-grow: 1;
 }
 nav ul li a {
     display: block;
@@ -56,9 +59,18 @@ nav ul li a {
     text-align: center;
     padding: 2vh 4vw;
     text-decoration: none;
-    transition: background-color 0.3s ease;
+
   }
-nav ul li a:hover {
+nav ul li:hover {
+    background-color: #52796F;
+}
+ul {
+    list-style-type: none;
+}
+table {
+    justify-self: center;
+}
+nav ul li:has(li a:hover) {
     background-color: #52796F;
 }
 
