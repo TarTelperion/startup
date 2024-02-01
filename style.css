@@ -7,6 +7,18 @@ body {
     flex-direction: column;
     min-height: 100vh;
 }
+h1 > a{
+    font-family: 'Germania One', 'Cambria';
+    font-weight: bold;
+    text-decoration: none;
+    cursor: pointer;
+    color: inherit;
+    font-size: 5vh;
+}
+h1 > a:hover {
+    text-decoration:underline;
+}
+
 nav {
     flex-direction: row;
     flex-wrap: nowrap;
