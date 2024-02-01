@@ -36,7 +36,7 @@ nav ul {
     margin: 0;
     padding: 0;
     overflow: hidden;
-    background-color: #778da9;
+    background-color: #84A98C;
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -52,8 +52,6 @@ nav ul li a {
     text-decoration: none;
   }
 nav ul li a:hover {
-    background-color: #415a77;
+    background-color: #52796F;
 }
-.active {
-    background-color: #1b263b;
-}
+
