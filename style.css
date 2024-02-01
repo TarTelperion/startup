@@ -1,11 +1,16 @@
 body {
     font-family: 'Spectral', 'Cambria';
-    background-repeat: repeat;
-    background-image: url('funky-lines.png');
     text-align: center;
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    margin-top: none;
+    border: none;
+}
+.head {
+    background-repeat: repeat;
+    background-image: url('funky-lines.png');
+    margin-top: none;
 }
 a {
     color: inherit;
@@ -13,6 +18,7 @@ a {
 h1 {
     font-family: 'Germania One', 'Cambria';
     font-size: 5vh;
+    text-shadow: 1px 1px 1px #ccc;
 }
 h1 > a{
     font-family: 'Germania One', 'Cambria';
@@ -39,7 +45,7 @@ nav ul {
     background-color: #84A98C;
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content: space-around;
 }
 nav ul li {
     float: left;
@@ -50,6 +56,7 @@ nav ul li a {
     text-align: center;
     padding: 2vh 4vw;
     text-decoration: none;
+    transition: background-color 0.3s ease;
   }
 nav ul li a:hover {
     background-color: #52796F;
