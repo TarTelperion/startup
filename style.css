@@ -24,12 +24,15 @@ h1 {
 .foo {
     display: flex;
     flex-direction: row;
+    width: 100vw;
+    flex-wrap: wrap;
 }
 .foo p {
     justify-content: left !important;
     flex-wrap: wrap;
     width: 25%;
     padding: 1vw;
+    flex-grow: 1;
 }
 .foo #quote {
     font-weight: bold;
@@ -103,6 +106,9 @@ nav ul li:has(li a:hover) {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-  }
-  
+    flex-wrap: wrap;
+}
+button {
+    padding: 15px 20px;
+}
 
