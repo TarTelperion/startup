@@ -21,6 +21,31 @@ h1 {
     text-shadow: 2px 2px 2px #ccc;
     color: #2F3E46;
 }
+.foo {
+    display: flex;
+    flex-direction: row;
+}
+.foo p {
+    justify-content: left !important;
+    flex-wrap: wrap;
+    width: 25%;
+    padding: 1vw;
+}
+.foo #quote {
+    font-weight: bold;
+    font-style: italic;
+    font-kerning: 0.5px;
+    line-height: 30px;
+}
+.foo #author {
+    flex-direction: column;
+}
+img {
+    object-fit: cover;
+    width: 25%;
+    height: 70%;
+    shape-outside: square();
+}
 h1 > a{
     font-family: 'Germania One', 'Cambria';
     font-weight: bold;
