@@ -47,11 +47,12 @@ nav ul {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
-    transition: color 0.3s ease;
+    
 }
 nav ul li {
     float: left;
     flex-grow: 1;
+    transition: background-color 0.3s ease;
 }
 nav ul li a {
     display: block;
