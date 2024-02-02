@@ -10,7 +10,7 @@ body {
 .head {
     background-repeat: repeat;
     background-image: url('funky-lines.png');
-    margin-top: none;
+    padding-top: 2%;
 }
 a {
     color: inherit;
@@ -18,7 +18,7 @@ a {
 h1 {
     font-family: 'Germania One', 'Cambria';
     font-size: 5vh;
-    text-shadow: 1px 1px 1px #ccc;
+    text-shadow: 2px 2px 2px #ccc;
     color: #2F3E46;
 }
 h1 > a{
@@ -74,4 +74,10 @@ table {
 nav ul li:has(li a:hover) {
     background-color: #52796F;
 }
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  
 
