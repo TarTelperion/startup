@@ -8,6 +8,41 @@
     <link href='style.css' rel='stylesheet'>
     <title>Writersblock -- Login</title>
 </head>
+<style>
+    .content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-around;
+        background-color: #cad2c5b8;
+        width: 33%;
+        margin: auto;
+        padding: 5%;
+        border-radius: 25px;
+        margin-top: 10vh;
+    }
+    input {
+        margin-top: 4vh;
+        padding: 0.25vw;
+        
+    }
+    hr {
+        width: 15vw;
+        stroke-width: 2vh;
+    }
+    .image {
+        display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    }
+    img {
+        position: fixed;
+        bottom: 0;
+        width: 10%;
+        height: 15%;
+    }
+</style>
 <body>
     <main>
         <div class="head">
@@ -15,13 +50,21 @@
         <h1> <a href="index.html"> Writers Block</a></h1>
         </header>
         </div>
+        <div class="content">
+            <p>Create an account:</p>
+            <hr />
         <input type="email" id="email" placeholder="cordeliainkwell@inkstains.com">
         <input type="text" id="username" placeholder="Cordelia Inkwell">
         <input type="password" id="password" placeholder="password">
         <!-- Add functionality for buttons later...-->
-       <a href="home.html"><input type="button" value="Begin Writing"></a>
-        <a href="friends.html"><input type="button" value="Link Friends" onclick=""></a>
+       <a href="home.html"><button id="write">Begin Writing</button></a>
+        <a href="friends.html"><button>Link Friends</button></a>
+        
+    </div>
     </main>
+    <div class="image">
+        <img src="Writers_Block_Logo_1.svg" alt="logo">
+    </div>
     <footer>
         <p>Writers Block, created by Tristan Fay--<a href="https://github.com/TarTelperion/startup">github</a></p>
     </footer>
