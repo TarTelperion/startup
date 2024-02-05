@@ -18,11 +18,10 @@
 - Database/Login - persisted app and auth data (Mongo, this is memory)
 - WebSocket - Data pushed from server, chat, notifications! Chat! This is really important for my startup! (Language)
 - React - Web framework, modern design to wrap components and make them easier (I can't find a body analogy for this...)
- **AWS:**
+**AWS:**
 - AWS is a webservice hosted by amazon that can run websites, you host them on a service
 - Route 58 allows you to connect a name from DNS to your IP address
-  **CSS:**
-  - a margin is the space around an element’s border, while padding is the space between an element’s border and the element’s content. Put another way, the margin property controls the space outside an element, and the padding property controls the space inside an element.
-  - The main difference between Inline, external and internal CSS Styles is their location and scope of application. Inline CSS styles are included within the HTML document and are specific to individual HTML elements, allowing for targeted styling. Internal CSS styles are included within the head section of an HTML document and apply to the entire document, allowing for consistent styling across multiple elements. External CSS styles are stored in a separate file and can be linked to multiple HTML documents, allowing for global styling across an entire website.
-  - 
+**CSS:**
+- a margin is the space around an element’s border, while padding is the space between an element’s border and the element’s content. Put another way, the margin property controls the space outside an element, and the padding property controls the space inside an element.
+- The main difference between Inline, external and internal CSS Styles is their location and scope of application. Inline CSS styles are included within the HTML document and are specific to individual HTML elements, allowing for targeted styling. Internal CSS styles are included within the head section of an HTML document and apply to the entire document, allowing for consistent styling across multiple elements. External CSS styles are stored in a separate file and can be linked to multiple HTML documents, allowing for global styling across an entire website.
 
