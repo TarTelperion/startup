@@ -17,6 +17,12 @@
         </header>
     </div>
     <style>
+        .quotey {
+            align-items: center;
+            display: flex;
+            border-style: solid;
+            border:#354f52;
+        }
         .floaty {
             display: flex;
             flex-direction: column;
@@ -27,7 +33,6 @@
             flex-direction: row;
             justify-content: center;
             background-color: #cad2c5b8;
-            
         }
         .imageandtext p, .imageandtext img {
             margin: 5vw;
@@ -41,7 +46,7 @@
             flex-grow: 1;
             display: flex;
             flex-direction: column;
-            justify-content: space-evenly;
+            justify-content: center;
         }
         img {
             border-radius: 25px;
@@ -58,6 +63,9 @@
         button:hover {
             background-color: #354f52;
         }
+        button a {
+            text-decoration: none;
+        }
 
     </style>
     <div class="foo">
@@ -73,8 +81,8 @@
             &#9 Afterwards the entire story will be open for all to read. <br>
             &#9 Either start your own story, or make one with friends, or even join a trending one anonymously, your worlds are at your fingertips.
             <br>
-            <a href="login.html"><button>LOG IN</button></a>
-            <button href="login.html">SIGN UP</button>
+            <button><a href="login.html">LOG IN</a></button>
+            <button><a href="login.html">SIGN UP</a></button>
             </p>
         </div>
             <div class="quotey">

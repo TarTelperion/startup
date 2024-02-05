@@ -26,6 +26,8 @@ h1 {
     flex-direction: column;
     width: 100vw;
     flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
 }
 .foo p {
     justify-content: left !important;
