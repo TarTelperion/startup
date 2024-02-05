@@ -109,6 +109,22 @@ nav ul li:has(li a:hover) {
     flex-wrap: wrap;
 }
 button {
-    padding: 15px 20px;
+    padding: 0.25%;
+    border: none;
+    color: white;
+    background-color: #CAD2C5;
+    border-radius: 5px;
+}
+button:hover {
+    background-color: #84A98C;
 }
 
+footer {
+    position: fixed;
+    bottom: 0;
+    font-size: small;
+    
+}
+h2 {
+    color:#2F3E46;
+}
