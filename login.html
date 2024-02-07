@@ -16,48 +16,6 @@
         bottom: 0;
         justify-content: flex-start;
     }
-    .content {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: space-around;
-        background-color: #cad2c5b8;
-        width: 33%;
-        margin: auto;
-        padding: 5%;
-        border-radius: 25px;
-        margin-top: 10vh;
-    }
-    input {
-        margin-top: 4vh;
-        padding: 0.25vw;
-        
-    }
-    hr {
-        width: 15vw;
-        stroke-width: 2vh;
-    }
-    img {
-        height: 10vh;
-        width: auto;
-        position: inherit;
-        bottom: 0;
-        justify-content: center;
-        margin: none;
-        align-self: flex-end;
-    }
-    footer p {
-        float: left !important;
-    }
-    .image {
-        display: flex;
-        justify-content: center;
-        flex-direction: row;
-        align-items: flex-end;
-        bottom: 0;
-        left: 50%;
-        position: fixed;
-    }
 </style>
 <body>
     <main>
@@ -66,24 +24,56 @@
         <h1> <a href="index.html"> Writers' Block</a></h1>
         </header>
         </div>
-        <div class="content">
-            <p>Create an account:</p>
-            <hr />
-        <input type="email" id="email" placeholder="cordeliainkwell@inkstains.com">
-        <input type="text" id="username" placeholder="Cordelia Inkwell">
-        <input type="password" id="password" placeholder="password">
+        <div class="card" style="width: 25vw">
+            <img src="Writers_Block_Logo_1.svg" alt="Logo" class="card-img-top fluid-image">
+            <div class="card-body">
+            <h5 class="card-title">Create an account:</h5>
+            <ul class="list-group list-group-flush">
+
+        <li class="list-group-item">
+            <div class="input-group flex-nowrap mb-3">
+            <span class="input-group-text" id="abasic-addon1">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-mailbox2" viewBox="0 0 16 16">
+                    <path d="M9 8.5h2.793l.853.854A.5.5 0 0 0 13 9.5h1a.5.5 0 0 0 .5-.5V8a.5.5 0 0 0-.5-.5H9z"/>
+                    <path d="M12 3H4a4 4 0 0 0-4 4v6a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1V7a4 4 0 0 0-4-4M8 7a4 4 0 0 0-1.354-3H12a3 3 0 0 1 3 3v6H8zm-3.415.157C4.42 7.087 4.218 7 4 7s-.42.086-.585.157C3.164 7.264 3 7.334 3 7a1 1 0 0 1 2 0c0 .334-.164.264-.415.157"/>
+                  </svg>
+            </span>
+            <input class="form-control" type="text" id="email" placeholder="cordeliainkwell@inkstains.com">
+        </li>
+        <li class="list-group-item">
+            <div class="input-group flex-nowrap mb-3">
+                <span class="input-group-text" id="abasic-addon1">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+                        <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
+                        <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
+                      </svg>
+                </span>
+                <input type="text" id="username" placeholder="Cordelia Inkwell" class="form-control">
+            </div>
+          
+        </li> <li class="list-group-item">
+          <div class="input-group flex-nowrap mb-3">
+            <span class="input-group-text" id="abasic-addon1">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-door-open-fill" viewBox="0 0 16 16">
+                    <path d="M1.5 15a.5.5 0 0 0 0 1h13a.5.5 0 0 0 0-1H13V2.5A1.5 1.5 0 0 0 11.5 1H11V.5a.5.5 0 0 0-.57-.495l-7 1A.5.5 0 0 0 3 1.5V15zM11 2h.5a.5.5 0 0 1 .5.5V15h-1zm-2.5 8c-.276 0-.5-.448-.5-1s.224-1 .5-1 .5.448.5 1-.224 1-.5 1"/>
+                  </svg>
+            </span>
+            <input type="password" id="password" placeholder="password" class="form-control">
+        </div>
+    </li>
+</div>
+
+</ul>
         <!-- Add functionality for buttons later...-->
        <a href="home.html"><button id="write">Begin Writing</button></a>
         <a href="friends.html"><button>Link Friends</button></a>
+            </div>
         
     </div>
     </main>
     <footer>
         <p>Writers Block, created by Tristan Fay--<a href="https://github.com/TarTelperion/startup">github</a></p>
     </footer>
-<div class="image">
-        <img src="Writers_Block_Logo_1.svg" alt="Logo"> 
-</div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
 </body>
 </html>
