@@ -1,7 +1,7 @@
 body {
     font-family: 'Spectral', 'Cambria';
-    text-align: center;
     display: flex;
+    text-align: center;
     flex-direction: column;
     min-height: 100vh;
     margin-top: none;
@@ -97,9 +97,6 @@ nav ul li a {
   }
 nav ul li:hover {
     background-color: #52796F;
-}
-ul {
-    list-style-type: none;
 }
 table {
     justify-self: center;
