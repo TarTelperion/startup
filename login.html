@@ -9,6 +9,12 @@
     <title>Writersblock -- Login</title>
 </head>
 <style>
+    footer {
+        display: flex;
+        width: 100%;
+        bottom: 0;
+        justify-content: flex-start;
+    }
     .content {
         display: flex;
         flex-direction: column;
@@ -30,17 +36,26 @@
         width: 15vw;
         stroke-width: 2vh;
     }
+    img {
+        height: 10vh;
+        width: auto;
+        position: inherit;
+        bottom: 0;
+        justify-content: center;
+        margin: none;
+        align-self: flex-end;
+    }
+    footer p {
+        float: left !important;
+    }
     .image {
         display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    }
-    img {
-        position: fixed;
+        justify-content: center;
+        flex-direction: row;
+        align-items: flex-end;
         bottom: 0;
-        width: 10%;
-        height: 15%;
+        left: 50%;
+        position: fixed;
     }
 </style>
 <body>
@@ -62,11 +77,11 @@
         
     </div>
     </main>
-    <div class="image">
-        <img src="Writers_Block_Logo_1.svg" alt="logo">
-    </div>
     <footer>
         <p>Writers Block, created by Tristan Fay--<a href="https://github.com/TarTelperion/startup">github</a></p>
     </footer>
+<div class="image">
+        <img src="Writers_Block_Logo_1.svg" alt="Logo"> 
+</div>
 </body>
 </html>
