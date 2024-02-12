@@ -26,19 +26,36 @@
     </div>
     <div class="input-group mb-3" style="margin-left: 5vw; margin-right: 5vw; width: 90vw; margin-top: 5vh;">
         <span class="input-group-text" id="basic-addon1" style="background-color: #cad2c5; color: white;">@</span>
-        <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+        <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" id="clickyreset">
       </div>
-      <div class="input-group" style=" margin-left: 5vw; margin-right: 5vw; width: 90vw;">
+      <div class="input-group" style=" margin-left: 5vw; margin-right: 5vw; width: 90vw; height: 25vh;">
         <span class="input-group-text" style="background-color: #cad2c5; color: white;">Message</span>
-        <textarea class="form-control" aria-label="Message"></textarea>
+        <textarea class="form-control" aria-label="Message" id="clickyreset2"></textarea>
       </div>
-            <input type="submit" value="Add another friend" class="btn">
-            <a href="home.html"><button class="btn">Finish</button></a>
+            <input type="submit" value="Add another friend" class="btn btn-secondary" onclick="clickreset(['clickyreset', 'clickyreset2'])" style="
+            margin-left: 45vw;
+            margin-right: 45vw;
+            width: 10vw;
+            margin-top: 1vw;
+            ">
+            <a href="home.html"><button class="btn btn-secondary" style="margin-left: 45vw; margin-right: 45vw; width: 10vw; margin-top: 1vw;">Finish</button></a>
         </div>
+        <img src="Writers_Block_Logo_1.svg" alt="Logo" style="
+        position: absolute;
+        left: 46vw;
+        bottom: 0;
+        height: auto;
+        width: 8vw;
+        ">
     </main>
     <footer style="display: none;">
         <p>Writers Block, created by Tristan Fay--<a href="https://github.com/TarTelperion/startup">github</a></p>
     </footer>
+    <script>
+        function clickreset(names) {
+            names.forEach((name) => document.getElementById(name).value = "");
+        }
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
 </body>
 </html>
