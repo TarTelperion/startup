@@ -11,7 +11,7 @@
 </head>
 <body>
     <style>
-        @media (min-height: 900px) {
+        @media (min-height: 850px) {
             footer {
                 display: show;
             }
@@ -23,8 +23,14 @@
         <h1>Writers Block</h1> 
         </header>
     </div>
-            <input type="text" placeholder="Email">
-            <input type="text" placeholder="Message">
+    <div class="input-group mb-3" style="margin-left: 5vw; margin-right: 5vw; width: 90vw; margin-top: 5vh;">
+        <span class="input-group-text" id="basic-addon1" style="background-color: #cad2c5; color: white;">@</span>
+        <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+      </div>
+      <div class="input-group" style=" margin-left: 5vw; margin-right: 5vw; width: 90vw;">
+        <span class="input-group-text" style="background-color: #cad2c5; color: white;">Message</span>
+        <textarea class="form-control" aria-label="Message"></textarea>
+      </div>
             <input type="submit" value="Add another friend" class="btn">
             <a href="home.html"><button class="btn">Finish</button></a>
         </div>
