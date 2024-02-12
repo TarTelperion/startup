@@ -10,12 +10,31 @@
     <title>Writersblock -- Write</title>
 </head>
 <body>
+    <style>
+        textarea {
+  width: 100%;
+  height: 80vh; 
+  padding: 20px;
+  font-family: 'Spectral', Times, serif; 
+  font-size: 18px;
+  line-height: 1.5;
+  background-color: #f8f8f8;
+  resize: none;
+  box-sizing: border-box;
+}
+    #writersblock:focus {
+        border-color: lightgrey;
+        outline: none;
+        -webkit-box-shadow: none;
+        -moz-box-shadow: none;
+        box-shadow: none;
+    }
+    </style>
     <main>
         <div class="head">
         <header>
         <h1> <a href="home.html"> Writers' Block</a></h1> 
        </header> 
-       <hr />
         
         <nav>
             <ul>
@@ -27,23 +46,21 @@
             </ul>
             </nav>
             </div>
-            <h2 id="title">Emerald Ink</h2>
-            <div id="theBlock">
+            <h2 id="title" style="margin-top: 2vh;">Emerald Ink</h2>
+            <div id="form-floating">
             <textarea
-            id="writers block"
-            class="input"
+            id="writersblock"
+            class="form-control"
             name="writers block"
-            rows="15"
-            cols="150"
-            placeholder="It was a dark and stormy night..."\
+            placeholder="It was a dark and stormy night..."
             style="
-            width: 98.5vw;
-            height: 70vh;
+            height: 60vh;
+            margin: 2vh 2vw;
+            width: 96vw;
             "
             ></textarea>
         </div>
-        <a href="blocked.html"><button id="pass">Pass Turn</button></a>
-            <hr />
+        <a href="blocked.html"><button id="pass" class="btn btn-secondary">Pass Turn</button></a>
         </main>
         <footer>
             <p>Writers Block, created by Tristan Fay--<a href="https://github.com/TarTelperion/startup">github</a></p>
