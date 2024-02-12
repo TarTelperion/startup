@@ -16,6 +16,7 @@ body {
     background-repeat: repeat;
     background-image: url('funky-lines.png');
     padding-top: 2%;
+    height: min-content;
 }
 a {
     color: inherit;
