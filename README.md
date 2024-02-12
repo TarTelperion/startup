@@ -50,5 +50,17 @@ In this deliverable I designed an HTML structure for the following:
 - **Text** - Descriptions for technologies and proper use is outlined through text that is placed throughout the website.
 - **Images** - Image placed on the about page as a placeholder for a javascript image library.
 - **DB/Login** - Login placed at beginning of website. Placeholders shown throuhout the website for saved names and information from the database such as trending stories.
-- **Websocket** - Nudging players is done through notifications sent to profile page. Also updates on stories are sent to both email and notification board on profile. 
+- **Websocket** - Nudging players is done through notifications sent to profile page. Also updates on stories are sent to both email and notification board on profile.
+
+### CSS Deliverable
+
+In this deliverable I styled the webpage using CSS, and did the following. 
+
+- **Header, Footer, and main content body** -- I used CSS to build a cohesive design throuhgout all elements.
+- **Navigation Elements** -- I designed a navigation bar to fit the theme of the website with custom hover colors and wrapped the links in flex divs.
+- **Responsiveness** -- This bad boy can handle anything except possibly an apple watch. It looks great and preforms even better due to flexbox and some epic web hooks.
+- **Application Elements** -- Elements of the application are properly colored and designed to make UI easy to navigate and easier to look at.
+- **Application fonts** -- I took the liberty of employing two of my all time favorite fonts in this website to make typing and writing a pleasurable experience.
+- **Application Images** -- Images were scaled and moved to become a part of the overall body, and added a svg logo image that resizes dynamically on otherwise boring pages.
+ 
 
