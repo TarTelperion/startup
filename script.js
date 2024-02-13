@@ -23,8 +23,11 @@ function gen_prompt(output, button) {
                     temp = temp.concat(".")
                 }
             }
-            console.log(temp)
-            item.innerText = temp;
+            first = temp.charAt(0).toUpperCase()
+            rest = temp.replace(temp.charAt(0), "")
+            console.log(first)
+            first = first.concat(rest)
+            item.innerText = first;
         })
         .catch(error => {
             console.error('Error: ', error)
