@@ -1,7 +1,7 @@
 // writing prompt generator
 const apikey = 'https://random-word-api.vercel.app/api?words=5'
 
-let user_mail = 'gabeybabey@awesomeness.com'
+let user_mail = 'gabrielbabriel@gmail.com'
 let user_name = 'Gabe Pettingill'
 let user_pass = 'fjdkal;jda;ldsa'
 
