@@ -40,7 +40,27 @@ function gen_prompt(output, button) {
     btn = document.getElementById(button)
     btn.innerText = "Regenerate!"
 }
+function check_login(name, email, pass) {
+    namey = document.getElementById(name).value;
+    mailey = document.getElementById(email).value;
+    passy = document.getElementById(pass).value;
 
+    update_content();
+
+    if (user_name === namey && user_pass == passy) {
+        return true;
+    }
+    else if (user_mail == mailey && user_pass == passy) {
+        return true;
+    }
+    else {
+        const newAlert = document.createElement('div')
+        newAlert.textContent = "<p>Login failed, check credentials</p>"
+        const parent = document.getElementById('login')
+        parent.appendChild(newAlert);
+        return false;
+    }
+}
 
 function save_login(mailbox, namebox, passbox) {
     email_container = document.getElementById(mailbox)
@@ -51,12 +71,17 @@ function save_login(mailbox, namebox, passbox) {
     user_name = name_container.value
     user_pass = password_container.value
 
-    alert(`Welcome, ${user_name}, you're in, with a email of ${user_mail}, and a password of ${user_pass}`)
+    localStorage.setItem('name', user_name);
+    localStorage.setItem('mail', user_mail);
+    localStorage.setItem('pass', user_pass);
 }
 
 function update_content() {
     let name_elements = document.getElementsByClassName('user')
     let mail_elements = document.getElementsByClassName('mail')
+    user_name = localStorage.getItem('name')
+    user_mail = localStorage.getItem('mail')
+    user_pass = localStorage.getItem('pass')
     console.log(name_elements)
     console.log(mail_elements)
 
