@@ -86,7 +86,7 @@ nav ul {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
-    
+    border-radius: 1vw;
 }
 nav ul li {
     float: left;
