@@ -40,6 +40,7 @@ function gen_prompt(output, button) {
     btn = document.getElementById(button)
     btn.innerText = "Regenerate!"
 }
+
 function check_login(name, email, pass) {
     namey = document.getElementById(name).value;
     mailey = document.getElementById(email).value;
@@ -48,16 +49,30 @@ function check_login(name, email, pass) {
     update_content();
 
     if (user_name === namey && user_pass == passy) {
-        return true;
+        const newAlert = document.createElement('div')
+        newAlert.style.alignSelf = 'center';
+        newAlert.innerHTML = "<p class='alert alert-success'>Success, redirecting...</p>"
+        const parent = document.getElementById('login')
+        parent.appendChild(newAlert);
+        setTimeout(() => window.location.href = "home.html", 300)
+        
     }
     else if (user_mail == mailey && user_pass == passy) {
-        return true;
+        const newAlert = document.createElement('div')
+        newAlert.style.alignSelf = 'center';
+        newAlert.innerHTML = "<p class='alert alert-success'>Success, redirecting...</p>"
+        const parent = document.getElementById('login')
+        parent.appendChild(newAlert);
+
+        setTimeout(() => window.location.href = "home.html", 300)
     }
     else {
         const newAlert = document.createElement('div')
-        newAlert.textContent = "<p>Login failed, check credentials</p>"
+        newAlert.style.alignSelf = 'center';
+        newAlert.innerHTML = "<p class='alert alert-danger'>Login failed, check credentials</p>"
         const parent = document.getElementById('login')
         parent.appendChild(newAlert);
+        setTimeout(() => newAlert.style.display = "none", 300)
         return false;
     }
 }
@@ -74,6 +89,14 @@ function save_login(mailbox, namebox, passbox) {
     localStorage.setItem('name', user_name);
     localStorage.setItem('mail', user_mail);
     localStorage.setItem('pass', user_pass);
+
+    const newAlert = document.createElement('div')
+        newAlert.style.alignSelf = 'center';
+        newAlert.innerHTML = "<p class='alert alert-success'>Account Created</p>"
+        const parent = document.getElementById('login')
+        parent.appendChild(newAlert);
+        setTimeout(() => newAlert.style.display = "none", 300)
+        window.location.href = "friends.html"
 }
 
 function update_content() {
