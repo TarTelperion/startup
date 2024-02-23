@@ -115,3 +115,24 @@ function update_content() {
         mail_elements[i].innerText = user_mail
     }
 } 
+
+
+// Important page stuff I guess
+
+function generate_story(title, genre, content=" ") {
+
+    localStorage.setItem(`title_${document.getElementById(title).value}`, document.getElementById(title).value);
+    localStorage.setItem(`${document.getElementById(title).value}_genre`, document.getElementById(genre).value);
+    localStorage.setItem(title, content);
+    stuff = localStorage.getItem("owned_stories")
+    if (stuff) {
+        localStorage.setItem("owned_stories", stuff + ", " + title)
+    }
+    else {
+        localStorage.setItem("owned_stories", title)
+    }
+}
+function retrieve_story() {
+    let title = document.getElementById("title")
+    
+}
