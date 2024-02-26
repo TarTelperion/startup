@@ -112,9 +112,6 @@ function update_content() {
 
     user = JSON.parse(localStorage.getItem('user'))
 
-    console.log(name_elements)
-    console.log(mail_elements)
-
     for (i = 0; i < name_elements.length; i++) {
         name_elements[i].innerText = user.name
     }
@@ -131,7 +128,7 @@ function generate_story(title, genre) {
     update_content();
 
     let current = new Story(document.getElementById(title).value, document.getElementById(genre).value);
-    user.stories.push(JSON.stringify(current))
+    user.stories.push(current)
     
     localStorage.setItem('user', JSON.stringify(user))
 
@@ -150,9 +147,6 @@ function retrieve_story(story_loc) {
     console.log(user.stories)
 
     let current_story = user.stories[story_loc];
-    current_story = JSON.parse(current_story)
-    console.log(current_story.title)
-    console.log(current_story)
     title.innerHTML = current_story.title;
 
 
@@ -165,10 +159,36 @@ function retrieve_story(story_loc) {
 
 function save_story(story_loc) {
     if(!story_loc) {story_loc = user.stories.length - 1};
-    user.stories[story_loc].content = doucment.getElementById('writersblock').value;
+    user.stories[story_loc].content = document.getElementById('writersblock').value;
     localStorage.setItem('user', JSON.stringify(user))
 }
 
-function gen_story_list() {
+function gen_story_list(list) {
+    let count = 0;
+    ul = document.getElementById(list);
     
+    console.log(`HEY THERE, ${user.stories}`);
+
+    stories = user.stories
+    
+    stories.forEach((item) => {
+        curr_item = document.createElement('li')
+        ul.appendChild(curr_item)
+        curr_item.classList.add('list-group-item')
+        curr_item.innerHTML = `<em>${item.title}</em> (${item.genre}). <button class="btn" onclick="retrieve_story(${count})">Write?</button><button onclick="dlt(${count})" class="btn btn-danger">Delete?</button>`
+        count++
+    })
+    if(stories.length === 1) {
+        p = doucment.createElement('p')
+        document.getElementById('empty').appendChild(p)
+        p.innerHTML = `Don't see anything here? <a href='create.html'>Create</a> a story!`
+    }
+
+}
+
+function dlt(count) {
+    update_content();
+    user.stories.splice(count, 1);
+    localStorage.setItem('user', JSON.stringify(user))
+    location.reload()
 }
