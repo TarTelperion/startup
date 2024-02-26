@@ -182,7 +182,7 @@ function gen_story_list(list) {
         curr_item = document.createElement('li')
         ul.appendChild(curr_item)
         curr_item.classList.add('list-group-item')
-        curr_item.innerHTML = `<em>${item.title}</em> (${item.genre}). <button class="btn" onclick="retrieve_story(${count})">Write?</button><button onclick="dlt(${count})" class="btn btn-danger">Delete?</button>`
+        curr_item.innerHTML = `<em>${item.title}</em> (${item.genre}). <button class="btn" onclick="retrieve_story(${count})">Write?</button><button onclick="dlt(${count})" class="btn btn-outline-danger">Delete?</button>`
         count++
     })
     if(stories.length === 0) {
