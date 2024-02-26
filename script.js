@@ -159,8 +159,16 @@ function retrieve_story(story_loc) {
     let box = document.getElementById('writersblock');
 
     box.innerHTML = current_story.content;
+
+    save_story(story_loc)
 }
 
-function save_story() {
+function save_story(story_loc) {
+    if(!story_loc) {story_loc = user.stories.length - 1};
+    user.stories[story_loc].content = doucment.getElementById('writersblock').value;
+    localStorage.setItem('user', JSON.stringify(user))
+}
+
+function gen_story_list() {
     
 }
