@@ -5,9 +5,12 @@ let user = {
     name : "Gabe Pettingill",
     email : "gaberielbabriel@sauce.com",
     pass: "restricted",
-    stories : ["Dawn of Darkness"],
-    genres : ["Fantasy"],
-    content : ["It was a dark and stormy night..."]
+    stories : []
+}
+function Story(title, genre, content) {
+    this.title = title;
+    this.genre = genre;
+    this.content = content ?? " ";
 }
 
 
@@ -53,7 +56,7 @@ function check_login(name, email, pass) {
 
     update_content();
 
-    if (user_name === namey && user_pass == passy) {
+    if (user.name === namey && user.pass == passy) {
         const newAlert = document.createElement('div')
         newAlert.style.alignSelf = 'center';
         newAlert.innerHTML = "<p class='alert alert-success'>Success, redirecting...</p>"
@@ -62,7 +65,7 @@ function check_login(name, email, pass) {
         setTimeout(() => window.location.href = "home.html", 300)
         
     }
-    else if (user_mail == mailey && user_pass == passy) {
+    else if (user.email == mailey && user.pass == passy) {
         const newAlert = document.createElement('div')
         newAlert.style.alignSelf = 'center';
         newAlert.innerHTML = "<p class='alert alert-success'>Success, redirecting...</p>"
@@ -123,16 +126,41 @@ function update_content() {
 
 // Important page stuff I guess
 
-function generate_story(title, genre, content=" ") {
+function generate_story(title, genre) {
 
     update_content();
 
-    user.stories.push(document.getElementById(title).value);
-    user.genres.push(document.getElementById(genre).value);
+    let current = new Story(document.getElementById(title).value, document.getElementById(genre).value);
+    user.stories.push(JSON.stringify(current))
     
     localStorage.setItem('user', JSON.stringify(user))
+
+    window.location.href = 'write.html'
+
+    retrieve_story(user.stories.length - 1)
+
 }
-function retrieve_story() {
+function retrieve_story(story_loc) {
+
+    update_content();
+
+    if(!story_loc) {story_loc = user.stories.length - 1;}
     let title = document.getElementById("title")
+    console.clear()
+    console.log(user.stories)
+
+    let current_story = user.stories[story_loc];
+    current_story = JSON.parse(current_story)
+    console.log(current_story.title)
+    console.log(current_story)
+    title.innerHTML = current_story.title;
+
+
+    let box = document.getElementById('writersblock');
+
+    box.innerHTML = current_story.content;
+}
+
+function save_story() {
     
 }
