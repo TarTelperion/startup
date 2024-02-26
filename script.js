@@ -1,9 +1,14 @@
 // writing prompt generator
 const apikey = 'https://random-word-api.vercel.app/api?words=5'
 
-let user_mail = 'gabrielbabriel@gmail.com'
-let user_name = 'Gabe Pettingill'
-let user_pass = 'fjdkal;jda;ldsa'
+let user = {
+    name : "Gabe Pettingill",
+    email : "gaberielbabriel@sauce.com",
+    pass: "restricted",
+    stories : ["Dawn of Darkness"],
+    genres : ["Fantasy"],
+    content : ["It was a dark and stormy night..."]
+}
 
 
 function gen_prompt(output, button) {
@@ -72,7 +77,7 @@ function check_login(name, email, pass) {
         newAlert.innerHTML = "<p class='alert alert-danger'>Login failed, check credentials</p>"
         const parent = document.getElementById('login')
         parent.appendChild(newAlert);
-        setTimeout(() => newAlert.style.display = "none", 300)
+        setTimeout(() => newAlert.style.display = "none", 3000)
         return false;
     }
 }
@@ -82,13 +87,12 @@ function save_login(mailbox, namebox, passbox) {
     name_container = document.getElementById(namebox)
     password_container = document.getElementById(passbox)
 
-    user_mail = email_container.value
-    user_name = name_container.value
-    user_pass = password_container.value
+    user.email = email_container.value
+    user.name = name_container.value
+    user.pass = password_container.value
 
-    localStorage.setItem('name', user_name);
-    localStorage.setItem('mail', user_mail);
-    localStorage.setItem('pass', user_pass);
+    localStorage.setItem('user', JSON.stringify(user));
+
 
     const newAlert = document.createElement('div')
         newAlert.style.alignSelf = 'center';
@@ -102,17 +106,17 @@ function save_login(mailbox, namebox, passbox) {
 function update_content() {
     let name_elements = document.getElementsByClassName('user')
     let mail_elements = document.getElementsByClassName('mail')
-    user_name = localStorage.getItem('name')
-    user_mail = localStorage.getItem('mail')
-    user_pass = localStorage.getItem('pass')
+
+    user = JSON.parse(localStorage.getItem('user'))
+
     console.log(name_elements)
     console.log(mail_elements)
 
     for (i = 0; i < name_elements.length; i++) {
-        name_elements[i].innerText = user_name
+        name_elements[i].innerText = user.name
     }
     for (i = 0; i < mail_elements.length; i++) {
-        mail_elements[i].innerText = user_mail
+        mail_elements[i].innerText = user.email
     }
 } 
 
@@ -121,16 +125,12 @@ function update_content() {
 
 function generate_story(title, genre, content=" ") {
 
-    localStorage.setItem(`title_${document.getElementById(title).value}`, document.getElementById(title).value);
-    localStorage.setItem(`${document.getElementById(title).value}_genre`, document.getElementById(genre).value);
-    localStorage.setItem(title, content);
-    stuff = localStorage.getItem("owned_stories")
-    if (stuff) {
-        localStorage.setItem("owned_stories", stuff + ", " + title)
-    }
-    else {
-        localStorage.setItem("owned_stories", title)
-    }
+    update_content();
+
+    user.stories.push(document.getElementById(title).value);
+    user.genres.push(document.getElementById(genre).value);
+    
+    localStorage.setItem('user', JSON.stringify(user))
 }
 function retrieve_story() {
     let title = document.getElementById("title")
