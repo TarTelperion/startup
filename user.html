@@ -10,6 +10,43 @@
     <title>Writersblock -- User</title>
 </head>
 <script src="script.js"></script>
+<style>
+    li {
+        border-radius: 5px !important;
+    }
+    #main {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+    }
+    #left {
+        width: 33vw;
+        float: left;
+        height: 55vh;
+        background-color: #CAD2C5;
+        border-radius: 3px;
+        padding: 5vh 5vw;
+    }
+    #right {
+        background: #cad2c53d;
+        display: flex;
+        flex-grow: 1;
+        flex-direction: column;
+        padding: 5vh 5vw;
+    }
+    #left:hover {
+        animation-name: slide;
+        animation-duration: 1s;
+    }
+    @keyframes slide {
+        100% {
+            width: 100vw;
+            #left {
+                display: none;
+            }
+        }
+    }
+</style>
 
 <body onload="update_content(); gen_story_list('stories')">
     <main>
@@ -28,28 +65,20 @@
             </ul>
             </nav>
             </div>
-            <div id="main">
-            <div id="left">
+            
         <h1 class="user" style="margin-top: 2.5vh;">Gabe Pettingill</h1>
-        <p class="mail">Email: Gabeybabey@awesomeness.puf</p>
-        <button class="btn btn-secondary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling">Show Notifications</button>
-</div>
-<div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
-  <div class="offcanvas-header">
-    <h5 class="offcanvas-title" id="offcanvasScrollingLabel">Recent Notifications:</h5>
-    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-  </div>
-  <div class="offcanvas-body">
-    <ul class="list-group" style="width: auto;">
+        <div id="main">
+            <div id="left">
+        <h2>Notifications:</h2>
+        <ul class="list-group" style="border-radius: 5px;">
         <li class="list-group-item">Emma pestered you to finish <i>Emerald Ink</i></li>
         <li class="list-group-item">It's your turn on <i>Love at First Click</i>. <a href="write.html">Write?</a></li>
         <li class="list-group-item"><i>Lameness</i> has been completed, take a look!</li>
     </ul>
-  </div>
 </div>
     <div id="right">
         <h2 style="margin-top: 3vh;">Owned Stories:</h2>
-        <ul class="list-group list-group-flush overflow-auto" style="width: 50vw; margin-left: 25vw; height: 20vh;" id="stories">
+        <ul class="list-group list-group-flush overflow-auto" id="stories">
         </ul>
         <div id="empty"></div>
     </div>
