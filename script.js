@@ -209,7 +209,3 @@ function dlt(count) {
     localStorage.setItem('user', JSON.stringify(user))
     location.reload()
 }
-
-function swish(thing1, thing2) {
-    
-}
