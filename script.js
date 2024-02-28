@@ -165,10 +165,23 @@ function update_content() {
 function generate_story(title, genre) {
 
     update_content()
-
+    if (!document.getElementById(title).value || !document.getElementById(genre).value) {
+        const newAlert = document.createElement('div')
+        newAlert.style.alignSelf = 'center';
+        newAlert.innerHTML = "<p class='alert alert-danger'>All fields must be filled</p>"
+        const parent = document.getElementById('list')
+        parent.appendChild(newAlert);
+        setTimeout(() => newAlert.style.display = "none", 3000)
+        return
+    }
     let current = new Story(document.getElementById(title).value, document.getElementById(genre).value)
     user.stories.push(current)
+    try {
     user.joined.push(current)
+    } catch (err) {
+        user.joined = []
+        user.joined.push(current)
+    }
     console.log(JSON.stringify(user))
     localStorage.setItem('story', user.stories.length - 1)
     localStorage.setItem('user', JSON.stringify(user))
@@ -247,6 +260,7 @@ function gen_story_list(list, joined) {
     try {
     user.joined.forEach((item) => {
         curr_item = document.createElement('li')
+        ul = document.getElementById('joined')
         ul.appendChild(curr_item)
         curr_item.classList.add('list-group-item')
         curr_item.innerHTML = `<p><em>${item.title}</em> (${item.genre}).</p>`
