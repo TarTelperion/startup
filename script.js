@@ -286,6 +286,7 @@ function go_to_write(count) {
 }
 
 function update_most_recent(id, titleid) {
+    update_content();
     body = document.getElementById(id)
     title_doc = document.getElementById(titleid)
     if (globe.mostrecent.length != 0) {
