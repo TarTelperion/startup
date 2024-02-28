@@ -340,7 +340,7 @@ function generate_list(table) {
     update_content()
     sort_global()
     let table_obj = document.getElementById(table)
-    let top_count = 0
+    let top_count = globe.stories.length - 1
     globe.stories.forEach((item) => {
         let row = document.createElement('tr')
         for (i = 0; i < 4; i++) {
@@ -371,7 +371,7 @@ function generate_list(table) {
             }
             count++
         })
-        top_count++
+        top_count--
         table_obj.prepend(row)
     })
 }
@@ -398,6 +398,7 @@ function sort_global() {
         }
     }
     }
+    localStorage.setItem('globe', JSON.stringify(globe))
 }
 function same(item, thing) {
     if (item.title === thing.title) {
@@ -420,4 +421,6 @@ function join(count) {
     user.stories.push(story)
     user.joined.push(story)
     story.authors += 1
+    localStorage.setItem('user', JSON.stringify(user))
+    localStorage.setItem('globe', JSON.stringify(globe))
 }
