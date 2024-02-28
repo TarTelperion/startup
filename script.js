@@ -2,9 +2,9 @@
 const apikey = 'https://random-word-api.vercel.app/api?words=5'
 
 let user = {
-    name : "",
-    email : "",
-    pass: "",
+    name : "Gabey",
+    email : "gmail.com",
+    pass: "fdkfdj",
     stories : [],
     joined : []
 }
@@ -267,6 +267,9 @@ function gen_story_list(list, joined) {
         count++
     
     })
+    if (user.joined.length === 0) {
+        throw new Error;
+    }
 }
 catch (err) {
     p = document.createElement('p')
@@ -280,14 +283,30 @@ catch (err) {
         p.style.alignSelf = "center"
         empty.appendChild(p)
 
-        p.innerHTML = `Don't see anything here? <a href='join.html'>Join</a> a story!`
+        p.innerHTML = `Is this box's emptiness depressing you? <a href='join.html'>Join</a> a story.`
 }
 }
-
+function same(obj1, obj2) {
+    if (obj1.title === obj2.title && obj1.genre === obj2.genre) {
+        return true
+    }
+    else {
+        return false
+    }
+}
 function dlt(count) {
     update_content();
+    globe.stories.forEach((story) => {
+        if (same(story, user.stories[count])) {
+            index = globe.stories.indexOf(story)
+            globe.stories.splice(index, 1)
+        }
+    })
     user.stories.splice(count, 1);
+    user.joined.splice(count, 1);
+    
     localStorage.setItem('user', JSON.stringify(user))
+    localStorage.setItem('globe', JSON.stringify(globe))
     location.reload()
 }
 
