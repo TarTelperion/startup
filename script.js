@@ -331,7 +331,7 @@ function dlt(count) {
     localStorage.setItem('user', JSON.stringify(user))
     location.reload()
 }
-
+// POSSIBLE ERROR EXISTS
 function go_to_write(count) {
     update_content();
     let story = localStorage.getItem(count);
@@ -346,8 +346,8 @@ function update_most_recent(id, titleid) {
     title_doc = document.getElementById(titleid)
     if (globe.mostrecent.length != 0) {
     update_content();
-    title_doc.innerText = `${globe.mostrecent[1].title} (Last Edited By ${globe.mostrecent[0]})`
-    body.innerHTML = `<p style="float: left;">${globe.mostrecent[1].content}</p>`
+    title_doc.innerText = `${localStorage.getItem(globe.mostrecent[1]).title} (Last Edited By ${globe.mostrecent[0]})`
+    body.innerHTML = `<p style="float: left;">${localStorage.getItem(globe.mostrecent[1]).content}</p>`
     }
     else {
         body.innerHTML = `<p style="float: left;">Once upon a time there was a new user with no stories...</p>`
