@@ -14,27 +14,6 @@ function Story(title, genre, content, authors) {
     this.authors = authors ?? 0;
     this.prompt = ' ';
 }
-let globe = {
-    stories : []
-}
-// filler things 
-let lovesite = new Story('Love at First Site', 'Romance', ' ', 1)
-let darkdawn = new Story('Dawn of Darkness', 'Dark Fantasy', ' ', 30)
-let change = new Story('When it Changed', 'Fantasy', ' ', 16)
-
-globe.stories.add(lovesite)
-globe.stories.add(darkdawn)
-globe.stories.add(change)
-
-function globify() {
-    update_content()
-    user.stories.forEach((item) => {
-        if (!globe.stories.includes(item)) {
-            globe.stories.add(item);
-        }
-    })
-    localStorage.setItem(JSON.stringify(globe))
-}
 
 function gen_prompt(output, button) {
     fetch(apikey)
