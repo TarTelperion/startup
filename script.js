@@ -256,7 +256,7 @@ function gen_story_list(list, joined) {
 
     stories = []
     user.stories.forEach((story) => {
-        stories.push(localStorage.getItem(story))
+        stories.push(JSON.parse(localStorage.getItem(story)))
     })
     
     stories.forEach((item) => {
@@ -289,6 +289,7 @@ function gen_story_list(list, joined) {
     count = 0
     try {
     user.joined.forEach((item) => {
+        item = JSON.parse(localStorage.getItem(item))
         curr_item = document.createElement('li')
         ul = document.getElementById('joined')
         ul.appendChild(curr_item)
@@ -347,8 +348,8 @@ function update_most_recent(id, titleid) {
     title_doc = document.getElementById(titleid)
     if (globe.mostrecent.length != 0) {
     update_content();
-    title_doc.innerText = `${localStorage.getItem(globe.mostrecent[1]).title} (Last Edited By ${globe.mostrecent[0]})`
-    body.innerHTML = `<p style="float: left;">${localStorage.getItem(globe.mostrecent[1]).content}</p>`
+    title_doc.innerText = `${JSON.parse(localStorage.getItem(globe.mostrecent[1])).title} (Last Edited By ${globe.mostrecent[0]})`
+    body.innerHTML = `<p style="float: left;">${JSON.parse(localStorage.getItem(globe.mostrecent[1])).content}</p>`
     }
     else {
         body.innerHTML = `<p style="float: left;">Once upon a time there was a new user with no stories...</p>`
@@ -362,7 +363,7 @@ function generate_list(table) {
     let table_obj = document.getElementById(table)
     let top_count = globe.stories.length - 1
     globe.stories.forEach((item) => {
-        item = localStorage.getItem(item)
+        item = JSON.parse(localStorage.getItem(item))
         let row = document.createElement('tr')
         for (i = 0; i < 4; i++) {
             let curr_data = document.createElement('td')
@@ -397,25 +398,26 @@ function generate_list(table) {
     })
 }
 
-function exchange_items(item1, item2) {
-    let temp = globe.stories.indexOf(item1)
-    globe.stories[temp] = globe.stories[globe.stories.indexOf(item2)]
-    globe.stories[globe.stories.indexOf(item2)] = temp
+function exchange_items(index1, index2) {
+    let temp = globe.stories[index1]
+    globe.stories[index1] = globe.stories[index2]
+    globe.stories[index2] = temp
 }
 function sort_global() {
     update_content()
     for(i = 0; i < globe.stories.length; i++) {
         if (i != 0) {
-        if (localStorage.getItem(globe.stories[i]).authors < localStorage.getItem(globe.stories[i - 1]).authors) {
+        if (JSON.parse(localStorage.getItem(globe.stories[i])).authors < JSON.parse(localStorage.getItem(globe.stories[i - 1])).authors) {
             let j = i
             try {
-            while (localStorage.getItem(globe.stories[j]).authors < localStorage(globe.stories[j - 1]).authors) {
+            while (JSON.parse(localStorage.getItem(globe.stories[j])).authors < JSON.parse(localStorage.getItem(globe.stories[j - 1])).authors) {
                 exchange_items(j, j - 1)
                 j--
             }
         }
         catch (err) {
-            console.log('unknown error caught. You may want to look at that eventually')
+            console.log('unknown error caught. You may want to look at that eventually ')
+            console.log(err)
         }
         }
     }
@@ -423,7 +425,7 @@ function sort_global() {
     localStorage.setItem('globe', JSON.stringify(globe))
 }
 function same(item, thing) {
-    if (localStorage.getItem(item).title === localStorage.getItem(thing).title) {
+    if (JSON.parse(localStorage.getItem(item)).title === JSON.parse(localStorage.getItem(thing).title)) {
         return true
     }
     else {
