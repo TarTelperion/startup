@@ -213,14 +213,14 @@ function retrieve_story(story_loc) {
 
     update_content();
 
-    let count = localStorage.getItem('story') ?? user.stories.length - 1;
+    let count = story_loc ?? user.stories.length - 1;
 
     console.log(count)
 
     let title = document.getElementById("title")
     console.log(user.stories)
     
-    let current_story = user.stories[count];
+    let current_story = localStorage.getItem(user.stories[count]);
     console.log(current_story)
     title.innerHTML = current_story.title ?? 'Untitled';
 
@@ -232,6 +232,7 @@ function retrieve_story(story_loc) {
     save_story(story_loc)
 }
 
+//USE IDS
 function save_story() {
     update_content();
     story_loc = localStorage.getItem('story') ?? user.stories.length - 1;
