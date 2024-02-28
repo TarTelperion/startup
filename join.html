@@ -9,7 +9,8 @@
     <link href='style.css' rel='stylesheet'>
     <title>Writersblock -- Join</title>
 </head>
-<body>
+<script src="script.js"></script>
+<body onload="generate_list('table')">
     <div class="head">
        
         <nav class="navbar navbar-expand-lg"  style="background-color: #84a98c;">
@@ -33,7 +34,7 @@
             </nav>
             </div>
             <h2 style="margin-top: 5vh;">Trending Stories</h2>
-            <table class="table table-hover">
+            <table class="table table-hover" id="table">
                 <thead>
                     <tr>
                         <td>
@@ -50,48 +51,7 @@
                         </td>
                     </tr>
                 </thead>
-                <tr>
-                    <td>
-                        When it Changed
-                    </td>
-                    <td>
-                        (Fantasy)
-                    </td>
-                    <td>
-                        16 Authors
-                    </td>
-                    <td>
-                        <input type="button" id="joinclick" value="Join" class="btn" disabled>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        Love at First Site
-                    </td>
-                    <td>
-                        (Romance)
-                    </td>
-                    <td>
-                        1 Author
-                    </td>
-                    <td>
-                        <input type="button" id="joinclick" value="Join" class="btn" disabled>
-                    </td>
-                    <tr>
-                        <td>
-                            Dawn of Darkness
-                        </td>
-                        <td>
-                            (Dark Fantasy)
-                        </td>
-                        <td>
-                            30 Authors
-                        </td>
-                        <td>
-                            <input type="button" id="joinclick" value="Join" class="btn" disabled>
-                        </td>
-                    </tr>
-                </tr>
+                
             </table>
         </main>
         <footer>

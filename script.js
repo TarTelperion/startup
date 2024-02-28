@@ -11,7 +11,7 @@ function Story(title, genre, content, authors) {
     this.title = title;
     this.genre = genre;
     this.content = content ?? " ";
-    this.authors = authors ?? 0;
+    this.authors = authors ?? 1;
     this.prompt = ' ';
 }
 let dawndark = new Story('Dawn of Darkness', 'Dark Fantasy', " ", 30)
@@ -30,7 +30,6 @@ function user_to_globe() {
     })
     localStorage.setItem('globe', JSON.stringify(globe))
 }
-user_to_globe()
 
 function gen_prompt(output, button) {
     fetch(apikey)
@@ -123,7 +122,10 @@ function save_login(mailbox, namebox, passbox) {
     user.pass = password_container.value
 
     localStorage.setItem('user', JSON.stringify(user));
-
+    globe.stories.push(dawndark)
+    globe.stories.push(change)
+    globe.stories.push(lovesite)
+    localStorage.setItem('globe', JSON.stringify(globe))
     const newAlert = document.createElement('div')
         newAlert.style.alignSelf = 'center';
         newAlert.innerHTML = "<p class='alert alert-success'>Account Created</p>"
@@ -259,4 +261,41 @@ function update_most_recent(id, titleid) {
         body.innerHTML = `<p style="float: left;">Once upon a time there was a new user with no stories...</p>`
         title_doc.innerText = `Writers' Block (Last Edited By Tristan Fay)`
     }
+}
+
+function generate_list(table) {
+    update_content()
+    user_to_globe()
+    let table_obj = document.getElementById(table)
+    let top_count = 0
+    globe.stories.forEach((item) => {
+        let row = document.createElement('tr')
+        for (i = 0; i < 4; i++) {
+            let curr_data = document.createElement('td')
+            row.appendChild(curr_data)
+        }
+        let count = 0;
+        [...row.children].forEach((child) => {
+            if (count === 0) {
+                child.innerText = `${item.title}`
+            }
+            else if (count === 1) {
+                child.innerText = `(${item.genre})`
+            }
+            else if (count === 2) {
+                if (item.authors > 1) {
+                child.innerText = `${item.authors} Authors`
+                }
+                else {
+                    child.innerText = `${item.authors} Author`
+                }
+            }
+            else {
+                child.innerHTML = `<button class="btn btn-secondary-outline" onclick="join(${top_count})">Join?</button>`
+            }
+            count++
+        })
+        top_count++
+        table_obj.appendChild(row)
+    })
 }
