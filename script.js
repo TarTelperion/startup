@@ -26,7 +26,7 @@ let globe = {
 function user_to_globe() {
     update_content()
     user.stories.forEach((item) => {
-        if (!user.stories.includes(item)) {
+        if (!globe.stories.includes(item)) {
         globe.stories.push(item)
         }
     })
