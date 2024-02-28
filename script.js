@@ -339,7 +339,7 @@ function go_to_write(count) {
     localStorage.setItem('story', count);
     window.location.href = "write.html";
 }
-
+// MOST RECENT
 function update_most_recent(id, titleid) {
     update_content();
     body = document.getElementById(id)
@@ -361,6 +361,7 @@ function generate_list(table) {
     let table_obj = document.getElementById(table)
     let top_count = globe.stories.length - 1
     globe.stories.forEach((item) => {
+        item = localStorage.getItem(item)
         let row = document.createElement('tr')
         for (i = 0; i < 4; i++) {
             let curr_data = document.createElement('td')
@@ -386,7 +387,7 @@ function generate_list(table) {
                 }
             }
             else {
-                child.innerHTML = `<button class="btn btn-secondary-outline" onclick="join(${top_count})" id="join${top_count}">Join?</button>`
+                child.innerHTML = `<button class="btn btn-secondary-outline" onclick="join(${item.id})" id="join${item.id}">Join?</button>`
             }
             count++
         })
@@ -394,6 +395,7 @@ function generate_list(table) {
         table_obj.prepend(row)
     })
 }
+
 function exchange_items(item1, item2) {
     let temp = globe.stories[item1]
     globe.stories[item1] = globe.stories[item2]
