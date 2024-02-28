@@ -15,8 +15,11 @@ body {
 .head {
     background-repeat: repeat;
     background-image: url('funky-lines.png');
-    padding-top: 1%;
-    height: min-content;
+
+    height: 125px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 }
 a {
     color: inherit;
@@ -142,7 +145,7 @@ h2 {
     border-radius: 15px;
     margin-left: 1vw;
     margin-right: 1vw;
-    margin-bottom: 3vh;
+    flex-grow: 1;
 }
 .navbar-brand {
     background: white !important;
