@@ -318,17 +318,17 @@ catch (err) {
 }
 }
 
-function dlt(count) {
+function dlt(id) {
     update_content();
     
     for (i = 0; i < globe.stories.length; i++) {
-        if (same(count, globe.stories[i]) && user.name === localStorage.getItem(globe.stories[i]).owner) {
+        if (same(id, globe.stories[i]) && user.name === JSON.parse(localStorage.getItem(globe.stories[i]).owner)) {
             globe.stories.splice(i, 1)
-            localStorage.removeItem(count)
+            localStorage.removeItem(id)
         }
     }
-    user.stories.remove(user.stories.indexOf(count), 1);
-    index = user.joined.indexOf(count)
+    user.stories.splice(user.stories.indexOf(id), 1);
+    index = user.joined.indexOf(id)
     user.joined.splice(index, 1)
     localStorage.setItem('user', JSON.stringify(user))
     location.reload()
@@ -425,12 +425,20 @@ function sort_global() {
     localStorage.setItem('globe', JSON.stringify(globe))
 }
 function same(item, thing) {
+    try {
     if (JSON.parse(localStorage.getItem(item)).title === JSON.parse(localStorage.getItem(thing).title)) {
         return true
     }
     else {
         return false
     }
+}
+catch (err) {
+    console.log('invalid story? Check that out')
+    console.log(err)
+    return false
+}
+    
 }
 function join(count) {
     update_content()
