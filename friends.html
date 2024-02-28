@@ -12,16 +12,13 @@
 </head>
 <body>
     <style>
-        @media (min-height: 850px) {
-            footer {
-                display: show;
-            }
+        .head {
+            flex-direction: column !important;
         }
     </style>
     <div class="head">
-    <main>
         <header>
-        <h1>Writers Block</h1> 
+        <h1> <a href="home.html"> Writers's Block</a></h1>
         </header>
     </div>
     <div class="input-group mb-3" style="margin-left: 5vw; margin-right: 5vw; width: 90vw; margin-top: 5vh;">
@@ -32,13 +29,18 @@
         <span class="input-group-text" style="background-color: #cad2c5; color: white;">Message</span>
         <textarea class="form-control" aria-label="Message" id="clickyreset2"></textarea>
       </div>
+      <div style="
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      align-self: center;">
             <input type="submit" value="Add another friend" class="btn btn-secondary" onclick="clickreset(['clickyreset', 'clickyreset2'])" style="
-            margin-left: 45vw;
-            margin-right: 45vw;
-            width: 10vw;
+            width: min-content;
             margin-top: 1vw;
             ">
-            <a href="home.html"><button class="btn btn-secondary" style="margin-left: 45vw; margin-right: 45vw; width: 10vw; margin-top: 1vw;">Finish</button></a>
+            <a href="home.html"><button class="btn btn-secondary" style="width: min-content; margin-top: 1vw;">Finish</button></a>
+        </div>
         </div>
         <img src="Writers_Block_Logo_1.svg" alt="Logo" style="
         position: absolute;
