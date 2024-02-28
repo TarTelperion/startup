@@ -334,7 +334,7 @@ function dlt(count) {
 
 function go_to_write(count) {
     update_content();
-    let story = user.stories[count];
+    let story = localStorage.getItem(count);
     console.log(story.content);
     localStorage.setItem('story', count);
     window.location.href = "write.html";
