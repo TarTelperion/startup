@@ -201,7 +201,7 @@ function generate_story(title, genre) {
     console.log(JSON.stringify(user))
     localStorage.setItem('story', user.stories.length - 1)
     localStorage.setItem('user', JSON.stringify(user))
-    localStorage.setItem(`${current.id}`, current)
+    localStorage.setItem(`${current.id}`, JSON.stringify(current))
     globe.stories.push(current.id)
     localStorage.setItem('globe', JSON.stringify(globe))
     window.location.href = 'write.html'
