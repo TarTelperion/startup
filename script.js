@@ -8,12 +8,13 @@ let user = {
     stories : [],
     joined : []
 }
-function Story(title, genre, content, authors) {
+function Story(title, genre, content, authors, owner) {
     this.title = title;
     this.genre = genre;
     this.content = content ?? " ";
     this.authors = authors ?? 1;
     this.prompt = ' ';
+    this.owner = owner ?? 'Gabe Pettingill';
 }
 let dawndark = new Story('Dawn of Darkness', 'Dark Fantasy', " ", 30)
 let lovesite = new Story('Love at First Site', 'Romance', " ", 1)
@@ -106,6 +107,7 @@ catch (err) {
 }
 
 function save_login(mailbox, namebox, passbox) {
+    update_content();
     email_container = document.getElementById(mailbox)
     name_container = document.getElementById(namebox)
     password_container = document.getElementById(passbox)
@@ -174,7 +176,7 @@ function generate_story(title, genre) {
         setTimeout(() => newAlert.style.display = "none", 3000)
         return
     }
-    let current = new Story(document.getElementById(title).value, document.getElementById(genre).value)
+    let current = new Story(document.getElementById(title).value, document.getElementById(genre).value, " ", 1, user.name)
     user.stories.push(current)
     try {
     user.joined.push(current)
@@ -226,6 +228,7 @@ function save_story() {
 }
 
 function gen_story_list(list, joined) {
+    update_content()
     let count = 0;
     ul = document.getElementById(list);
     
@@ -297,7 +300,7 @@ function same(obj1, obj2) {
 function dlt(count) {
     update_content();
     globe.stories.forEach((story) => {
-        if (same(story, user.stories[count])) {
+        if (same(story, user.stories[count]) && user.name === story.owner) {
             index = globe.stories.indexOf(story)
             globe.stories.splice(index, 1)
         }
@@ -364,7 +367,7 @@ function generate_list(table) {
                 }
             }
             else {
-                child.innerHTML = `<button class="btn btn-secondary-outline" onclick="join(${top_count})">Join?</button>`
+                child.innerHTML = `<button class="btn btn-secondary-outline" onclick="join(${top_count})" id="join${top_count}">Join?</button>`
             }
             count++
         })
@@ -383,14 +386,40 @@ function sort_global() {
         if (i != 0) {
         if (globe.stories[i].authors < globe.stories[i - 1].authors) {
             let j = i
+            try {
             while (globe.stories[j].authors < globe.stories[j - 1].authors) {
                 exchange_items(j, j - 1)
                 j--
             }
         }
+        catch (err) {
+
+        }
+        }
     }
     }
 }
 function join(count) {
-
+    update_content();
+    try {
+    for (i = 0; i < user.stories.length; i++) {
+        if (same(globe.stories[count], user.stories[i])) {
+            throw new Error
+        }
+    }
+    document.getElementById(`join${count}`).innerText = 'Joined.'
+    user.stories.push(globe.stories[count])
+    globe.stories[count].authors += 1
+    }
+    catch (err) {
+        const newAlert = document.createElement('div')
+        newAlert.style.alignSelf = 'center';
+        newAlert.innerHTML = "<p class='alert alert-danger'>You shall not pass! (You cannot enter a story twice)</p>"
+        const parent = document.getElementById('alert')
+        parent.appendChild(newAlert);
+        setTimeout(() => newAlert.style.display = "none", 1000)
+    }
+    
+    localStorage.setItem('user', JSON.stringify(user))
+    localStorage.setItem('globe', JSON.stringify(globe))
 }
