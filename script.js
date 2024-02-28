@@ -5,7 +5,8 @@ let user = {
     name : "",
     email : "",
     pass: "",
-    stories : []
+    stories : [],
+    authors : 1 
 }
 function Story(title, genre, content) {
     this.title = title;
@@ -148,13 +149,16 @@ function retrieve_story(story_loc) {
 
     update_content();
 
-    if(!story_loc) {story_loc = user.stories.length - 1;}
-    let title = document.getElementById("title")
-    console.clear()
-    console.log(user.stories)
+    let count = localStorage.getItem('story') ?? user.stories.length - 1;
 
-    let current_story = user.stories[story_loc];
-    title.innerHTML = current_story.title;
+    console.log(count)
+
+    let title = document.getElementById("title")
+    console.log(user.stories)
+    
+    let current_story = user.stories[count];
+    console.log(current_story)
+    title.innerHTML = current_story.title ?? 'Untitled';
 
 
     let box = document.getElementById('writersblock');
@@ -164,8 +168,8 @@ function retrieve_story(story_loc) {
     save_story(story_loc)
 }
 
-function save_story(story_loc) {
-    if(!story_loc) {story_loc = user.stories.length - 1};
+function save_story() {
+    story_loc = localStorage.getItem('story') ?? 0;
     user.stories[story_loc].content = document.getElementById('writersblock').value;
     localStorage.setItem('user', JSON.stringify(user))
 }
@@ -182,7 +186,7 @@ function gen_story_list(list) {
         curr_item = document.createElement('li')
         ul.appendChild(curr_item)
         curr_item.classList.add('list-group-item')
-        curr_item.innerHTML = `<em>${item.title}</em> (${item.genre}). <button class="btn" onclick="retrieve_story(${count})">Write?</button><button onclick="dlt(${count})" class="btn btn-outline-danger">Delete?</button>`
+        curr_item.innerHTML = `<p><em>${item.title}</em> (${item.genre}). </p><button onclick="go_to_write(${count})" class="btn">Write</button><button onclick="dlt(${count})" class="btn btn-outline-danger">Delete</button>`
         count++
     })
     if(stories.length === 0) {
@@ -208,4 +212,12 @@ function dlt(count) {
     user.stories.splice(count, 1);
     localStorage.setItem('user', JSON.stringify(user))
     location.reload()
+}
+
+function go_to_write(count) {
+    update_content();
+    let story = user.stories[count];
+    console.log(story.content);
+    localStorage.setItem('story', count);
+    window.location.href = "write.html";
 }
