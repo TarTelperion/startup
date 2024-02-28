@@ -24,6 +24,14 @@ body {
 a {
     color: inherit;
 }
+.user {
+    font-family: 'Germania One', 'Cambria';
+    font-size: 5vh;
+    text-shadow: 2px 2px 2px #ccc;
+    color: #2F3E46;
+    align-self: center;
+    padding-top: 0 !important;
+}
 h1 {
     font-family: 'Germania One', 'Cambria';
     font-size: 5vh;
