@@ -137,8 +137,9 @@ function save_login(mailbox, namebox, passbox) {
     localStorage.setItem('user', JSON.stringify(user));
     let to_add = [lovesite, change, dawndark]
     to_add.forEach((item) => {
-        if (!globe.stories.includes(item)) {
-            globe.stories.push(item)
+        if (!globe.stories.includes(item.id)) {
+            globe.stories.push(item.id)
+            localStorage.setItem(item.id, JSON.stringify(item))
         }
     })
     localStorage.setItem('globe', JSON.stringify(globe))
@@ -320,7 +321,7 @@ function dlt(count) {
     update_content();
     
     for (i = 0; i < globe.stories.length; i++) {
-        if (same(localStorage.getItem(count), localStorage.getItem(globe.stories[i])) && user.name === localStorage.getItem(globe.stories[i]).owner) {
+        if (same(count, globe.stories[i]) && user.name === localStorage.getItem(globe.stories[i]).owner) {
             globe.stories.splice(i, 1)
             localStorage.removeItem(count)
         }
@@ -405,16 +406,16 @@ function sort_global() {
     update_content()
     for(i = 0; i < globe.stories.length; i++) {
         if (i != 0) {
-        if (globe.stories[i].authors < globe.stories[i - 1].authors) {
+        if (localStorage.getItem(globe.stories[i]).authors < localStorage.getItem(globe.stories[i - 1]).authors) {
             let j = i
             try {
-            while (globe.stories[j].authors < globe.stories[j - 1].authors) {
+            while (localStorage.getItem(globe.stories[j]).authors < localStorage(globe.stories[j - 1]).authors) {
                 exchange_items(j, j - 1)
                 j--
             }
         }
         catch (err) {
-
+            console.log('unknown error caught. You may want to look at that eventually')
         }
         }
     }
@@ -422,7 +423,7 @@ function sort_global() {
     localStorage.setItem('globe', JSON.stringify(globe))
 }
 function same(item, thing) {
-    if (item.title === thing.title) {
+    if (localStorage.getItem(item).title === localStorage.getItem(thing).title) {
         return true
     }
     else {
