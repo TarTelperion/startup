@@ -26,7 +26,9 @@ let globe = {
 function user_to_globe() {
     update_content()
     user.stories.forEach((item) => {
+        if (!user.stories.includes(item)) {
         globe.stories.push(item)
+        }
     })
     localStorage.setItem('globe', JSON.stringify(globe))
 }
@@ -266,6 +268,7 @@ function update_most_recent(id, titleid) {
 function generate_list(table) {
     update_content()
     user_to_globe()
+    sort_global()
     let table_obj = document.getElementById(table)
     let top_count = 0
     globe.stories.forEach((item) => {
@@ -298,4 +301,23 @@ function generate_list(table) {
         top_count++
         table_obj.appendChild(row)
     })
+}
+function exchange_items(item1, item2) {
+    let temp = globe.stories[item1]
+    globe.stories[item1] = globe.stories[item2]
+    globe.stories[item2] = temp
+}
+function sort_global() {
+    update_content()
+    for(i = 0; i < globe.stories.length; i++) {
+        if (i != 0) {
+        if (globe.stories[i].authors < globe.stories[i - 1]) {
+            let j = i
+            while (globe.stories[j].authors < globe.stories[j - 1].authors) {
+                exchange_items(j, j - 1)
+                j--
+            }
+        }
+    }
+    }
 }
