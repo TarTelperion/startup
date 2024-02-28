@@ -245,6 +245,7 @@ function save_story() {
     localStorage.setItem('globe', JSON.stringify(globe))
 }
 
+// GEN STORY LIST
 function gen_story_list(list, joined) {
     update_content()
     let count = 0;
@@ -319,12 +320,13 @@ function dlt(count) {
     update_content();
     
     for (i = 0; i < globe.stories.length; i++) {
-        if (same(user.stories[count], globe.stories[i]) && user.name === globe.stories[i].owner) {
+        if (same(localStorage.getItem(count), localStorage.getItem(globe.stories[i])) && user.name === localStorage.getItem(globe.stories[i]).owner) {
             globe.stories.splice(i, 1)
+            localStorage.removeItem(count)
         }
     }
-    user.stories.splice(count, 1);
-    index = user.joined.indexOf(user.stories[count])
+    user.stories.remove(user.stories.indexOf(count), 1);
+    index = user.joined.indexOf(count)
     user.joined.splice(index, 1)
     localStorage.setItem('user', JSON.stringify(user))
     location.reload()
