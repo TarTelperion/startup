@@ -5,7 +5,8 @@ let user = {
     name : "",
     email : "",
     pass: "",
-    stories : []
+    stories : [],
+    joined : []
 }
 function Story(title, genre, content, authors) {
     this.title = title;
@@ -21,16 +22,6 @@ let change = new Story('When it Changed', 'Fantasy', " ", 16)
 let globe = {
     mostrecent : [],
     stories : []
-}
-
-function user_to_globe() {
-    update_content()
-    user.stories.forEach((item) => {
-        if (!globe.stories.includes(item)) {
-        globe.stories.push(item)
-        }
-    })
-    localStorage.setItem('globe', JSON.stringify(globe))
 }
 
 function gen_prompt(output, button) {
@@ -137,9 +128,12 @@ function save_login(mailbox, namebox, passbox) {
         return
     }
     localStorage.setItem('user', JSON.stringify(user));
-    globe.stories.push(dawndark)
-    globe.stories.push(change)
-    globe.stories.push(lovesite)
+    let to_add = [lovesite, change, dawndark]
+    to_add.forEach((item) => {
+        if (!globe.stories.includes(item)) {
+            globe.stories.push(item)
+        }
+    })
     localStorage.setItem('globe', JSON.stringify(globe))
     const newAlert = document.createElement('div')
         newAlert.style.alignSelf = 'center';
@@ -174,10 +168,12 @@ function generate_story(title, genre) {
 
     let current = new Story(document.getElementById(title).value, document.getElementById(genre).value)
     user.stories.push(current)
+    user.joined.push(current)
     console.log(JSON.stringify(user))
     localStorage.setItem('story', user.stories.length - 1)
     localStorage.setItem('user', JSON.stringify(user))
-
+    globe.stories.push(current)
+    localStorage.setItem('globe', JSON.stringify(globe))
     window.location.href = 'write.html'
 
 }
@@ -216,7 +212,7 @@ function save_story() {
     localStorage.setItem('globe', JSON.stringify(globe))
 }
 
-function gen_story_list(list) {
+function gen_story_list(list, joined) {
     let count = 0;
     ul = document.getElementById(list);
     
@@ -247,6 +243,31 @@ function gen_story_list(list) {
         p.innerHTML = `Don't see anything here? <a href='create.html'>Create</a> a story!`
     }
 
+    count = 0
+    try {
+    user.joined.forEach((item) => {
+        curr_item = document.createElement('li')
+        ul.appendChild(curr_item)
+        curr_item.classList.add('list-group-item')
+        curr_item.innerHTML = `<p><em>${item.title}</em> (${item.genre}).</p>`
+        count++
+    
+    })
+}
+catch (err) {
+    p = document.createElement('p')
+        p.classList.add('alert')
+        p.classList.add('alert-light')
+        p.style.width = "50%"
+        let empty = document.getElementById('empty2');
+        empty.style.display = 'flex'
+        empty.style.flexDirection = 'column'
+        empty.style.justifyContent = 'center'
+        p.style.alignSelf = "center"
+        empty.appendChild(p)
+
+        p.innerHTML = `Don't see anything here? <a href='join.html'>Join</a> a story!`
+}
 }
 
 function dlt(count) {
@@ -280,7 +301,6 @@ function update_most_recent(id, titleid) {
 
 function generate_list(table) {
     update_content()
-    user_to_globe()
     sort_global()
     let table_obj = document.getElementById(table)
     let top_count = 0
@@ -294,6 +314,9 @@ function generate_list(table) {
         [...row.children].forEach((child) => {
             if (count === 0) {
                 child.innerText = `${item.title}`
+                if (item.authors > 20) {
+                    child.innerText += " 🔥🔥🔥"
+                }
             }
             else if (count === 1) {
                 child.innerText = `(${item.genre})`
@@ -312,7 +335,7 @@ function generate_list(table) {
             count++
         })
         top_count++
-        table_obj.appendChild(row)
+        table_obj.prepend(row)
     })
 }
 function exchange_items(item1, item2) {
@@ -324,7 +347,7 @@ function sort_global() {
     update_content()
     for(i = 0; i < globe.stories.length; i++) {
         if (i != 0) {
-        if (globe.stories[i].authors < globe.stories[i - 1]) {
+        if (globe.stories[i].authors < globe.stories[i - 1].authors) {
             let j = i
             while (globe.stories[j].authors < globe.stories[j - 1].authors) {
                 exchange_items(j, j - 1)
