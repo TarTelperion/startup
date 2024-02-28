@@ -29,8 +29,8 @@ h1 {
     font-size: 5vh;
     text-shadow: 2px 2px 2px #ccc;
     color: #2F3E46;
-    padding-top: 0.5%;
-    padding-bottom: 0.5%;
+    align-self: center;
+    padding-top: 5%;
 }
 .foo {
     display: flex;
