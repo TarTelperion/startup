@@ -300,7 +300,15 @@ catch (err) {
 
 function dlt(count) {
     update_content();
+    
+    for (i = 0; i < globe.stories.length; i++) {
+        if (same(user.stories[count], globe.stories[i]) && user.name === globe.stories[i].owner) {
+            globe.stories.splice(i, 1)
+        }
+    }
     user.stories.splice(count, 1);
+    index = user.joined.indexOf(user.stories[count])
+    user.joined.splice(index, 1)
     localStorage.setItem('user', JSON.stringify(user))
     location.reload()
 }
@@ -401,12 +409,15 @@ function same(item, thing) {
 }
 function join(count) {
     update_content()
-    story = globe.stories[count]
+    let story = globe.stories[count]
     user.stories.forEach((item) => {
         if (same(story, item)) {
             document.getElementById(`join${count}`).textContent = 'Fail.'
             return false
         }
     })
-    document.getElementById(`join${count}`).textContent = 'success!'
+    document.getElementById(`join${count}`).textContent = 'Joined!'
+    user.stories.push(story)
+    user.joined.push(story)
+    story.authors += 1
 }
