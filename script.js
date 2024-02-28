@@ -397,9 +397,9 @@ function generate_list(table) {
 }
 
 function exchange_items(item1, item2) {
-    let temp = globe.stories[item1]
-    globe.stories[item1] = globe.stories[item2]
-    globe.stories[item2] = temp
+    let temp = globe.stories.indexOf(item1)
+    globe.stories[temp] = globe.stories[globe.stories.indexOf(item2)]
+    globe.stories[globe.stories.indexOf(item2)] = temp
 }
 function sort_global() {
     update_content()
