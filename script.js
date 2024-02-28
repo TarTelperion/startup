@@ -2,9 +2,9 @@
 const apikey = 'https://random-word-api.vercel.app/api?words=5'
 
 let user = {
-    name : "",
-    email : "",
-    pass: "",
+    name : "Gabey",
+    email : "email",
+    pass: "fdsklfsd",
     stories : [],
     joined : []
 }
@@ -150,8 +150,12 @@ function update_content() {
     let name_elements = document.getElementsByClassName('user')
     let mail_elements = document.getElementsByClassName('mail')
 
-    user = JSON.parse(localStorage.getItem('user'))
-    globe = JSON.parse(localStorage.getItem('globe'))
+    if (JSON.parse(localStorage.getItem('user'))) {
+        user = JSON.parse(localStorage.getItem('user'))
+    }
+    if (JSON.parse(localStorage.getItem('globe'))) {
+        globe = JSON.parse(localStorage.getItem('globe'))
+    }
 
     for (i = 0; i < name_elements.length; i++) {
         name_elements[i].innerText = `--> ${user.name} <--`
@@ -240,7 +244,11 @@ function gen_story_list(list, joined) {
         curr_item = document.createElement('li')
         ul.appendChild(curr_item)
         curr_item.classList.add('list-group-item')
-        curr_item.innerHTML = `<p><em>${item.title}</em> (${item.genre}). </p><button onclick="go_to_write(${count})" class="btn">Write</button><button onclick="dlt(${count})" class="btn btn-outline-danger">Delete</button>`
+        try {
+        curr_item.innerHTML = `<p><em>${item.title}</em> (${item.genre}). </p><button onclick="go_to_write(${count})" class="btn">Write</button><button onclick="dlt(${count})" class="btn btn-outline-danger">Delete</button>`}
+        catch (err) {
+            curr_item.style.display = 'none'
+        }
         count++
     })
     if(stories.length === 0) {
@@ -270,6 +278,9 @@ function gen_story_list(list, joined) {
         count++
     
     })
+    if (user.joined.length == 0) {
+        throw new Error
+    }
 }
 catch (err) {
     p = document.createElement('p')
@@ -380,6 +391,22 @@ function sort_global() {
     }
     }
 }
+function same(item, thing) {
+    if (item.title === thing.title) {
+        return true
+    }
+    else {
+        return false
+    }
+}
 function join(count) {
-   
+    update_content()
+    story = globe.stories[count]
+    user.stories.forEach((item) => {
+        if (same(story, item)) {
+            document.getElementById(`join${count}`).textContent = 'Fail.'
+            return false
+        }
+    })
+    document.getElementById(`join${count}`).textContent = 'success!'
 }
