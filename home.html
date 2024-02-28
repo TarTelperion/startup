@@ -9,7 +9,9 @@
     <link href='style.css' rel='stylesheet'>
     <title>Writersblock -- Home</title>
 </head>
-<body>
+<script src="script.js"></script>
+<body onload="update_most_recent('block', 'title')">
+    
     <main>
         <div class="head">
        
@@ -35,7 +37,7 @@
                 </div>
 
             <div>
-                <h3 style="margin-top: 5vh;">
+                <h3 style="margin-top: 5vh;" id="title">
                     Most Recent Story... (Last edited by Gabe Pettingill)
                 </h3>
                 <div style="
@@ -49,8 +51,8 @@
                 border-style: solid;
                 border-color: lightgrey;
                 height: 67vh;
-                ">
-                    <p>
+                " id="block">
+                    <p style="float: left;">
                         Once upon a time there was a piece of tofu. 
                     </p>
                 </div>

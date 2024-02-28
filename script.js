@@ -14,6 +14,23 @@ function Story(title, genre, content, authors) {
     this.authors = authors ?? 0;
     this.prompt = ' ';
 }
+let dawndark = new Story('Dawn of Darkness', 'Dark Fantasy', " ", 30)
+let lovesite = new Story('Love at First Site', 'Romance', " ", 1)
+let change = new Story('When it Changed', 'Fantasy', " ", 16)
+
+let globe = {
+    mostrecent : [],
+    stories : []
+}
+
+function user_to_globe() {
+    update_content()
+    user.stories.forEach((item) => {
+        globe.stories.push(item)
+    })
+    localStorage.setItem('globe', JSON.stringify(globe))
+}
+user_to_globe()
 
 function gen_prompt(output, button) {
     fetch(apikey)
@@ -141,6 +158,7 @@ function generate_story(title, genre) {
     let current = new Story(document.getElementById(title).value, document.getElementById(genre).value)
     user.stories.push(current)
     console.log(JSON.stringify(user))
+    localStorage.setItem('story', user.stories.length - 1)
     localStorage.setItem('user', JSON.stringify(user))
 
     window.location.href = 'write.html'
@@ -170,9 +188,15 @@ function retrieve_story(story_loc) {
 }
 
 function save_story() {
-    story_loc = localStorage.getItem('story') ?? 0;
+    update_content();
+    story_loc = localStorage.getItem('story') ?? user.stories.length - 1;
     user.stories[story_loc].content = document.getElementById('writersblock').value;
     localStorage.setItem('user', JSON.stringify(user))
+
+    globe.mostrecent = []
+    globe.mostrecent.push(user.name)
+    globe.mostrecent.push(user.stories[story_loc])
+    localStorage.setItem('globe', JSON.stringify(globe))
 }
 
 function gen_story_list(list) {
@@ -223,4 +247,16 @@ function go_to_write(count) {
     window.location.href = "write.html";
 }
 
-
+function update_most_recent(id, titleid) {
+    body = document.getElementById(id)
+    title_doc = document.getElementById(titleid)
+    if (globe.mostrecent.length != 0) {
+    update_content();
+    title_doc.innerText = `${globe.mostrecent[1].title} (Last Edited By ${globe.mostrecent[0]})`
+    body.innerHTML = `<p style="float: left;">${globe.mostrecent[1].content}</p>`
+    }
+    else {
+        body.innerHTML = `<p style="float: left;">Once upon a time there was a new user with no stories...</p>`
+        title_doc.innerText = `Writers' Block (Last Edited By Tristan Fay)`
+    }
+}
