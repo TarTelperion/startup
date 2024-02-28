@@ -72,7 +72,7 @@ h1 > a:hover {
     text-decoration:underline;
 }
 
-nav {
+/* nav {
     flex-direction: row;
     flex-wrap: nowrap;
     padding: 1%;
@@ -103,13 +103,13 @@ nav ul li a {
   }
 nav ul li:hover {
     background-color: #52796F;
-}
+} */
 table {
     justify-self: center;
 }
-nav ul li:has(li a:hover) {
+/* nav ul li:has(li a:hover) {
     background-color: #52796F;
-}
+} */
 /* * {
     box-sizing: border-box;
     margin: 0;
