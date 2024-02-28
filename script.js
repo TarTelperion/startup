@@ -2,9 +2,9 @@
 const apikey = 'https://random-word-api.vercel.app/api?words=5'
 
 let user = {
-    name : "Gabey",
-    email : "gmail.com",
-    pass: "fdkfdj",
+    name : "",
+    email : "",
+    pass: "",
     stories : [],
     joined : []
 }
@@ -270,9 +270,6 @@ function gen_story_list(list, joined) {
         count++
     
     })
-    if (user.joined.length === 0) {
-        throw new Error;
-    }
 }
 catch (err) {
     p = document.createElement('p')
@@ -286,30 +283,14 @@ catch (err) {
         p.style.alignSelf = "center"
         empty.appendChild(p)
 
-        p.innerHTML = `Is this box's emptiness depressing you? <a href='join.html'>Join</a> a story.`
+        p.innerHTML = `Don't see anything here? <a href='join.html'>Join</a> a story!`
 }
 }
-function same(obj1, obj2) {
-    if (obj1.title === obj2.title && obj1.genre === obj2.genre) {
-        return true
-    }
-    else {
-        return false
-    }
-}
+
 function dlt(count) {
     update_content();
-    globe.stories.forEach((story) => {
-        if (same(story, user.stories[count]) && user.name === story.owner) {
-            index = globe.stories.indexOf(story)
-            globe.stories.splice(index, 1)
-        }
-    })
     user.stories.splice(count, 1);
-    user.joined.splice(count, 1);
-    
     localStorage.setItem('user', JSON.stringify(user))
-    localStorage.setItem('globe', JSON.stringify(globe))
     location.reload()
 }
 
@@ -400,26 +381,5 @@ function sort_global() {
     }
 }
 function join(count) {
-    update_content();
-    try {
-    for (i = 0; i < user.stories.length; i++) {
-        if (same(globe.stories[count], user.stories[i])) {
-            throw new Error
-        }
-    }
-    document.getElementById(`join${count}`).innerText = 'Joined.'
-    user.stories.push(globe.stories[count])
-    globe.stories[count].authors += 1
-    }
-    catch (err) {
-        const newAlert = document.createElement('div')
-        newAlert.style.alignSelf = 'center';
-        newAlert.innerHTML = "<p class='alert alert-danger'>You shall not pass! (You cannot enter a story twice)</p>"
-        const parent = document.getElementById('alert')
-        parent.appendChild(newAlert);
-        setTimeout(() => newAlert.style.display = "none", 1000)
-    }
-    
-    localStorage.setItem('user', JSON.stringify(user))
-    localStorage.setItem('globe', JSON.stringify(globe))
+   
 }
