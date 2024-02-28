@@ -252,14 +252,17 @@ function gen_story_list(list, joined) {
     
     console.log(`HEY THERE, ${user.stories}`);
 
-    stories = user.stories
+    stories = []
+    user.stories.forEach((story) => {
+        stories.push(localStorage.getItem(story))
+    })
     
     stories.forEach((item) => {
         curr_item = document.createElement('li')
         ul.appendChild(curr_item)
         curr_item.classList.add('list-group-item')
         try {
-        curr_item.innerHTML = `<p><em>${item.title}</em> (${item.genre}). </p><button onclick="go_to_write(${count})" class="btn">Write</button><button onclick="dlt(${count})" class="btn btn-outline-danger">Delete</button>`}
+        curr_item.innerHTML = `<p><em>${item.title}</em> (${item.genre}). </p><button onclick="go_to_write(${item.id})" class="btn">Write</button><button onclick="dlt(${item.id})" class="btn btn-outline-danger">Delete</button>`}
         catch (err) {
             curr_item.style.display = 'none'
         }
