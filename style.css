@@ -140,11 +140,15 @@ h2 {
 
 .navbar {
     border-radius: 15px;
-    margin-left: 2.5vw;
-    margin-right: 2.5vw;
+    margin-left: 1vw;
+    margin-right: 1vw;
     margin-bottom: 3vh;
 }
 .navbar-brand {
     background: white !important;
     border-radius: 15px;
+}
+nav div div a {
+    color: white !important;
+    font-weight: bold !important;
 }
