@@ -143,5 +143,8 @@ h2 {
     margin-left: 2.5vw;
     margin-right: 2.5vw;
     margin-bottom: 3vh;
-    /* background-color: #cad2c5 !important; */
+}
+.navbar-brand {
+    background: white !important;
+    border-radius: 15px;
 }
