@@ -119,10 +119,23 @@ function save_login(mailbox, namebox, passbox) {
     name_container = document.getElementById(namebox)
     password_container = document.getElementById(passbox)
 
-    user.email = email_container.value
-    user.name = name_container.value
-    user.pass = password_container.value
+    function fail() {
+        const newAlert = document.createElement('div')
+        newAlert.style.alignSelf = 'center';
+        newAlert.innerHTML = "<p class='alert alert-danger'>Fill out all fields!</p>"
+        const parent = document.getElementById('login')
+        parent.appendChild(newAlert);
+        setTimeout(() => newAlert.style.display = "none", 300)
+    }
 
+    user.email = email_container.value
+    user.name = name_container.value 
+    user.pass = password_container.value 
+
+    if (!user.pass || !user.email || !user.name) {
+        fail()
+        return
+    }
     localStorage.setItem('user', JSON.stringify(user));
     globe.stories.push(dawndark)
     globe.stories.push(change)
@@ -133,7 +146,7 @@ function save_login(mailbox, namebox, passbox) {
         newAlert.innerHTML = "<p class='alert alert-success'>Account Created</p>"
         const parent = document.getElementById('login')
         parent.appendChild(newAlert);
-        setTimeout(() => newAlert.style.display = "none", 300)
+        setTimeout(() => newAlert.style.display = "none", 3000)
         window.location.href = "friends.html"
 }
 
@@ -320,4 +333,7 @@ function sort_global() {
         }
     }
     }
+}
+function join(count) {
+
 }
