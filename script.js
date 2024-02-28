@@ -5,15 +5,36 @@ let user = {
     name : "",
     email : "",
     pass: "",
-    stories : [],
-    authors : 1 
+    stories : []
 }
-function Story(title, genre, content) {
+function Story(title, genre, content, authors) {
     this.title = title;
     this.genre = genre;
     this.content = content ?? " ";
+    this.authors = authors ?? 0;
+    this.prompt = ' ';
 }
+let globe = {
+    stories : []
+}
+// filler things 
+let lovesite = new Story('Love at First Site', 'Romance', ' ', 1)
+let darkdawn = new Story('Dawn of Darkness', 'Dark Fantasy', ' ', 30)
+let change = new Story('When it Changed', 'Fantasy', ' ', 16)
 
+globe.stories.add(lovesite)
+globe.stories.add(darkdawn)
+globe.stories.add(change)
+
+function globify() {
+    update_content()
+    user.stories.forEach((item) => {
+        if (!globe.stories.includes(item)) {
+            globe.stories.add(item);
+        }
+    })
+    localStorage.setItem(JSON.stringify(globe))
+}
 
 function gen_prompt(output, button) {
     fetch(apikey)
@@ -121,6 +142,7 @@ function update_content() {
     let mail_elements = document.getElementsByClassName('mail')
 
     user = JSON.parse(localStorage.getItem('user'))
+    globe = JSON.parse(localStorage.getItem('globe'))
 
     for (i = 0; i < name_elements.length; i++) {
         name_elements[i].innerText = `--> ${user.name} <--`
@@ -193,7 +215,7 @@ function gen_story_list(list) {
         console.log('trippepd just don"t work')
         p = document.createElement('p')
         p.classList.add('alert')
-        p.classList.add('alert-secondary')
+        p.classList.add('alert-light')
         p.style.width = "50%"
         let empty = document.getElementById('empty');
         empty.style.display = 'flex'
@@ -221,3 +243,5 @@ function go_to_write(count) {
     localStorage.setItem('story', count);
     window.location.href = "write.html";
 }
+
+
