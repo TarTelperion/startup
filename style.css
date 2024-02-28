@@ -137,3 +137,11 @@ footer {
 h2 {
     color:#2F3E46;
 }
+
+.navbar {
+    border-radius: 15px;
+    margin-left: 2.5vw;
+    margin-right: 2.5vw;
+    margin-bottom: 3vh;
+    /* background-color: #cad2c5 !important; */
+}
