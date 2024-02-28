@@ -9,6 +9,7 @@ let user = {
     joined : []
 }
 function Story(title, genre, content, authors, owner) {
+    this.id = Math.floor(Math.random() * 9000) + 1000
     this.title = title;
     this.genre = genre;
     this.content = content ?? " ";
@@ -59,6 +60,10 @@ function gen_prompt(output, button) {
     btn = document.getElementById(button)
     btn.innerText = "Regenerate!"
 }
+
+
+
+// LOGIN STUFF
 
 function check_login(name, email, pass) {
     namey = document.getElementById(name).value;
@@ -146,6 +151,10 @@ function save_login(mailbox, namebox, passbox) {
         window.location.href = "friends.html"
 }
 
+
+
+// UPDATE CONTENT
+
 function update_content() {
     let name_elements = document.getElementsByClassName('user')
     let mail_elements = document.getElementsByClassName('mail')
@@ -166,7 +175,8 @@ function update_content() {
 } 
 
 
-// Important page stuff I guess
+
+//Story generation. Fixed
 
 function generate_story(title, genre) {
 
@@ -181,21 +191,24 @@ function generate_story(title, genre) {
         return
     }
     let current = new Story(document.getElementById(title).value, document.getElementById(genre).value, " ", 1, user.name)
-    user.stories.push(current)
+    user.stories.push(current.id)
     try {
-    user.joined.push(current)
+    user.joined.push(current.id)
     } catch (err) {
         user.joined = []
-        user.joined.push(current)
+        user.joined.push(current.id)
     }
     console.log(JSON.stringify(user))
     localStorage.setItem('story', user.stories.length - 1)
     localStorage.setItem('user', JSON.stringify(user))
-    globe.stories.push(current)
+    localStorage.setItem(`${current.id}`, current)
+    globe.stories.push(current.id)
     localStorage.setItem('globe', JSON.stringify(globe))
     window.location.href = 'write.html'
 
 }
+
+
 function retrieve_story(story_loc) {
 
     update_content();
