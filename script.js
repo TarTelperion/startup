@@ -347,7 +347,6 @@ function dlt(id) {
     }
     localStorage.setItem('user', JSON.stringify(user))
     localStorage.setItem('globe', JSON.stringify(globe))
-    gen_story_list('stories', 'joined')
     window.location.reload()
 }
 // POSSIBLE ERROR EXISTS
