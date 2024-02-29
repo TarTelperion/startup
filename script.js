@@ -322,15 +322,17 @@ function dlt(id) {
     update_content();
     
     for (i = 0; i < globe.stories.length; i++) {
-        if (same(id, globe.stories[i]) && user.name === JSON.parse(localStorage.getItem(globe.stories[i]).owner)) {
+        if (id === JSON.parse(localStorage.getItem(globe.stories[i])).id && user.name == JSON.parse(localStorage.getItem(globe.stories[i])).owner) {
             globe.stories.splice(i, 1)
             localStorage.removeItem(id)
+            break
         }
     }
     user.stories.splice(user.stories.indexOf(id), 1);
-    index = user.joined.indexOf(id)
+    let index = user.joined.indexOf(id)
     user.joined.splice(index, 1)
     localStorage.setItem('user', JSON.stringify(user))
+    localStorage.setItem('globe', JSON.stringify(globe))
     location.reload()
 }
 // POSSIBLE ERROR EXISTS
