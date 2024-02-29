@@ -137,7 +137,13 @@ function save_login(mailbox, namebox, passbox) {
     localStorage.setItem('user', JSON.stringify(user));
     let to_add = [lovesite, change, dawndark]
     to_add.forEach((item) => {
-        if (!globe.stories.includes(item.id)) {
+        let in_array = false
+        globe.stories.forEach((story) => {
+            if (story.title === item.title) {
+                in_array = true
+            }
+        })
+        if (!in_array) {
             globe.stories.push(item.id)
             localStorage.setItem(item.id, JSON.stringify(item))
         }
@@ -200,9 +206,9 @@ function generate_story(title, genre) {
         user.joined.push(current.id)
     }
     console.log(JSON.stringify(user))
-    localStorage.setItem('story', user.stories.length - 1)
+    localStorage.setItem('story', current.id)
     localStorage.setItem('user', JSON.stringify(user))
-    localStorage.setItem(`${current.id}`, JSON.stringify(current))
+    localStorage.setItem(current.id, JSON.stringify(current))
     globe.stories.push(current.id)
     localStorage.setItem('globe', JSON.stringify(globe))
     window.location.href = 'write.html'
@@ -323,7 +329,7 @@ catch (err) {
 
 function dlt(id) {
     update_content();
-    
+    let actual = JSON.parse(localStorage.getItem(id))
     for (i = 0; i < globe.stories.length; i++) {
         if (id === JSON.parse(localStorage.getItem(globe.stories[i])).id && user.name === JSON.parse(localStorage.getItem(globe.stories[i])).owner) {
             globe.stories.splice(i, 1)
@@ -331,15 +337,18 @@ function dlt(id) {
             break
         }
     }
-    let actual = JSON.parse(localStorage.getItem(id))
     actual.authors -= 1
     user.stories.splice(user.stories.indexOf(id), 1);
     let index = user.joined.indexOf(id)
+    console.log(id)
     user.joined.splice(index, 1)
+    if (localStorage.getItem(id)) {
     localStorage.setItem(id, JSON.stringify(actual))
+    }
     localStorage.setItem('user', JSON.stringify(user))
     localStorage.setItem('globe', JSON.stringify(globe))
-    location.reload()
+    gen_story_list('stories', 'joined')
+    window.location.reload()
 }
 // POSSIBLE ERROR EXISTS
 // DO I EVEN NEED IT?
