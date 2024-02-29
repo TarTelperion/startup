@@ -208,20 +208,21 @@ function generate_story(title, genre) {
     window.location.href = 'write.html'
 
 }
+function go_write(loc) {
+    localStorage.setItem('story', loc)
+    window.location.href = 'write.html'
+}
 
-
-function retrieve_story(story_loc) {
-
+function retrieve_story() {
     update_content();
+    let story_loc = localStorage.getItem('story')
 
-    let count = story_loc ?? user.stories.length - 1;
-
-    console.log(count)
+    console.log(`This is the count: ${story_loc}`)
 
     let title = document.getElementById("title")
     console.log(user.stories)
     
-    let current_story = JSON.parse(localStorage.getItem(user.stories[count]));
+    let current_story = JSON.parse(localStorage.getItem(story_loc));
     console.log(current_story)
     title.innerHTML = current_story.title ?? 'Untitled';
 
@@ -236,13 +237,15 @@ function retrieve_story(story_loc) {
 //USE IDS
 function save_story() {
     update_content();
-    story_loc = localStorage.getItem('story') ?? user.stories.length - 1;
-    user.stories[story_loc].content = document.getElementById('writersblock').value;
+    let story_loc = localStorage.getItem('story')
+    let thing = JSON.parse(localStorage.getItem(story_loc))
+    thing.content = document.getElementById('writersblock').value;
     localStorage.setItem('user', JSON.stringify(user))
 
     globe.mostrecent = []
     globe.mostrecent.push(user.name)
-    globe.mostrecent.push(user.stories[story_loc])
+    globe.mostrecent.push(user.stories[user.stories.indexOf(thing.id)])
+    localStorage.setItem(story_loc, JSON.stringify(thing))
     localStorage.setItem('globe', JSON.stringify(globe))
 }
 
@@ -264,7 +267,7 @@ function gen_story_list(list, joined) {
         ul.appendChild(curr_item)
         curr_item.classList.add('list-group-item')
         try {
-        curr_item.innerHTML = `<p><em>${item.title}</em> (${item.genre}). </p><button onclick="go_to_write(${item.id})" class="btn">Write</button><button onclick="dlt(${item.id})" class="btn btn-outline-danger">Delete</button>`}
+        curr_item.innerHTML = `<p><em>${item.title}</em> (${item.genre}). </p><button onclick="go_write(${item.id})" class="btn">Write</button><button onclick="dlt(${item.id})" class="btn btn-outline-danger">Delete</button>`}
         catch (err) {
             curr_item.style.display = 'none'
         }
@@ -322,7 +325,7 @@ function dlt(id) {
     update_content();
     
     for (i = 0; i < globe.stories.length; i++) {
-        if (id === JSON.parse(localStorage.getItem(globe.stories[i])).id && user.name == JSON.parse(localStorage.getItem(globe.stories[i])).owner) {
+        if (id === JSON.parse(localStorage.getItem(globe.stories[i])).id && user.name === JSON.parse(localStorage.getItem(globe.stories[i])).owner) {
             globe.stories.splice(i, 1)
             localStorage.removeItem(id)
             break
@@ -339,13 +342,14 @@ function dlt(id) {
     location.reload()
 }
 // POSSIBLE ERROR EXISTS
-function go_to_write(count) {
-    update_content();
-    let story = localStorage.getItem(count);
-    console.log(story.content);
-    localStorage.setItem('story', count);
-    window.location.href = "write.html";
-}
+// DO I EVEN NEED IT?
+// function go_to_write(count) {
+//     update_content();
+//     let story = localStorage.getItem(count);
+//     console.log(story.content);
+//     localStorage.setItem('story', count);
+//     window.location.href = "write.html";
+// }
 // MOST RECENT
 function update_most_recent(id, titleid) {
     update_content();
