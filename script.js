@@ -221,7 +221,7 @@ function retrieve_story(story_loc) {
     let title = document.getElementById("title")
     console.log(user.stories)
     
-    let current_story = localStorage.getItem(user.stories[count]);
+    let current_story = JSON.parse(localStorage.getItem(user.stories[count]));
     console.log(current_story)
     title.innerHTML = current_story.title ?? 'Untitled';
 
@@ -328,9 +328,12 @@ function dlt(id) {
             break
         }
     }
+    let actual = JSON.parse(localStorage.getItem(id))
+    actual.authors -= 1
     user.stories.splice(user.stories.indexOf(id), 1);
     let index = user.joined.indexOf(id)
     user.joined.splice(index, 1)
+    localStorage.setItem(id, JSON.stringify(actual))
     localStorage.setItem('user', JSON.stringify(user))
     localStorage.setItem('globe', JSON.stringify(globe))
     location.reload()
@@ -444,7 +447,7 @@ catch (err) {
 }
 function join(count) {
     update_content()
-    let story = globe.stories[count]
+    let story = count
     user.stories.forEach((item) => {
         if (same(story, item)) {
             document.getElementById(`join${count}`).textContent = 'Fail.'
@@ -454,7 +457,9 @@ function join(count) {
     document.getElementById(`join${count}`).textContent = 'Joined!'
     user.stories.push(story)
     user.joined.push(story)
-    story.authors += 1
+    let story_loc = JSON.parse(localStorage.getItem(story))
+    story_loc.authors += 1
+    localStorage.setItem(story, JSON.stringify(story_loc))
     localStorage.setItem('user', JSON.stringify(user))
     localStorage.setItem('globe', JSON.stringify(globe))
 }
