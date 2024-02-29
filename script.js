@@ -448,12 +448,13 @@ catch (err) {
 function join(count) {
     update_content()
     let story = count
+    let good = true
     user.stories.forEach((item) => {
-        if (same(story, item)) {
-            document.getElementById(`join${count}`).textContent = 'Fail.'
-            return false
+        if (story === item) {
+            good = false
         }
     })
+    if (good) {
     document.getElementById(`join${count}`).textContent = 'Joined!'
     user.stories.push(story)
     user.joined.push(story)
@@ -462,4 +463,13 @@ function join(count) {
     localStorage.setItem(story, JSON.stringify(story_loc))
     localStorage.setItem('user', JSON.stringify(user))
     localStorage.setItem('globe', JSON.stringify(globe))
+    }
+    else {
+        const newAlert = document.createElement('div')
+        newAlert.style.alignSelf = 'center';
+        newAlert.innerHTML = "<p class='alert alert-danger'>You cannot pass! (You cannot join a story more than once)</p>"
+        const parent = document.getElementById('alert')
+        parent.appendChild(newAlert);
+        setTimeout(() => newAlert.style.display = "none", 3000)
+    }
 }
