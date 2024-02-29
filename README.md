@@ -62,5 +62,11 @@ In this deliverable I styled the webpage using CSS, and did the following.
 - **Application Elements** -- Elements of the application are properly colored and designed to make UI easy to navigate and easier to look at.
 - **Application fonts** -- I took the liberty of employing two of my all time favorite fonts in this website to make typing and writing a pleasurable experience.
 - **Application Images** -- Images were scaled and moved to become a part of the overall body, and added a svg logo image that resizes dynamically on otherwise boring pages.
- 
 
+### JavaScript Deliverable 
+
+This deliverable contains these spicy JavaScript components. 
+- **login** -- Creating an account saves pertenint information to local storage as a JSON-ified object.
+- **database** -- Database is built out of local storage, with user state saved to a user object, and global state to a global object. All stories are assigned and sorted by randomly generated four digit IDs.
+- **Websocket** -- Story author counts and user stories react to local changes, later websocket will allow other users to see the same edits.
+- **Application Logic** -- Joined stories are ranked using an insertion sort algorithm, and added "🔥🔥🔥" emojis are added to stories with more than twenty authors. All content is saved when a turn is passed, and are displayed on user profile page. On home page there is a main section that shows the progress on the most recent story, and its most recent editor. 
