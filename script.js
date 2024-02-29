@@ -25,7 +25,19 @@ let globe = {
     mostrecent : [],
     stories : []
 }
-
+function build_login() {
+    let ref = localStorage.getItem('ref')
+    let title = document.getElementById('ref')
+    if (ref === 'login') {
+        title.innerText = "Log in:"
+    }
+    else if (ref === 'create') {
+        title.innerText = "Create an account:"
+    }
+    else {
+        title.innerText = "Create an account:"
+    }
+}
 function gen_prompt(output, button) {
     fetch(apikey)
         .then(response => {
@@ -69,6 +81,8 @@ function check_login(name, email, pass) {
     namey = document.getElementById(name).value;
     mailey = document.getElementById(email).value;
     passy = document.getElementById(pass).value;
+    localStorage.setItem('ref', "login");
+
 
     update_content();
     try {
@@ -116,6 +130,7 @@ function save_login(mailbox, namebox, passbox) {
     email_container = document.getElementById(mailbox)
     name_container = document.getElementById(namebox)
     password_container = document.getElementById(passbox)
+    localStorage.setItem('ref', "create");
 
     function fail() {
         const newAlert = document.createElement('div')

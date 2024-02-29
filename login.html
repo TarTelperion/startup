@@ -9,7 +9,8 @@
     <link href='style.css' rel='stylesheet'>
     <title>Writersblock -- Login</title>
 </head>
-<body>
+<script src="script.js"></script>
+<body onload="build_login()">
     <style>
          .head {
             flex-direction: column !important;
@@ -33,7 +34,7 @@ button {
         <div class="card" style="width: 80vw; left: 10vw; margin-top: 5vh;" id="login">
             <img src="forest.jpg" alt="Logo" class="card-img-top fluid-image" style="height: 30vh;">
             <div class="card-body">
-            <h5 class="card-title">Create an account:</h5>
+            <h5 class="card-title" id="ref">Create an account:</h5>
             <ul class="list-group list-group-flush">
 
         <li class="list-group-item">
