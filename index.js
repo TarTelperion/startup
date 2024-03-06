@@ -21,6 +21,10 @@ apiRoute.get('/stories/:id', (req, res) => {
         res.send({error : "no story with that ID found"})
     }
 })
+// Add story
+apiRoute.post('/stories/add', (req, res) => {
+    stories.push(JSON.parse(req.body))
+})
 
 
 app.listen(port, () => {
