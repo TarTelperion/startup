@@ -25,7 +25,16 @@ apiRoute.get('/stories/:id', (req, res) => {
 apiRoute.post('/stories/add', (req, res) => {
     stories.push(JSON.parse(req.body))
 })
-
+// Update content of a story. Send in the content of the story in the request body
+apiRoute.put('/stories/:id', (req, res) => {
+    let helpful = false
+    stories.forEach((story) => {
+        if (story.id === id) {
+            story.content += JSON.parse(req.body)
+            helpful = true
+        }
+    })
+})
 
 app.listen(port, () => {
     console.log(`listening on port ${port}`)
