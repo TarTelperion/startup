@@ -2,9 +2,20 @@
 const apikey = 'https://random-word-api.vercel.app/api?words=5'
 
 // api access functions!!!!
+async function incrememnt_author(amount, id) {
+    try {
+        const response = await fetch(`http://localhost:3000/api/stories/authors?id=${id}ct=${amount}`, {
+            method: 'PUT',
+            headers: {"Content-Type" : "applications/json"}
+        })
+
+    } catch(err) {
+        console.log(err)
+    }
+}
 async function create_globe_stories() {
     try {
-        const response = await fetch('http://localhost:3000/api/leaders', {
+        const response = await fetch('http://localhost:3000/api/stories/leaders', {
             method: 'GET',
             headers: {"Content-Type" : "application.json"}
         })
@@ -222,6 +233,7 @@ function save_login(mailbox, namebox, passbox) {
 // UPDATE CONTENT
 
 function update_content() {
+    let mostrecent = localStorage.getItem('mostrecent') ?? []
     let name_elements = document.getElementsByClassName('user')
     let mail_elements = document.getElementsByClassName('mail')
 
@@ -309,7 +321,7 @@ function save_story() {
 
     mostrecent = []
     mostrecent.push(user.name)
-    mostrecent.push(user.stories[user.stories.indexOf(thing.id)])
+    mostrecent.push(user.stories[user.stories.indexOf(story.id)])
     localStorage.setItem('mostrecent', JSON.stringify(mostrecent))
 }
 
@@ -392,7 +404,7 @@ function dlt(id) {
         delete_story(actual.id)
     }
     else {
-    actual.authors -= 1
+    incrememnt_author(-1, actual.id)
     user.stories.splice(user.stories.indexOf(id), 1);
     let index = user.joined.indexOf(id)
     console.log(id)
@@ -428,11 +440,11 @@ function update_most_recent(id, titleid) {
 
 function generate_list(table) {
     update_content()
-    sort_global()
+    let stories = [...sort_global()]
+
     let table_obj = document.getElementById(table)
-    let top_count = globe.stories.length - 1
-    globe.stories.forEach((item) => {
-        item = JSON.parse(localStorage.getItem(item))
+    let top_count = stories.length - 1
+    stories.forEach((item) => {
         let row = document.createElement('tr')
         for (i = 0; i < 4; i++) {
             let curr_data = document.createElement('td')
@@ -493,23 +505,9 @@ function sort_global() {
         }
     }
     }
-}
-function same(item, thing) {
-    try {
-    if (JSON.parse(localStorage.getItem(item)).title === JSON.parse(localStorage.getItem(thing).title)) {
-        return true
-    }
-    else {
-        return false
-    }
-}
-catch (err) {
-    console.log('invalid story? Check that out')
-    console.log(err)
-    return false
+    return globe
 }
     
-}
 function join(count) {
     update_content()
     let story = count
@@ -523,11 +521,9 @@ function join(count) {
     document.getElementById(`join${count}`).textContent = 'Joined!'
     user.stories.push(story)
     user.joined.push(story)
-    let story_loc = JSON.parse(localStorage.getItem(story))
-    story_loc.authors += 1
-    localStorage.setItem(story, JSON.stringify(story_loc))
+    let story_loc = get_story(story)
+    incrememnt_author(1, story_loc.id)
     localStorage.setItem('user', JSON.stringify(user))
-    localStorage.setItem('globe', JSON.stringify(globe))
     }
     else {
         const newAlert = document.createElement('div')

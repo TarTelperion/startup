@@ -50,6 +50,17 @@ apiRoute.put('/stories/update', (req, res) => {
         res.send("Success!")
     }
 })
+// Add author
+apiRoute.put('/stories/authors', (req, res) => {
+    const id = req.query.id
+    const ct = req.query.ct
+    stories.forEach((story) => {
+        if (story.id == id) {
+            story.authors += ct
+        }
+    })
+    res.send()
+})
 // returns all of the stories currently in the globe
 apiRoute.get('/stories/leaders', (req, res) => {
     res.send(JSON.stringify(stories))
