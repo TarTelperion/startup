@@ -57,14 +57,7 @@ function Story(title, genre, content, authors, owner) {
     this.prompt = ' ';
     this.owner = owner ?? 'Gabe Pettingill';
 }
-let dawndark = new Story('Dawn of Darkness', 'Dark Fantasy', " ", 30)
-let lovesite = new Story('Love at First Site', 'Romance', " ", 1)
-let change = new Story('When it Changed', 'Fantasy', " ", 16)
 
-let globe = {
-    mostrecent : [],
-    stories : []
-}
 function build_login() {
     let ref = localStorage.getItem('ref')
     let title = document.getElementById('ref')
@@ -190,20 +183,7 @@ function save_login(mailbox, namebox, passbox) {
         return
     }
     localStorage.setItem('user', JSON.stringify(user));
-    let to_add = [lovesite, change, dawndark]
-    to_add.forEach((item) => {
-        let in_array = false
-        globe.stories.forEach((story) => {
-            if (story.title === item.title) {
-                in_array = true
-            }
-        })
-        if (!in_array) {
-            globe.stories.push(item.id)
-            localStorage.setItem(item.id, JSON.stringify(item))
-        }
-    })
-    localStorage.setItem('globe', JSON.stringify(globe))
+    
     const newAlert = document.createElement('div')
         newAlert.style.alignSelf = 'center';
         newAlert.innerHTML = "<p class='alert alert-success'>Account Created</p>"
@@ -223,9 +203,6 @@ function update_content() {
 
     if (JSON.parse(localStorage.getItem('user'))) {
         user = JSON.parse(localStorage.getItem('user'))
-    }
-    if (JSON.parse(localStorage.getItem('globe'))) {
-        globe = JSON.parse(localStorage.getItem('globe'))
     }
 
     for (i = 0; i < name_elements.length; i++) {
@@ -263,9 +240,9 @@ function generate_story(title, genre) {
     console.log(JSON.stringify(user))
     localStorage.setItem('story', current.id)
     localStorage.setItem('user', JSON.stringify(user))
-    localStorage.setItem(current.id, JSON.stringify(current))
-    globe.stories.push(current.id)
-    localStorage.setItem('globe', JSON.stringify(globe))
+
+    set_story(current)
+
     window.location.href = 'write.html'
 
 }
@@ -273,6 +250,7 @@ function go_write(loc) {
     localStorage.setItem('story', loc)
     window.location.href = 'write.html'
 }
+
 
 function retrieve_story() {
     update_content();
@@ -283,7 +261,7 @@ function retrieve_story() {
     let title = document.getElementById("title")
     console.log(user.stories)
     
-    let current_story = JSON.parse(localStorage.getItem(story_loc));
+    let current_story = get_story(story_loc);
     console.log(current_story)
     title.innerHTML = current_story.title ?? 'Untitled';
 
@@ -299,15 +277,16 @@ function retrieve_story() {
 function save_story() {
     update_content();
     let story_loc = localStorage.getItem('story')
-    let thing = JSON.parse(localStorage.getItem(story_loc))
-    thing.content = document.getElementById('writersblock').value;
+
+    let story  = get_story(story_loc)
+    send_content(story_loc, story.content + document.getElementById('writersblock').value)
+
     localStorage.setItem('user', JSON.stringify(user))
 
-    globe.mostrecent = []
-    globe.mostrecent.push(user.name)
-    globe.mostrecent.push(user.stories[user.stories.indexOf(thing.id)])
-    localStorage.setItem(story_loc, JSON.stringify(thing))
-    localStorage.setItem('globe', JSON.stringify(globe))
+    mostrecent = []
+    mostrecent.push(user.name)
+    mostrecent.push(user.stories[user.stories.indexOf(thing.id)])
+    localStorage.setItem('mostrecent', JSON.stringify(mostrecent))
 }
 
 // GEN STORY LIST
@@ -320,7 +299,7 @@ function gen_story_list(list, joined) {
 
     stories = []
     user.stories.forEach((story) => {
-        stories.push(JSON.parse(localStorage.getItem(story)))
+        stories.push(get_story(story))
     })
     
     stories.forEach((item) => {
@@ -353,7 +332,7 @@ function gen_story_list(list, joined) {
     count = 0
     try {
     user.joined.forEach((item) => {
-        item = JSON.parse(localStorage.getItem(item))
+        item = get_story(item)
         curr_item = document.createElement('li')
         ul = document.getElementById('joined')
         ul.appendChild(curr_item)
@@ -384,13 +363,9 @@ catch (err) {
 
 function dlt(id) {
     update_content();
-    let actual = JSON.parse(localStorage.getItem(id))
-    for (i = 0; i < globe.stories.length; i++) {
-        if (id === JSON.parse(localStorage.getItem(globe.stories[i])).id && user.name === JSON.parse(localStorage.getItem(globe.stories[i])).owner) {
-            globe.stories.splice(i, 1)
-            localStorage.removeItem(id)
-            break
-        }
+    let actual = get_story(id)
+    if (actual.owner === user.name) {
+        
     }
     actual.authors -= 1
     user.stories.splice(user.stories.indexOf(id), 1);

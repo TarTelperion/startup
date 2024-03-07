@@ -54,6 +54,17 @@ apiRoute.put('/stories/update', (req, res) => {
 apiRoute.get('/stories/leaders', (req, res) => {
     res.send(JSON.stringify(stories))
 })
+apiRoute.delete('/stories', (req, res) => {
+    let id = req.query.id
+    let i = 0
+    stories.forEach((story) => {
+        if(story.id == id) {
+            stories.splice(i, 1)
+        }
+        i++
+    })
+    res.send()
+})
 app.listen(port, () => {
     console.log(`listening on port ${port}`)
 })
