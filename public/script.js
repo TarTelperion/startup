@@ -1,6 +1,22 @@
 // writing prompt generator
 const apikey = 'https://random-word-api.vercel.app/api?words=5'
 
+// api access functions!!!!
+
+async function set_story(story) {
+    try {
+    const response = await fetch('writersblock.click/api/stories/add', {
+        method: 'POST',
+        headers: {"Content-Type" : "application/json"},
+        body: JSON.stringify(story)
+    })
+    return true
+} catch (err) {
+    console.log(err)
+    return false
+}
+}
+
 let user = {
     name : "Gabey",
     email : "email",
