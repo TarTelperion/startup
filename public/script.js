@@ -1,12 +1,12 @@
 // writing prompt generator
 const apikey = 'https://random-word-api.vercel.app/api?words=5'
-
+let mostrecent = []
 // api access functions!!!!
 async function incrememnt_author(amount, id) {
     try {
         const response = await fetch(`http://localhost:3000/api/stories/authors?id=${id}ct=${amount}`, {
             method: 'PUT',
-            headers: {"Content-Type" : "applications/json"}
+            headers: {"Content-Type" : "application/json"}
         })
 
     } catch(err) {
@@ -17,7 +17,7 @@ async function create_globe_stories() {
     try {
         const response = await fetch('http://localhost:3000/api/stories/leaders', {
             method: 'GET',
-            headers: {"Content-Type" : "application.json"}
+            headers: {"Content-Type" : "application/json"}
         })
         const words = await response.json()
         let stories = [...words]
@@ -146,9 +146,9 @@ function gen_prompt(output, button) {
 // LOGIN STUFF
 
 function check_login(name, email, pass) {
-    namey = document.getElementById(name).value;
-    mailey = document.getElementById(email).value;
-    passy = document.getElementById(pass).value;
+    let namey = document.getElementById(name).value;
+    let mailey = document.getElementById(email).value;
+    let passy = document.getElementById(pass).value;
     localStorage.setItem('ref', "login");
 
 
@@ -233,7 +233,7 @@ function save_login(mailbox, namebox, passbox) {
 // UPDATE CONTENT
 
 function update_content() {
-    let mostrecent = localStorage.getItem('mostrecent') ?? []
+    mostrecent = localStorage.getItem('mostrecent') ?? []
     let name_elements = document.getElementsByClassName('user')
     let mail_elements = document.getElementsByClassName('mail')
 
@@ -266,6 +266,7 @@ function generate_story(title, genre) {
         return
     }
     let current = new Story(document.getElementById(title).value, document.getElementById(genre).value, " ", 1, user.name)
+    set_story(current)
     user.stories.push(current.id)
     try {
     user.joined.push(current.id)
@@ -277,7 +278,7 @@ function generate_story(title, genre) {
     localStorage.setItem('story', current.id)
     localStorage.setItem('user', JSON.stringify(user))
 
-    set_story(current)
+    
 
     window.location.href = 'write.html'
 
@@ -319,7 +320,7 @@ function save_story() {
 
     localStorage.setItem('user', JSON.stringify(user))
 
-    mostrecent = []
+    let mostrecent = []
     mostrecent.push(user.name)
     mostrecent.push(user.stories[user.stories.indexOf(story.id)])
     localStorage.setItem('mostrecent', JSON.stringify(mostrecent))
