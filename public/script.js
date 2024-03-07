@@ -2,6 +2,30 @@
 const apikey = 'https://random-word-api.vercel.app/api?words=5'
 
 // api access functions!!!!
+async function create_globe_stories() {
+    try {
+        const response = await fetch('http://localhost:3000/api/leaders', {
+            method: 'GET',
+            headers: {"Content-Type" : "application.json"}
+        })
+        const words = await response.json()
+        let stories = [...words]
+        return words
+    } catch(err) {
+        console.log(err)
+    }
+}
+async function delete_story(id) {
+    try {
+        const response = await fetch(`http://localhost:3000/api/stories?id=${id}`, {
+            method: 'DELETE',
+            headers: {"Content-Type" : "application/json"},
+        })
+    } catch(err) {
+        console.log(err)
+        return false;
+    }
+}
 async function set_story(story) {
     try {
     const response = await fetch('http://localhost:3000/api/stories/add', {
@@ -365,19 +389,17 @@ function dlt(id) {
     update_content();
     let actual = get_story(id)
     if (actual.owner === user.name) {
-        
+        delete_story(actual.id)
     }
+    else {
     actual.authors -= 1
     user.stories.splice(user.stories.indexOf(id), 1);
     let index = user.joined.indexOf(id)
     console.log(id)
     user.joined.splice(index, 1)
-    if (localStorage.getItem(id)) {
-    localStorage.setItem(id, JSON.stringify(actual))
-    }
-    localStorage.setItem('user', JSON.stringify(user))
-    localStorage.setItem('globe', JSON.stringify(globe))
+    localStorage.setItem('user', user)
     window.location.reload()
+}
 }
 // POSSIBLE ERROR EXISTS
 // DO I EVEN NEED IT?
@@ -393,10 +415,10 @@ function update_most_recent(id, titleid) {
     update_content();
     body = document.getElementById(id)
     title_doc = document.getElementById(titleid)
-    if (globe.mostrecent.length != 0) {
+    if (mostrecent.length != 0) {
     update_content();
-    title_doc.innerText = `${JSON.parse(localStorage.getItem(globe.mostrecent[1])).title} (Last Edited By ${globe.mostrecent[0]})`
-    body.innerHTML = `<p style="float: left;">${JSON.parse(localStorage.getItem(globe.mostrecent[1])).content}</p>`
+    title_doc.innerText = `${mostrecent[1].title} (Last Edited By ${mostrecent[0]})`
+    body.innerHTML = `<p style="float: left;">${mostrecent[1].content}</p>`
     }
     else {
         body.innerHTML = `<p style="float: left;">Once upon a time there was a new user with no stories...</p>`
@@ -446,18 +468,20 @@ function generate_list(table) {
 }
 
 function exchange_items(index1, index2) {
-    let temp = globe.stories[index1]
-    globe.stories[index1] = globe.stories[index2]
-    globe.stories[index2] = temp
+    let temp = globe[index1]
+    globe[index1] = globe[index2]
+    globe[index2] = temp
 }
 function sort_global() {
     update_content()
-    for(i = 0; i < globe.stories.length; i++) {
+    let globe = []
+    globe.push(create_globe_stories())
+    for(i = 0; i < globe.length; i++) {
         if (i != 0) {
-        if (JSON.parse(localStorage.getItem(globe.stories[i])).authors < JSON.parse(localStorage.getItem(globe.stories[i - 1])).authors) {
+        if (globe[i].authors < globe[i - 1].authors) {
             let j = i
             try {
-            while (JSON.parse(localStorage.getItem(globe.stories[j])).authors < JSON.parse(localStorage.getItem(globe.stories[j - 1])).authors) {
+            while (globe[j].authors < globe[j - 1].authors) {
                 exchange_items(j, j - 1)
                 j--
             }
@@ -469,7 +493,6 @@ function sort_global() {
         }
     }
     }
-    localStorage.setItem('globe', JSON.stringify(globe))
 }
 function same(item, thing) {
     try {
