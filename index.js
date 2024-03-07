@@ -50,9 +50,6 @@ apiRoute.put('/stories/:id', (req, res) => {
     }
 })
 apiRoute.get('/stories/leaders', (req, res) => {
-    stories.sort((a, b) => {
-        return a.authors - b.authors
-    })
     res.send(JSON.stringify(stories))
 })
 app.listen(port, () => {
