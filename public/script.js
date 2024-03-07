@@ -4,7 +4,7 @@ const apikey = 'https://random-word-api.vercel.app/api?words=5'
 // api access functions!!!!
 async function set_story(story) {
     try {
-    const response = await fetch('writersblock.click/api/stories/add', {
+    const response = await fetch('http://localhost:3000/api/stories/add', {
         method: 'POST',
         headers: {"Content-Type" : "application/json"},
         body: JSON.stringify(story)
@@ -17,11 +17,11 @@ async function set_story(story) {
 }
 async function get_story(id) {
     try{
-        const response = await fetch(`writersblock.click/api/stories?id=${id}`, {
+        const response = await fetch(`http://localhost:3000/api/stories?id=${id}`, {
             method: 'GET',
             headers : {"Content-Type" : "application/json"}
         })
-        const words = await JSON.parse(response)
+        const words = await response.json()
         console.log(words)
         return words
     } catch (err) {
@@ -29,12 +29,12 @@ async function get_story(id) {
         return false
     }
 }
-async function send_content(id) {
+async function send_content(id, content) {
     try {
-        const response = await fetch(`writersblock.click/api/stories/update?id=${id}`, {
+        const response = await fetch(`http://localhost:3000/api/stories/update?id=${id}`, {
             method: 'PUT',
             headers: {"Content-Type" : "application/json"},
-            body: JSON.stringify({id : get_story(id).content})
+            body: JSON.stringify({id : content})
         })
     } catch(err) {
         console.log(err)

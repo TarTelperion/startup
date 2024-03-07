@@ -38,7 +38,7 @@ apiRoute.put('/stories/update', (req, res) => {
     const id = req.query.id
     let helpful = false
     stories.forEach((story) => {
-        if (story.id === id) {
+        if (story.id == id) {
             story.content = Object.values(req.body)[0]
             helpful = true
         }
