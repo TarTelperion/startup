@@ -16,7 +16,20 @@ async function set_story(story) {
     return false
 }
 }
-
+async function get_story(id) {
+    try{
+        const response = await fetch(`writersblock.click/api/stories?id=${id}`, {
+            method: 'GET',
+            headers : {"Content-Type" : "application/json"},
+        })
+        const words = await response.json()
+        console.log(words)
+        return words
+    } catch (err) {
+        console.log(err)
+        return false
+    }
+}
 let user = {
     name : "Gabey",
     email : "email",
