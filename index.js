@@ -38,12 +38,23 @@ apiRoute.put('/stories/:id', (req, res) => {
     let helpful = false
     stories.forEach((story) => {
         if (story.id === id) {
-            story.content += JSON.parse(req.body)
+            story.content += Object.values(req.body)[0]
             helpful = true
         }
     })
+    if (!helpful) {
+        res.send("Failure!")
+    }
+    else {
+        res.send("Success!")
+    }
 })
-
+apiRoute.get('/stories/leaders', (req, res) => {
+    stories.sort((a, b) => {
+        return a.authors - b.authors
+    })
+    res.send(JSON.stringify(stories))
+})
 app.listen(port, () => {
     console.log(`listening on port ${port}`)
 })
