@@ -336,7 +336,10 @@ function gen_story_list(list, joined) {
 
     stories = []
     user.stories.forEach((story) => {
-        stories.push(get_story(story))
+        let item = get_story(story)
+        if (item) {
+            stories.push(item)
+        }
     })
     
     stories.forEach((item) => {
@@ -410,7 +413,7 @@ function dlt(id) {
     let index = user.joined.indexOf(id)
     console.log(id)
     user.joined.splice(index, 1)
-    localStorage.setItem('user', user)
+    localStorage.setItem('user', JSON.stringify(user))
     window.location.reload()
 }
 }
@@ -439,10 +442,12 @@ function update_most_recent(id, titleid) {
     }
 }
 
-function generate_list(table) {
+async function generate_list(table) {
     update_content()
-    let stories = [...sort_global()]
-
+    const content = await sort_global()
+    let stories = []
+    content.forEach((item) => stories.push(item))
+    console.log(stories)
     let table_obj = document.getElementById(table)
     let top_count = stories.length - 1
     stories.forEach((item) => {
@@ -485,10 +490,11 @@ function exchange_items(index1, index2) {
     globe[index1] = globe[index2]
     globe[index2] = temp
 }
-function sort_global() {
+async function sort_global() {
     update_content()
     let globe = []
-    globe.push(create_globe_stories())
+    const stories = await create_globe_stories()
+    stories.forEach((story) => globe.push(story))
     for(i = 0; i < globe.length; i++) {
         if (i != 0) {
         if (globe[i].authors < globe[i - 1].authors) {
