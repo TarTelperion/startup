@@ -34,11 +34,12 @@ apiRoute.post('/stories/add', (req, res) => {
     res.send("success")
 })
 // Update content of a story. Send in the content of the story in the request body
-apiRoute.put('/stories/:id', (req, res) => {
+apiRoute.put('/stories/update', (req, res) => {
+    const id = req.query.id
     let helpful = false
     stories.forEach((story) => {
         if (story.id === id) {
-            story.content += Object.values(req.body)[0]
+            story.content = Object.values(req.body)[0]
             helpful = true
         }
     })
@@ -49,6 +50,7 @@ apiRoute.put('/stories/:id', (req, res) => {
         res.send("Success!")
     }
 })
+// returns all of the stories currently in the globe
 apiRoute.get('/stories/leaders', (req, res) => {
     res.send(JSON.stringify(stories))
 })
