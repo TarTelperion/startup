@@ -70,3 +70,12 @@ This deliverable contains these spicy JavaScript components.
 - **database** -- Database is built out of local storage, with user state saved to a user object, and global state to a global object. All stories are assigned and sorted by randomly generated four digit IDs.
 - **Websocket** -- Story author counts and user stories react to local changes, later websocket will allow other users to see the same edits.
 - **Application Logic** -- Joined stories are ranked using an insertion sort algorithm, and added "🔥🔥🔥" emojis are added to stories with more than twenty authors. All content is saved when a turn is passed, and are displayed on user profile page. On home page there is a main section that shows the progress on the most recent story, and its most recent editor. 
+
+### Service Deliverable
+
+This deliverable contains these groovy endpoint and service components
+- **Node.js/Express HTTP service** -- Done! Server now serves up pages using node and Express
+- **Static Middleware for Frontend** -- Done! Server does things with pages, you see pages. Everything good.
+- **Calls to Third Party Endpoints** -- Prompt generation done through a fetch call to a third party api.
+- **Backend Service Endpoints** -- Endpoints created for retrieving story data, updating story content or author count, accessing global list of stories, and adding users to stories.
+- **Frontend calls Service Endpoints** -- Tots! Frontend extensively calls backend for continual beautiful updated information from backend endpoints. Everything is run asynchronously through fetch calls to create a flawless user experience.   
