@@ -1,7 +1,9 @@
 const express = require('express')
+const cors = require('cors')
 const bodyParser = require('body-parser')
 const app = express()
 const port = process.argv.length > 2 ? process.argv[2] : 3000
+app.use(cors())
 app.use(express.static('public'))
 
 apiRoute = express.Router()
@@ -12,7 +14,7 @@ let stories = []
 
 // Retrieve story by ID and send by JSON stringify
 apiRoute.get('/stories', (req, res) => {
-    let id = req.query.id
+    let id = parseInt(req.query.id)
     console.log(id)
     console.log(stories)
     let helpful = false
@@ -27,10 +29,10 @@ apiRoute.get('/stories', (req, res) => {
     if (!helpful) {
         try {
         const error = new Error('No story found')
-        error.statusCode = 400
+        error.statusCode = 418
         throw error
         } catch(error) {
-            res.status(error.statusCode || 200).json({error : "You can't write anything, you know."})
+            res.status(error.statusCode || 400).json({error : "This ain't for coffee (Herbal teas only (word of wisdom, my friends))"})
         }
     }
 })
@@ -46,6 +48,7 @@ apiRoute.put('/stories/update', (req, res) => {
     stories.forEach((story) => {
         if (story.id == id) {
             story.content = Object.values(req.body)[0]
+            console.log(Object.values(req.body))
             helpful = true
         }
     })

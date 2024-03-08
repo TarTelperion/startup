@@ -45,7 +45,7 @@ async function set_story(story) {
         body: JSON.stringify(story)
     })
     return true
-} catch (err) {
+} catch (error) {
     console.log(err)
     return false
 }
@@ -62,7 +62,7 @@ async function get_story(id) {
         } 
         return words
     } catch (error) {
-        console.log(JSON.parse(err))
+        console.log(error)
         return false
     }
 }
@@ -317,9 +317,10 @@ async function retrieve_story() {
 async function save_story() {
     update_content();
     let story_loc = localStorage.getItem('story')
-
     let story  = await get_story(story_loc)
-    await send_content(story_loc, story.content + document.getElementById('writersblock').value)
+    story.content += document.getElementById('writersblock').value
+    console.log(story.content)
+    await send_content(story_loc, story.content)
 
     localStorage.setItem('user', JSON.stringify(user))
 
