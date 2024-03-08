@@ -39,25 +39,26 @@ async function delete_story(id) {
 }
 async function set_story(story) {
     try {
-    const response = await fetch('http://localhost:3000/api/stories/add', {
+    const response = await fetch('https://writersblock.click/api/stories/add', {
         method: 'POST',
         headers: {"Content-Type" : "application/json"},
         body: JSON.stringify(story)
     })
     return true
 } catch (error) {
-    console.log(err)
+    console.log(error)
     return false
 }
 }
 async function get_story(id) {
     try{
-        const response = await fetch(`http://localhost:3000/api/stories?id=${id}`, {
+        const response = await fetch(`https://writersblock.click/api/stories?id=${id}`, {
             method: 'GET',
             headers : {"Content-Type" : "application/json"}
         })
         const words = await response.json()
-        if (Object.keys(words)[0] == "error") {
+        console.log(words)
+        if (Object.keys(words)[0] === "error") {
             return false
         } 
         return words
@@ -68,7 +69,7 @@ async function get_story(id) {
 }
 async function send_content(id, content) {
     try {
-        const response = await fetch(`http://localhost:3000/api/stories/update?id=${id}`, {
+        const response = await fetch(`https:writersblock.click/api/stories/update?id=${id}`, {
             method: 'PUT',
             headers: {"Content-Type" : "application/json"},
             body: JSON.stringify({id : content})
@@ -310,17 +311,22 @@ async function retrieve_story() {
 
     box.innerHTML = current_story.content;
 
-    save_story(story_loc)
 }
 
 //USE IDS
 async function save_story() {
     update_content();
-    let story_loc = localStorage.getItem('story')
-    let story  = await get_story(story_loc)
-    story.content += document.getElementById('writersblock').value
-    console.log(story.content)
-    await send_content(story_loc, story.content)
+    let story = undefined;
+    async function waiting() {
+    let story_loc = JSON.parse(localStorage.getItem('story'))
+
+    story  = await get_story(parseInt(story_loc))
+
+    let stuff = document.getElementById('writersblock').value
+
+    await send_content(story_loc, stuff)
+}
+    await waiting()
 
     localStorage.setItem('user', JSON.stringify(user))
 
@@ -328,6 +334,8 @@ async function save_story() {
     mostrecent.push(user.name)
     mostrecent.push(JSON.stringify(story))
     localStorage.setItem('mostrecent', JSON.stringify(mostrecent))
+
+    window.location.href = 'blocked.html'
 }
 
 // GEN STORY LIST
@@ -379,7 +387,6 @@ async function gen_story_list(list, joined) {
     }))
     joined = joined.filter(story => story !== null);
     joined.forEach((item) => {
-        item = get_story(item)
         curr_item = document.createElement('li')
         ul = document.getElementById('joined')
         ul.appendChild(curr_item)
