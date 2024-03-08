@@ -255,7 +255,7 @@ function update_content() {
 
 //Story generation. Fixed
 
-function generate_story(title, genre) {
+async function generate_story(title, genre) {
 
     update_content()
     if (!document.getElementById(title).value || !document.getElementById(genre).value) {
@@ -268,7 +268,7 @@ function generate_story(title, genre) {
         return
     }
     let current = new Story(document.getElementById(title).value, document.getElementById(genre).value, " ", 1, user.name)
-    set_story(current)
+    await set_story(current)
     user.stories.push(current.id)
     try {
     user.joined.push(current.id)
@@ -291,7 +291,7 @@ function go_write(loc) {
 }
 
 
-function retrieve_story() {
+async function retrieve_story() {
     update_content();
     let story_loc = localStorage.getItem('story')
 
@@ -300,7 +300,7 @@ function retrieve_story() {
     let title = document.getElementById("title")
     console.log(user.stories)
     
-    let current_story = get_story(story_loc);
+    let current_story = await get_story(story_loc);
     console.log(current_story)
     title.innerHTML = current_story.title ?? 'Untitled';
 
@@ -406,14 +406,14 @@ catch (err) {
 }
 }
 
-function dlt(id) {
+async function dlt(id) {
     update_content();
-    let actual = get_story(id)
+    let actual = await get_story(id)
     if (actual.owner === user.name) {
-        delete_story(actual.id)
+        await delete_story(actual.id)
     }
     else {
-    incrememnt_author(-1, actual.id)
+    await incrememnt_author(-1, actual.id)
     user.stories.splice(user.stories.indexOf(id), 1);
     let index = user.joined.indexOf(id)
     console.log(id)
