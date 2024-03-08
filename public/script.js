@@ -249,6 +249,7 @@ function update_content() {
     for (i = 0; i < mail_elements.length; i++) {
         mail_elements[i].innerText = `Email: ${user.email}`
     }
+    mostrecent = JSON.parse(localStorage.getItem('mostrecent'))
 } 
 
 
@@ -313,18 +314,18 @@ async function retrieve_story() {
 }
 
 //USE IDS
-function save_story() {
+async function save_story() {
     update_content();
     let story_loc = localStorage.getItem('story')
 
-    let story  = get_story(story_loc)
-    send_content(story_loc, story.content + document.getElementById('writersblock').value)
+    let story  = await get_story(story_loc)
+    await send_content(story_loc, story.content + document.getElementById('writersblock').value)
 
     localStorage.setItem('user', JSON.stringify(user))
 
-    let mostrecent = []
+    mostrecent = []
     mostrecent.push(user.name)
-    mostrecent.push(user.stories[user.stories.indexOf(story.id)])
+    mostrecent.push(JSON.stringify(story))
     localStorage.setItem('mostrecent', JSON.stringify(mostrecent))
 }
 
@@ -411,6 +412,7 @@ async function dlt(id) {
     let actual = await get_story(id)
     if (actual.owner === user.name) {
         await delete_story(actual.id)
+        user.stories.splice(user.stories.indexOf(actual.id), 1)
     }
     else {
     await incrememnt_author(-1, actual.id)
@@ -438,6 +440,7 @@ function update_most_recent(id, titleid) {
     title_doc = document.getElementById(titleid)
     if (mostrecent.length != 0) {
     update_content();
+    mostrecent[1] = JSON.parse(mostrecent[1])
     title_doc.innerText = `${mostrecent[1].title} (Last Edited By ${mostrecent[0]})`
     body.innerHTML = `<p style="float: left;">${mostrecent[1].content}</p>`
     }
