@@ -452,11 +452,13 @@ async function update_most_recent(id, titleid) {
     update_content();
     mostrecent[1] = JSON.parse(mostrecent[1])
     mostrecent[1] = await get_story(mostrecent[1].id)
-    title_doc.innerText = `${mostrecent[1].title} (Last Edited By ${mostrecent[0]})`
-    body.innerHTML = `<p style="float: left;">${mostrecent[1].content}</p>`
+    let lines = mostrecent[1].content.split('\n')
+    const htmlcontent = lines.map(line => line + '<br>').join('');
+    title_doc.innerHTML = `${mostrecent[1].title} (Last Edited By ${mostrecent[0]})`
+    body.innerHTML = `<p style="float: left;">${htmlcontent}</p>`
     }
     else {
-        body.innerHTML = `<p style="float: left;">Once upon a time there was a new user with no stories...</p>`
+        body.innerHTML = `<p style="float: left; text-align: left;">Once upon a time there was a new user with no stories...</p>`
         title_doc.innerText = `Writers' Block (Last Edited By Tristan Fay)`
     }
 }
