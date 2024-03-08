@@ -3,8 +3,9 @@ const apikey = 'https://random-word-api.vercel.app/api?words=5'
 let mostrecent = []
 // api access functions!!!!
 async function incrememnt_author(amount, id) {
+    // https://writersblock.click
     try {
-        const response = await fetch(`https://writersblock.click/api/stories/authors?id=${id}ct=${amount}`, {
+        const response = await fetch(`https://writersblock.click/api/stories/authors?id=${id}&ct=${amount}`, {
             method: 'PUT',
             headers: {"Content-Type" : "application/json"}
         })
@@ -69,7 +70,7 @@ async function get_story(id) {
 }
 async function send_content(id, content) {
     try {
-        const response = await fetch(`https:writersblock.click/api/stories/update?id=${id}`, {
+        const response = await fetch(`https://writersblock.click/api/stories/update?id=${id}`, {
             method: 'PUT',
             headers: {"Content-Type" : "application/json"},
             body: JSON.stringify({id : content})
@@ -326,6 +327,7 @@ async function save_story() {
 
     await send_content(story_loc, stuff)
 }
+
     await waiting()
 
     localStorage.setItem('user', JSON.stringify(user))
@@ -531,7 +533,7 @@ async function sort_global() {
     return globe
 }
     
-function join(count) {
+async function join(count) {
     update_content()
     let story = count
     let good = true
@@ -545,7 +547,7 @@ function join(count) {
     user.stories.push(story)
     user.joined.push(story)
     let story_loc = get_story(story)
-    incrememnt_author(1, story_loc.id)
+    await incrememnt_author(1, count)
     localStorage.setItem('user', JSON.stringify(user))
     }
     else {

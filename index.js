@@ -65,7 +65,8 @@ apiRoute.put('/stories/authors', (req, res) => {
     const ct = req.query.ct
     stories.forEach((story) => {
         if (story.id == id) {
-            story.authors += ct
+            if (ct > 0) {story.authors++}
+            else {story.authors--}
         }
     })
     res.send()
