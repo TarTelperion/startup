@@ -444,13 +444,14 @@ async function dlt(id) {
 //     window.location.href = "write.html";
 // }
 // MOST RECENT
-function update_most_recent(id, titleid) {
+async function update_most_recent(id, titleid) {
     update_content();
     body = document.getElementById(id)
     title_doc = document.getElementById(titleid)
     if (mostrecent.length != 0) {
     update_content();
     mostrecent[1] = JSON.parse(mostrecent[1])
+    mostrecent[1] = await get_story(mostrecent[1].id)
     title_doc.innerText = `${mostrecent[1].title} (Last Edited By ${mostrecent[0]})`
     body.innerHTML = `<p style="float: left;">${mostrecent[1].content}</p>`
     }
