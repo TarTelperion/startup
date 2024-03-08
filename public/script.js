@@ -4,7 +4,7 @@ let mostrecent = []
 // api access functions!!!!
 async function incrememnt_author(amount, id) {
     try {
-        const response = await fetch(`http://localhost:3000/api/stories/authors?id=${id}ct=${amount}`, {
+        const response = await fetch(`https://writersblock.click/api/stories/authors?id=${id}ct=${amount}`, {
             method: 'PUT',
             headers: {"Content-Type" : "application/json"}
         })
@@ -15,7 +15,7 @@ async function incrememnt_author(amount, id) {
 }
 async function create_globe_stories() {
     try {
-        const response = await fetch('http://localhost:3000/api/stories/leaders', {
+        const response = await fetch('https://writersblock.click/api/stories/leaders', {
             method: 'GET',
             headers: {"Content-Type" : "application/json"}
         })
@@ -28,7 +28,7 @@ async function create_globe_stories() {
 }
 async function delete_story(id) {
     try {
-        const response = await fetch(`http://localhost:3000/api/stories?id=${id}`, {
+        const response = await fetch(`https://writersblock.click/api/stories?id=${id}`, {
             method: 'DELETE',
             headers: {"Content-Type" : "application/json"},
         })
