@@ -57,10 +57,12 @@ async function get_story(id) {
             headers : {"Content-Type" : "application/json"}
         })
         const words = await response.json()
-        console.log(words)
+        if (Object.keys(words)[0] == "error") {
+            return false
+        } 
         return words
-    } catch (err) {
-        console.log(err)
+    } catch (error) {
+        console.log(JSON.parse(err))
         return false
     }
 }
@@ -327,21 +329,19 @@ function save_story() {
 }
 
 // GEN STORY LIST
-function gen_story_list(list, joined) {
+async function gen_story_list(list, joined) {
     update_content()
     let count = 0;
     ul = document.getElementById(list);
     
-    console.log(`HEY THERE, ${user.stories}`);
 
-    stories = []
-    user.stories.forEach((story) => {
-        let item = get_story(story)
-        if (item) {
-            stories.push(item)
-        }
-    })
-    
+    let stories = await Promise.all(user.stories.map(async (story)=>{
+        const item = await get_story(story)
+        return item !== false ? item : null
+    }))
+    stories = stories.filter(story => story !== null);
+    console.log('your story down there')
+    console.log(stories)
     stories.forEach((item) => {
         curr_item = document.createElement('li')
         ul.appendChild(curr_item)
@@ -371,7 +371,12 @@ function gen_story_list(list, joined) {
 
     count = 0
     try {
-    user.joined.forEach((item) => {
+    let joined = await Promise.all(user.joined.map(async (story)=>{
+        const item = await get_story(story)
+        return item !== false ? item : null
+    }))
+    joined = joined.filter(story => story !== null);
+    joined.forEach((item) => {
         item = get_story(item)
         curr_item = document.createElement('li')
         ul = document.getElementById('joined')
@@ -381,7 +386,7 @@ function gen_story_list(list, joined) {
         count++
     
     })
-    if (user.joined.length == 0) {
+    if (joined.length == 0) {
         throw new Error
     }
 }

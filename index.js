@@ -25,7 +25,13 @@ apiRoute.get('/stories', (req, res) => {
         }
     })
     if (!helpful) {
-        res.send({error : "no story with that ID found"})
+        try {
+        const error = new Error('No story found')
+        error.statusCode = 400
+        throw error
+        } catch(error) {
+            res.status(error.statusCode || 200).json({error : "You can't write anything, you know."})
+        }
     }
 })
 // Add story
