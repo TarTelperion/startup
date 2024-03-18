@@ -27,3 +27,15 @@ function user_token(tok) {
     return userCollection.findOne({token: tok})
 }
 
+// create user
+
+async function createUser(mail, pass) {
+    const passwordHash = await bcrypt.hash(pass, 10)
+    const user = {
+        email: mail,
+        password: passwordHash,
+        token: uuid.v4()
+    }
+    await userCollection.insertOne(user)
+    return user
+}
