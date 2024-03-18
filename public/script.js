@@ -158,7 +158,7 @@ function check_login(name, email, pass) {
 
     update_content();
     try {
-    if (user.name === namey && user.pass == passy) {
+    if (user.name == namey && user.pass == passy) {
         const newAlert = document.createElement('div')
         newAlert.style.alignSelf = 'center';
         newAlert.innerHTML = "<p class='alert alert-success'>Success, redirecting...</p>"
