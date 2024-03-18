@@ -40,16 +40,43 @@ async function createUser(mail, pass) {
     return user
 }
 
-function add_story(story) {
-    return storyCollection.insertOne(story)
+async function create_story(title, author, genre) {
+    const story = {
+        _id: uuid.v4(),
+        title: title,
+        authors: 1,
+        owner: author,
+        genre: genre,
+    }
+    await storyCollection.insertOne(story)
+    return story
+}
+
+async function addUser(user_id, story_id) {
+    const story_obj = await storyCollection.findOne({_id: story_id})
+    const user = await storyCollection.findOne({token: user_id})
+
+    story_obj.authors += 1
+    story_obj.joined.push(user._id)
+
+    await storyCollection.updateOne({_id: story_id}, {...story_obj})
+    return story_obj
 }
 
 function get_pop_stories() {
-    const query = { score: { $gt: 0, $lt: 900 } };
+    const query = { authors: { $gt: 0, $lt: 900 } };
     const options = {
-    sort: { score: -1 },
+    sort: { authors: -1 },
     limit: 10,
   };
   const stories = storyCollection.find(query, options);
   return stories.to_Array()
+}
+
+module.exports = {
+    user,
+    user_token,
+    createUser,
+    add_story,
+    get_pop_stories
 }
