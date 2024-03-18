@@ -18,3 +18,12 @@ const storyCollection = db.collection('stories')
     process.exit(1)
 })
 
+// find user stuff
+function user(mail) {
+    return userCollection.findOne({email: mail})
+}
+
+function user_token(tok) {
+    return userCollection.findOne({token: tok})
+}
+
