@@ -39,3 +39,17 @@ async function createUser(mail, pass) {
     await userCollection.insertOne(user)
     return user
 }
+
+function add_story(story) {
+    return storyCollection.insertOne(story)
+}
+
+function get_pop_stories() {
+    const query = { score: { $gt: 0, $lt: 900 } };
+    const options = {
+    sort: { score: -1 },
+    limit: 10,
+  };
+  const stories = storyCollection.find(query, options);
+  return stories.to_Array()
+}
