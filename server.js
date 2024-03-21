@@ -87,6 +87,4 @@ apiRoute.delete('/stories', (req, res) => {
     res.send()
 })
 
-module.exports = {
-    app
-}
+module.exports = app
