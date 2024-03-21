@@ -8,6 +8,7 @@ const story = {
     authors : 1,
     content: "asdf"
 }
+
 test('add story', (done) => {
     request(app)
     .post('/api/stories/add')
@@ -74,6 +75,15 @@ test('add content', (done) => {
         authors : 2,
         content: "asdfjkl;"
     })
+    .end((err) => (err ? done(err) : done()))
+})
+
+test('add nonexistent story', (done) => {
+    request(app)
+    .put('/api/stories/update?id=5050')
+    .send({content : "if this happens, I'll be irritated"})
+    .expect(404)
+    .expect("Failure!")
     .end((err) => (err ? done(err) : done()))
 })
 

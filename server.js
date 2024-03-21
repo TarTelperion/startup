@@ -55,7 +55,7 @@ apiRoute.put('/stories/update', (req, res) => {
         }
     })
     if (!helpful) {
-        res.send("Failure!")
+        res.status(404).send("Failure!")
     }
     else {
         res.json(found)
