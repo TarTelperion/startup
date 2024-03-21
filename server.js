@@ -85,7 +85,7 @@ apiRoute.put('/stories/authors', (req, res) => {
 })
 // returns all of the stories currently in the globe
 apiRoute.get('/stories/leaders', (req, res) => {
-    res.send(JSON.stringify(stories))
+    res.json(stories)
 })
 apiRoute.delete('/stories', (req, res) => {
     let id = req.query.id

@@ -46,3 +46,15 @@ test('change author amount', (done) => {
     })
     .end((err) => (err ? done(err) : done()))
 })
+
+test('get leaders', (done) => {
+    request(app)
+    .get('/api/stories/leaders')
+    .expect(200)
+    .expect([{
+        id : 4545,
+        title : 'test',
+        authors : 2,
+    }])
+    .end((err) => (err ? done(err) : done()))
+})
