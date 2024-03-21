@@ -76,3 +76,18 @@ test('add content', (done) => {
     })
     .end((err) => (err ? done(err) : done()))
 })
+
+test('delete story, clean up', (done) => {
+    request(app)
+    .delete('/api/stories?id=4545')
+    .expect(200)
+    .end((err) => (err ? done(err) : done()))
+})
+
+test('get leaders after deletion', (done) => {
+    request(app)
+    .get('/api/stories/leaders')
+    .expect(200)
+    .expect([])
+    .end((err) => (err ? done(err) : done()))
+})
