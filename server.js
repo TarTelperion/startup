@@ -22,7 +22,7 @@ apiRoute.get('/stories', (req, res) => {
         console.log(story)
         console.log(story.id)
         if (story.id == id) {
-            res.send(JSON.stringify(story))
+            res.json(story)
             helpful = true
         }
     })
