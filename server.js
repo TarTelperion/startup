@@ -45,18 +45,20 @@ apiRoute.post('/stories/add', (req, res) => {
 apiRoute.put('/stories/update', (req, res) => {
     const id = req.query.id
     let helpful = false
+    let found = null;
     stories.forEach((story) => {
         if (story.id == id) {
             story.content = Object.values(req.body)[0]
             console.log(Object.values(req.body))
             helpful = true
+            found = story;
         }
     })
     if (!helpful) {
         res.send("Failure!")
     }
     else {
-        res.send("Success!")
+        res.json(found)
     }
 })
 // Add author

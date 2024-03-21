@@ -6,6 +6,7 @@ const story = {
     id : 4545,
     title : 'test',
     authors : 1,
+    content: "asdf"
 }
 test('add story', (done) => {
     request(app)
@@ -24,6 +25,7 @@ test('GET story', (done) => {
         id : 4545,
         title : 'test',
         authors : 1,
+        content: "asdf"
     })
     .end((err) => (err ? done(err) : done()))
 })
@@ -43,6 +45,7 @@ test('change author amount', (done) => {
         id : 4545,
         title : 'test',
         authors : 2,
+        content: "asdf"
     })
     .end((err) => (err ? done(err) : done()))
 })
@@ -55,6 +58,21 @@ test('get leaders', (done) => {
         id : 4545,
         title : 'test',
         authors : 2,
+        content: "asdf"
     }])
+    .end((err) => (err ? done(err) : done()))
+})
+
+test('add content', (done) => {
+    request(app)
+    .put('/api/stories/update?id=4545')
+    .send({content : "asdfjkl;"})
+    .expect(200)
+    .expect({
+        id : 4545,
+        title : 'test',
+        authors : 2,
+        content: "asdfjkl;"
+    })
     .end((err) => (err ? done(err) : done()))
 })
