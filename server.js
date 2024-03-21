@@ -61,15 +61,27 @@ apiRoute.put('/stories/update', (req, res) => {
 })
 // Add author
 apiRoute.put('/stories/authors', (req, res) => {
-    const id = req.query.id
-    const ct = req.query.ct
+    const id = parseInt(req.query.id); // Convert id to number
+    const ct = parseInt(req.query.ct); 
+    let changed = false
+    let found = null
     stories.forEach((story) => {
         if (story.id == id) {
-            if (ct > 0) {story.authors++}
+            if (ct > 0) {
+                story.authors++
+            }
             else {story.authors--}
+            changed = true
+            found = story
         }
     })
-    res.send()
+    if (changed) {
+        res.json(found)
+    }
+    else {
+        res.status(404).json('story not found')
+    }
+    
 })
 // returns all of the stories currently in the globe
 apiRoute.get('/stories/leaders', (req, res) => {

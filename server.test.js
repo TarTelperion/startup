@@ -7,7 +7,6 @@ const story = {
     title : 'test',
     authors : 1,
 }
-
 test('add story', (done) => {
     request(app)
     .post('/api/stories/add')
@@ -21,7 +20,11 @@ test('GET story', (done) => {
     request(app)
     .get('/api/stories?id=4545')
     .expect(200)
-    .expect({ id: 4545, title: 'test', authors: 1 })
+    .expect({
+        id : 4545,
+        title : 'test',
+        authors : 1,
+    })
     .end((err) => (err ? done(err) : done()))
 })
 
@@ -34,11 +37,12 @@ test('GET story invalid', (done) => {
 
 test('change author amount', (done) => {
     request(app)
-    .put('/api/authors?id=4545&ct=1')
+    .put('/api/stories/authors?id=4545&ct=1')
     .expect(200)
-    request(app)
-    .get('/api/stories?id=4545')
-    .expect(200)
-    .expect({ id: 4545, title: 'test', authors: 2 })
+    .expect({
+        id : 4545,
+        title : 'test',
+        authors : 2,
+    })
     .end((err) => (err ? done(err) : done()))
 })
