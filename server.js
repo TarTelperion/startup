@@ -34,10 +34,14 @@ apiRoute.post('/stories/add', async (req, res) => {
 })
 
 // Update content of a story. Send in the content of the story in the request body
-apiRoute.put('/stories/update', (req, res) => {
-    const id = req.query.id
-    db.update(id, JSON.parse(req.body))
-    res.send()
+apiRoute.put('/stories/update', async (req, res) => {
+    let story = await db.update_story(req.body)
+    if (story) {
+    res.send(story)
+    }
+    else {
+        res.status(404).send("Story not found")
+    }
 })
 // Add author
 apiRoute.put('/stories/authors', async (req, res) => {
@@ -54,8 +58,9 @@ apiRoute.put('/stories/authors', async (req, res) => {
     }
 })
 // returns all of the stories currently in the globe
-apiRoute.get('/stories/leaders', (req, res) => {
-    res.json(db.get_pop_stories())
+apiRoute.get('/stories/leaders', async (req, res) => {
+    let stories = await db.get_pop_stories()
+    res.json(stories)
 })
 apiRoute.delete('/stories', async (req, res) => {
     let id = parseInt(req.query.id)

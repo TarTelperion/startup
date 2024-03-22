@@ -65,14 +65,15 @@ async function addUser(user_id, story_id) {
     return story_obj
 }
 
-function get_pop_stories() {
+async function get_pop_stories() {
     const query = { authors: { $gt: 0, $lt: 900 } };
     const options = {
     sort: { authors: -1 },
     limit: 10,
   };
   const stories = storyCollection.find(query, options);
-  return stories.toArray()
+  const array = await stories.toArray()
+  return array
 }
 
 async function get_story(story_id) {
@@ -80,15 +81,11 @@ async function get_story(story_id) {
     return story
 }
 
-async function update(story_id, content) {
-    let story = await get_story(story_id)
-    story.content = content
-    await storyCollection.updateOne({_id : story_id}, story)
-}
 
 async function update_story(story) {
     await storyCollection.replaceOne({_id : story._id}, story)
-    return await get_story(story._id)
+    let fin = await get_story(story._id)
+    return fin
 }
 
 async function remove(story_id) {
@@ -102,7 +99,6 @@ module.exports = {
     create_story,
     get_story,
     get_pop_stories,
-    update,
     update_story,
     remove
 }
