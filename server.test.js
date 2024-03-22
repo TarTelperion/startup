@@ -10,6 +10,12 @@ const story = {
     content: "asdf"
 }
 
+const usr = {
+    mail : "funkychickens@crazies.com",
+    name : "dude",
+    pass : "secretcombinations"
+}
+
 test('add story', (done) => {
     request(app)
     .post('/api/stories/add')
@@ -129,5 +135,45 @@ test('get leaders after deletion', (done) => {
     .get('/api/stories/leaders')
     .expect(200)
     .expect([])
+    .end((err) => (err ? done(err) : done()))
+})
+
+test('create user', (done) => {
+    request(app)
+    .put('/api/auth/create')
+    .send(usr)
+    .expect(200)
+    .end((err) => (err ? done(err) : done()))
+})
+
+
+test('login user', (done) => {
+    request(app)
+    .post('/api/auth/login')
+    .send(usr)
+    .expect(200)
+    .end((err) => (err ? done(err) : done()))
+})
+
+test('login user unauthorized', (done) => {
+    usr.pass = 'funkymonkeys'
+    request(app)
+    .post('/api/auth/login')
+    .send(usr)
+    .expect(401)
+    .expect('unauthorized')
+    .end((err) => (err ? done(err) : done()))
+})
+
+user2 = {
+    mail : "dudley@crazies.com",
+    name : "dude",
+    pass : "somethingsupercovert"
+}
+
+test('log out', (done) => {
+    request(app)
+    .delete('/api/auth/logout')
+    .expect(204)
     .end((err) => (err ? done(err) : done()))
 })

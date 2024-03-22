@@ -4,6 +4,9 @@ const bodyParser = require('body-parser')
 const app = express()
 const port = process.argv.length > 2 ? process.argv[2] : 3000
 const db = require('./database')
+const bcrypt = require('bcrypt')
+
+let cookie_name = 'token'
 
 app.use(cors())
 app.use(express.static('public'))
@@ -66,6 +69,43 @@ apiRoute.delete('/stories', async (req, res) => {
     let id = parseInt(req.query.id)
     await db.remove(id)
     res.send()
+})
+
+//auth
+apiRoute.put('/auth/create', async (req, res) => {
+    if (await db.user(req.body.mail)) {
+        res.status(409).send("Preexisting user")
+    }
+    else {
+        let usr = await db.createUser(req.body.mail, req.body.pass) 
+        bake_cookie(res, usr.token)
+        res.send({token : usr.token})
+    }
+})
+
+function bake_cookie(res, token) {
+    res.cookie(cookie_name, token, {
+        secure: true,
+        httpOnly: true,
+        sameSite: 'strict'
+    })
+}
+
+apiRoute.post('/auth/login', async (req, res) => {
+    const usr = await db.user(req.body.mail)
+    if (usr) {
+        if (await bcrypt.compare(req.body.pass, usr.password)) {
+            bake_cookie(res, usr.token)
+            res.send({token : usr.token})
+            return
+        }
+        }
+    res.status(401).send("unauthorized")
+})
+
+apiRoute.delete('/auth/logout', (req, res) => {
+    res.clearCookie(cookie_name)
+    res.status(204).send('cookie eaten')
 })
 
 module.exports = app

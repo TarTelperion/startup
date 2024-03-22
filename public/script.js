@@ -15,6 +15,7 @@ async function incrememnt_author(amount, id) {
         console.log(err)
     }
 }
+
 async function create_globe_stories() {
     try {
         const response = await fetch('${host}/api/stories/leaders', {
@@ -28,6 +29,7 @@ async function create_globe_stories() {
         console.log(err)
     }
 }
+
 async function delete_story(id) {
     try {
         const response = await fetch(`${host}/api/stories?id=${id}`, {
@@ -39,6 +41,7 @@ async function delete_story(id) {
         return false;
     }
 }
+
 async function set_story(story) {
     try {
     const response = await fetch('${host}/api/stories/add', {
@@ -52,6 +55,7 @@ async function set_story(story) {
     return false
 }
 }
+
 async function get_story(id) {
     try{
         const response = await fetch(`${host}/api/stories?id=${id}`, {
@@ -69,6 +73,7 @@ async function get_story(id) {
         return false
     }
 }
+
 async function send_content(id, content) {
     try {
         const response = await fetch(`${host}/api/stories/update?id=${id}`, {
@@ -81,6 +86,7 @@ async function send_content(id, content) {
         return false
     }
 }
+
 let user = {
     name : "Gabey",
     email : "email",
@@ -88,6 +94,7 @@ let user = {
     stories : [],
     joined : []
 }
+
 function Story(title, genre, content, authors, owner) {
     this.id = Math.floor(Math.random() * 9000) + 1000
     this.title = title;
@@ -111,6 +118,7 @@ function build_login() {
         title.innerText = "Create an account:"
     }
 }
+
 function gen_prompt(output, button) {
     fetch(apikey)
         .then(response => {

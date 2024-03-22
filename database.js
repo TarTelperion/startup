@@ -19,8 +19,9 @@ const storyCollection = db.collection('stories');
 })
 
 // find user stuff
-function user(mail) {
-    return userCollection.findOne({email: mail})
+async function user(mail) {
+    let user = await userCollection.findOne({email: mail})
+    return user
 }
 
 function user_token(tok) {
@@ -102,3 +103,4 @@ module.exports = {
     update_story,
     remove
 }
+
