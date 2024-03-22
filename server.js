@@ -77,7 +77,9 @@ apiRoute.put('/auth/create', async (req, res) => {
         res.status(409).send("Preexisting user")
     }
     else {
-        let usr = await db.createUser(req.body.mail, req.body.pass) 
+        console.log(`serverside mail: ${req.body.mail}`)
+        console.log(`serverside pass: ${req.body.pass}`)
+        let usr = await db.createUser(req.body.mail, req.body.pass, req.body.name) 
         bake_cookie(res, usr.token)
         res.send({token : usr.token})
     }

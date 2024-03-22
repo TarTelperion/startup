@@ -142,7 +142,7 @@ test('create user', (done) => {
     request(app)
     .put('/api/auth/create')
     .send(usr)
-    .expect(200)
+    .expect(409)
     .end((err) => (err ? done(err) : done()))
 })
 
@@ -164,12 +164,6 @@ test('login user unauthorized', (done) => {
     .expect('unauthorized')
     .end((err) => (err ? done(err) : done()))
 })
-
-user2 = {
-    mail : "dudley@crazies.com",
-    name : "dude",
-    pass : "somethingsupercovert"
-}
 
 test('log out', (done) => {
     request(app)

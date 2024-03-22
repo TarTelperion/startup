@@ -87,14 +87,6 @@ async function send_content(id, content) {
     }
 }
 
-let user = {
-    name : "Gabey",
-    email : "email",
-    pass: "fdsklfsd",
-    stories : [],
-    joined : []
-}
-
 function Story(title, genre, content, authors, owner) {
     this.id = Math.floor(Math.random() * 9000) + 1000
     this.title = title;
@@ -158,59 +150,31 @@ function gen_prompt(output, button) {
 
 // LOGIN STUFF
 
-function check_login(name, email, pass) {
+async function check_login(name, email, pass) {
     let namey = document.getElementById(name).value;
     let mailey = document.getElementById(email).value;
     let passy = document.getElementById(pass).value;
     localStorage.setItem('ref', "login");
-
-
     update_content();
-    try {
-    if (user.name == namey && user.pass == passy) {
-        const newAlert = document.createElement('div')
-        newAlert.style.alignSelf = 'center';
-        newAlert.innerHTML = "<p class='alert alert-success'>Success, redirecting...</p>"
-        const parent = document.getElementById('login')
-        parent.appendChild(newAlert);
-        setTimeout(() => window.location.href = "home.html", 300)
-        
-    }
-    else if (user.email == mailey && user.pass == passy) {
-        const newAlert = document.createElement('div')
-        newAlert.style.alignSelf = 'center';
-        newAlert.innerHTML = "<p class='alert alert-success'>Success, redirecting...</p>"
-        const parent = document.getElementById('login')
-        parent.appendChild(newAlert);
 
-        setTimeout(() => window.location.href = "home.html", 300)
-    }
-    else {
-        const newAlert = document.createElement('div')
-        newAlert.style.alignSelf = 'center';
-        newAlert.innerHTML = "<p class='alert alert-danger'>Login failed, check credentials</p>"
-        const parent = document.getElementById('login')
-        parent.appendChild(newAlert);
-        setTimeout(() => newAlert.style.display = "none", 3000)
-        return false;
-    }
-}
-catch (err) {
-    const newAlert = document.createElement('div')
-        newAlert.style.alignSelf = 'center';
-        newAlert.innerHTML = "<p class='alert alert-danger'>Login failed, create an account</p>"
-        const parent = document.getElementById('login')
-        parent.appendChild(newAlert);
-        setTimeout(() => newAlert.style.display = "none", 3000)
-        return false;
-}
+    let user = {
+        email: namey.value,
+        name: mailey.value,
+        pass: passy.value
+    };
+
+    const usr = await fetch(`${host}/api/auth/create`, {
+        method : "POST",
+        headers: {"Content-Type" : "application/json"},
+        body : JSON.stringify(user)
+    })
+
+    console.log(user)
+    return user
 }
 
-function save_login(mailbox, namebox, passbox) {
+async function save_login(name, email, pass) {
     update_content();
-    email_container = document.getElementById(mailbox)
-    name_container = document.getElementById(namebox)
-    password_container = document.getElementById(passbox)
     localStorage.setItem('ref', "create");
 
     function fail() {
@@ -222,15 +186,25 @@ function save_login(mailbox, namebox, passbox) {
         setTimeout(() => newAlert.style.display = "none", 300)
     }
 
-    user.email = email_container.value
-    user.name = name_container.value 
-    user.pass = password_container.value 
+    let namey = document.getElementById(name);
+    let mailey = document.getElementById(email);
+    let passy = document.getElementById(pass);
+    localStorage.setItem('ref', "login");
+    update_content();
 
-    if (!user.pass || !user.email || !user.name) {
-        fail()
-        return
-    }
-    localStorage.setItem('user', JSON.stringify(user));
+    let user = {
+        mail: mailey.value,
+        name: namey.value,
+        pass: passy.value
+    };
+
+    const usr = await fetch(`${host}/api/auth/create`, {
+        method : "PUT",
+        headers: {"Content-Type" : "application/json"},
+        body : JSON.stringify(user)
+    })
+
+    console.log(usr)
     
     const newAlert = document.createElement('div')
         newAlert.style.alignSelf = 'center';

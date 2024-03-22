@@ -30,11 +30,16 @@ function user_token(tok) {
 
 // create user
 
-async function createUser(mail, pass) {
+async function createUser(mail, pass, name) {
+    if (!mail || !pass) {
+        console.log(`mail: ${mail}`)
+        console.log(`pass: ${pass}`)
+    }
     const passwordHash = await bcrypt.hash(pass, 10)
     const user = {
-        email: mail,
-        password: passwordHash,
+        mail: mail,
+        pass: passwordHash,
+        name : name,
         token: uuid.v4()
     }
     await userCollection.insertOne(user)
