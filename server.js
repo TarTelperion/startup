@@ -110,6 +110,7 @@ secureRoute.post('/stories/add', async (req, res) => {
 // Update content of a story. Send in the content of the story in the request body
 secureRoute.put('/stories/update', async (req, res) => {
     let story = await db.update_story(req.body)
+    console.log(`UPDATED.... ${story}`)
     if (story) {
     res.send(story)
     }

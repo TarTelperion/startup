@@ -53,8 +53,6 @@ async function set_story(story) {
     const story_obj = await response.json()
     user.stories.push(story_obj._id)
     user.joined.push(story_obj._id)
-    console.log(`RIGHT HERE, MISTER ${user.stories}`)
-    console.log(`THIS IS THE USER ${user}`)
     const responseTwo = await fetch(`${host}/api/users/update`, {
         method : 'PUT',
         headers: {"Content-Type" : "application/json"},
@@ -87,12 +85,13 @@ async function get_story(id) {
     }
 }
 
-async function send_content(id, content) {
+async function send_content(story) {
     try {
-        const response = await fetch(`${host}/api/stories/update?id=${id}`, {
+        console.log(`SENDING IN FOR UPDATE ---> ${story}`)
+        const response = await fetch(`${host}/api/stories/update`, {
             method: 'PUT',
             headers: {"Content-Type" : "application/json"},
-            body: JSON.stringify({id : content})
+            body: JSON.stringify(story)
         })
     } catch(err) {
         console.log(err)
@@ -291,8 +290,7 @@ async function generate_story(title, genre) {
     //     user.joined.push(current.id)
     // }
     // console.log(JSON.stringify(user))
-    localStorage.setItem('story', current._id)
-    localStorage.setItem('user', JSON.stringify(user))
+    
 
     
 
@@ -314,7 +312,7 @@ async function retrieve_story() {
     let title = document.getElementById("title")
     console.log(user.stories)
     
-    let current_story = await get_story(story_loc);
+    let current_story = await get_story(user.stories[user.stories.length - 1]);
     console.log(current_story)
     title.innerHTML = current_story.title ?? 'Untitled';
 
@@ -328,24 +326,16 @@ async function retrieve_story() {
 //USE IDS
 async function save_story() {
     await update_content();
-    let story = undefined;
-    async function waiting() {
-    let story_loc = JSON.parse(localStorage.getItem('story'))
+    let _id = user.stories[user.stories.length - 1]
+    const words = await fetch(`${host}/api/stories?id=${_id}`)
+    const story = await words.json()
+    story.content = document.getElementById('writersblock').value
 
-    story  = await get_story(parseInt(story_loc))
-
-    let stuff = document.getElementById('writersblock').value
-
-    await send_content(story_loc, stuff)
-}
-
-    await waiting()
-
-    localStorage.setItem('user', JSON.stringify(user))
+    await send_content(story)
 
     mostrecent = []
     mostrecent.push(user.name)
-    mostrecent.push(JSON.stringify(story))
+    mostrecent.push(story._id)
     localStorage.setItem('mostrecent', JSON.stringify(mostrecent))
 
     window.location.href = 'blocked.html'
