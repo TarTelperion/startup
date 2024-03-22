@@ -232,12 +232,15 @@ async function update_content() {
     mostrecent = localStorage.getItem('mostrecent') ?? []
     let name_elements = document.getElementsByClassName('user')
     let mail_elements = document.getElementsByClassName('mail')
-
+    try {
     let preuser = await fetch(`${host}/api/auth`)
     const working = await preuser.json()
-
     if (working) {
         user = working
+    }
+    } catch(err) {
+        console.log(err)
+        user = undefined;
     }
 
     for (i = 0; i < name_elements.length; i++) {
