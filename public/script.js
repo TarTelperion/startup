@@ -1,11 +1,12 @@
 // writing prompt generator
 const apikey = 'https://random-word-api.vercel.app/api?words=5'
 let mostrecent = []
+const host = 'http://localhost:3000'
 // api access functions!!!!
 async function incrememnt_author(amount, id) {
-    // https://writersblock.click
+    // ${host}
     try {
-        const response = await fetch(`https://writersblock.click/api/stories/authors?id=${id}&ct=${amount}`, {
+        const response = await fetch(`${host}/api/stories/authors?id=${id}&ct=${amount}`, {
             method: 'PUT',
             headers: {"Content-Type" : "application/json"}
         })
@@ -16,7 +17,7 @@ async function incrememnt_author(amount, id) {
 }
 async function create_globe_stories() {
     try {
-        const response = await fetch('https://writersblock.click/api/stories/leaders', {
+        const response = await fetch('${host}/api/stories/leaders', {
             method: 'GET',
             headers: {"Content-Type" : "application/json"}
         })
@@ -29,7 +30,7 @@ async function create_globe_stories() {
 }
 async function delete_story(id) {
     try {
-        const response = await fetch(`https://writersblock.click/api/stories?id=${id}`, {
+        const response = await fetch(`${host}/api/stories?id=${id}`, {
             method: 'DELETE',
             headers: {"Content-Type" : "application/json"},
         })
@@ -40,7 +41,7 @@ async function delete_story(id) {
 }
 async function set_story(story) {
     try {
-    const response = await fetch('https://writersblock.click/api/stories/add', {
+    const response = await fetch('${host}/api/stories/add', {
         method: 'POST',
         headers: {"Content-Type" : "application/json"},
         body: JSON.stringify(story)
@@ -53,7 +54,7 @@ async function set_story(story) {
 }
 async function get_story(id) {
     try{
-        const response = await fetch(`https://writersblock.click/api/stories?id=${id}`, {
+        const response = await fetch(`${host}/api/stories?id=${id}`, {
             method: 'GET',
             headers : {"Content-Type" : "application/json"}
         })
@@ -70,7 +71,7 @@ async function get_story(id) {
 }
 async function send_content(id, content) {
     try {
-        const response = await fetch(`https://writersblock.click/api/stories/update?id=${id}`, {
+        const response = await fetch(`${host}/api/stories/update?id=${id}`, {
             method: 'PUT',
             headers: {"Content-Type" : "application/json"},
             body: JSON.stringify({id : content})
@@ -351,7 +352,7 @@ async function gen_story_list(list, joined) {
         const item = await get_story(story)
         return item !== false ? item : null
     }))
-    stories = stories.filter(story => story !== null);
+    stories = stories.filter(story => story !== "failed");
     console.log('your story down there')
     console.log(stories)
     stories.forEach((item) => {
@@ -387,7 +388,7 @@ async function gen_story_list(list, joined) {
         const item = await get_story(story)
         return item !== false ? item : null
     }))
-    joined = joined.filter(story => story !== null);
+    joined = joined.filter(story => story !== "failed");
     joined.forEach((item) => {
         curr_item = document.createElement('li')
         ul = document.getElementById('joined')
@@ -465,7 +466,8 @@ async function update_most_recent(id, titleid) {
 
 async function generate_list(table) {
     update_content()
-    const content = await sort_global()
+    const response = await fetch(`${host}/api/stories/leaders`)
+    const content = await response.json()
     let stories = []
     content.forEach((item) => stories.push(item))
     console.log(stories)
