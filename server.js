@@ -43,6 +43,16 @@ function bake_cookie(res, token) {
     console.log('cookies baked!')
 }
 
+apiRoute.get('/auth', async (req, res) => {
+    const user = await db.user_token(req.cookies.token)
+    if (user) {
+        res.send(JSON.stringify(user))
+    }
+    else {
+        res.status(404).send('unknown')
+    }
+})
+
 apiRoute.post('/auth/login', async (req, res) => {
     console.log(req.body.mail)
     const usr = await db.user(req.body.mail)
@@ -92,6 +102,7 @@ secureRoute.get('/stories', async (req, res) => {
 // Add story
 secureRoute.post('/stories/add', async (req, res) => {
     let story = req.body
+    console.log(req.body)
     const fin = await db.create_story(story.title, story.owner, story.genre, story._id)
     res.send(fin)
 })

@@ -40,6 +40,8 @@ async function createUser(mail, pass, name) {
         mail: mail,
         pass: passwordHash,
         name : name,
+        joined : [],
+        stories : [],
         token: uuid.v4()
     }
     await userCollection.insertOne(user)
@@ -92,6 +94,12 @@ async function update_story(story) {
     await storyCollection.replaceOne({_id : story._id}, story)
     let fin = await get_story(story._id)
     return fin
+}
+
+async function update_user(user) {
+    await userCollection.replaceOne({token : user.token}, user)
+    const usEr = await user_token(user.token)
+    return usEr
 }
 
 async function remove(story_id) {

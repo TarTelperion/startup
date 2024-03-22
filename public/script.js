@@ -44,7 +44,7 @@ async function delete_story(id) {
 
 async function set_story(story) {
     try {
-    const response = await fetch('${host}/api/stories/add', {
+    const response = await fetch(`${host}/api/stories/add`, {
         method: 'POST',
         headers: {"Content-Type" : "application/json"},
         body: JSON.stringify(story)
@@ -155,7 +155,7 @@ async function check_login(name, email, pass) {
     let mailey = document.getElementById(email).value;
     let passy = document.getElementById(pass).value;
     localStorage.setItem('ref', "login");
-    update_content();
+    await update_content();
 
     let user = {
         mail: mailey,
@@ -183,7 +183,7 @@ async function check_login(name, email, pass) {
 }
 
 async function save_login(name, email, pass) {
-    update_content();
+    await update_content();
     localStorage.setItem('ref', "create");
 
     function fail() {
@@ -199,7 +199,7 @@ async function save_login(name, email, pass) {
     let mailey = document.getElementById(email);
     let passy = document.getElementById(pass);
     localStorage.setItem('ref', "login");
-    update_content();
+    await update_content();
 
     let user = {
         mail: mailey.value,
@@ -228,13 +228,16 @@ async function save_login(name, email, pass) {
 
 // UPDATE CONTENT
 
-function update_content() {
+async function update_content() {
     mostrecent = localStorage.getItem('mostrecent') ?? []
     let name_elements = document.getElementsByClassName('user')
     let mail_elements = document.getElementsByClassName('mail')
 
-    if (JSON.parse(localStorage.getItem('user'))) {
-        user = JSON.parse(localStorage.getItem('user'))
+    let preuser = await fetch(`${host}/api/auth`)
+    const working = await preuser.json()
+
+    if (working) {
+        user = working
     }
 
     for (i = 0; i < name_elements.length; i++) {
@@ -252,7 +255,7 @@ function update_content() {
 
 async function generate_story(title, genre) {
 
-    update_content()
+    await update_content()
     if (!document.getElementById(title).value || !document.getElementById(genre).value) {
         const newAlert = document.createElement('div')
         newAlert.style.alignSelf = 'center';
@@ -264,14 +267,14 @@ async function generate_story(title, genre) {
     }
     let current = new Story(document.getElementById(title).value, document.getElementById(genre).value, " ", 1, user.name)
     await set_story(current)
-    user.stories.push(current.id)
-    try {
-    user.joined.push(current.id)
-    } catch (err) {
-        user.joined = []
-        user.joined.push(current.id)
-    }
-    console.log(JSON.stringify(user))
+    // user.stories.push(current.id)
+    // try {
+    // user.joined.push(current.id)
+    // } catch (err) {
+    //     user.joined = []
+    //     user.joined.push(current.id)
+    // }
+    // console.log(JSON.stringify(user))
     localStorage.setItem('story', current.id)
     localStorage.setItem('user', JSON.stringify(user))
 
@@ -287,7 +290,7 @@ function go_write(loc) {
 
 
 async function retrieve_story() {
-    update_content();
+    await update_content();
     let story_loc = localStorage.getItem('story')
 
     console.log(`This is the count: ${story_loc}`)
@@ -308,7 +311,7 @@ async function retrieve_story() {
 
 //USE IDS
 async function save_story() {
-    update_content();
+    await update_content();
     let story = undefined;
     async function waiting() {
     let story_loc = JSON.parse(localStorage.getItem('story'))
@@ -334,7 +337,7 @@ async function save_story() {
 
 // GEN STORY LIST
 async function gen_story_list(list, joined) {
-    update_content()
+    await update_content()
     let count = 0;
     ul = document.getElementById(list);
     
@@ -410,7 +413,7 @@ catch (err) {
 }
 
 async function dlt(id) {
-    update_content();
+    await update_content();
     let actual = await get_story(id)
     if (actual.owner === user.name) {
         await delete_story(actual.id)
@@ -437,11 +440,11 @@ async function dlt(id) {
 // }
 // MOST RECENT
 async function update_most_recent(id, titleid) {
-    update_content();
+    await update_content();
     body = document.getElementById(id)
     title_doc = document.getElementById(titleid)
     if (mostrecent.length != 0) {
-    update_content();
+    await update_content();
     mostrecent[1] = JSON.parse(mostrecent[1])
     mostrecent[1] = await get_story(mostrecent[1].id)
     let lines = mostrecent[1].content.split('\n')
@@ -456,7 +459,7 @@ async function update_most_recent(id, titleid) {
 }
 
 async function generate_list(table) {
-    update_content()
+    await update_content()
     const response = await fetch(`${host}/api/stories/leaders`)
     const content = await response.json()
     let stories = []
@@ -505,7 +508,7 @@ function exchange_items(index1, index2) {
     globe[index2] = temp
 }
 async function sort_global() {
-    update_content()
+    await update_content()
     let globe = []
     const stories = await create_globe_stories()
     stories.forEach((story) => globe.push(story))
@@ -530,7 +533,7 @@ async function sort_global() {
 }
     
 async function join(count) {
-    update_content()
+    await update_content()
     let story = count
     let good = true
     user.stories.forEach((item) => {
