@@ -52,6 +52,7 @@ async function create_story(title, author, genre, id=null) {
     const story = {
         _id: id ?? Math.floor(Math.random() * 9000) + 1000,
         title: title,
+        content: " ",
         authors: 1,
         owner: author,
         genre: genre,
@@ -97,7 +98,15 @@ async function update_story(story) {
 }
 
 async function update_user(user) {
-    await userCollection.replaceOne({token : user.token}, user)
+    console.log(user.joined)
+    await userCollection.updateOne(
+        { token: user.token },
+        { $set: { joined: user.joined } } 
+    )
+    await userCollection.updateOne(
+        { token: user.token },
+        { $set: { stories: user.stories } } 
+    )
     const usEr = await user_token(user.token)
     return usEr
 }
@@ -114,6 +123,7 @@ module.exports = {
     get_story,
     get_pop_stories,
     update_story,
-    remove
+    remove,
+    update_user
 }
 

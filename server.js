@@ -142,4 +142,11 @@ secureRoute.delete('/stories', async (req, res) => {
     res.send()
 })
 
+secureRoute.put('/users/update', async (req, res) => {
+    console.log(req.body)
+    console.log('this is the body^^^^')
+    let neuUser = await db.update_user(req.body)
+    res.send(neuUser)
+})
+
 module.exports = app

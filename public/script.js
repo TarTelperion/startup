@@ -43,12 +43,25 @@ async function delete_story(id) {
 }
 
 async function set_story(story) {
+    await update_content()
     try {
     const response = await fetch(`${host}/api/stories/add`, {
         method: 'POST',
         headers: {"Content-Type" : "application/json"},
         body: JSON.stringify(story)
     })
+    const story_obj = await response.json()
+    user.stories.push(story_obj._id)
+    user.joined.push(story_obj._id)
+    console.log(`RIGHT HERE, MISTER ${user.stories}`)
+    console.log(`THIS IS THE USER ${user}`)
+    const responseTwo = await fetch(`${host}/api/users/update`, {
+        method : 'PUT',
+        headers: {"Content-Type" : "application/json"},
+        body: JSON.stringify(user)
+    })
+    const stuff = await responseTwo.json()
+    console.log(stuff)
     return true
 } catch (error) {
     console.log(error)
@@ -88,7 +101,7 @@ async function send_content(id, content) {
 }
 
 function Story(title, genre, content, authors, owner) {
-    this.id = Math.floor(Math.random() * 9000) + 1000
+    this._id = Math.floor(Math.random() * 9000) + 1000
     this.title = title;
     this.genre = genre;
     this.content = content ?? " ";
@@ -278,7 +291,7 @@ async function generate_story(title, genre) {
     //     user.joined.push(current.id)
     // }
     // console.log(JSON.stringify(user))
-    localStorage.setItem('story', current.id)
+    localStorage.setItem('story', current._id)
     localStorage.setItem('user', JSON.stringify(user))
 
     
