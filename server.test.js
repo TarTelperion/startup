@@ -46,13 +46,15 @@ test('GET story invalid', (done) => {
 
 test('change author amount', (done) => {
     request(app)
-    .put('/api/stories/authors?id=4545&ct=1')
+    .put(`/api/stories/authors?id=${storyId}&ct=1`)
     .expect(200)
     .expect({
-        id : 4545,
-        title : 'test',
-        authors : 2,
-        content: "asdf"
+        _id : storyId,
+        title: 'test',
+        authors: 2,
+        owner: 'gabe',
+        genre: 'testing',
+        joined: []
     })
     .end((err) => (err ? done(err) : done()))
 })

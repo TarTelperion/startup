@@ -87,7 +87,12 @@ async function update(story_id, content) {
 }
 
 async function update_story(story) {
-    await storyCollection.updateOne({_id : story._id}, story)
+    await storyCollection.replaceOne({_id : story._id}, story)
+    return await get_story(story._id)
+}
+
+async function remove(story_id) {
+    return await storyCollection.deleteOne({_id : story_id})
 }
 
 module.exports = {
@@ -98,5 +103,6 @@ module.exports = {
     get_story,
     get_pop_stories,
     update,
-    update_story
+    update_story,
+    remove
 }

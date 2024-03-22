@@ -46,8 +46,8 @@ apiRoute.put('/stories/authors', async (req, res) => {
     let story = await db.get_story(id)
     if (story) {
         story.authors += ct
-        await db.update_story(story)
-        res.send()
+        let new_story = await db.update_story(story)
+        res.send(new_story)
     }
     else {
         res.status(404).send('story not found...')
@@ -57,15 +57,9 @@ apiRoute.put('/stories/authors', async (req, res) => {
 apiRoute.get('/stories/leaders', (req, res) => {
     res.json(db.get_pop_stories())
 })
-apiRoute.delete('/stories', (req, res) => {
-    let id = req.query.id
-    let i = 0
-    stories.forEach((story) => {
-        if(story.id == id) {
-            stories.splice(i, 1)
-        }
-        i++
-    })
+apiRoute.delete('/stories', async (req, res) => {
+    let id = parseInt(req.query.id)
+    await db.remove(id)
     res.send()
 })
 
