@@ -86,17 +86,23 @@ apiRoute.put('/auth/create', async (req, res) => {
 })
 
 function bake_cookie(res, token) {
+    console.log('cookies in the oven')
     res.cookie(cookie_name, token, {
         secure: true,
         httpOnly: true,
         sameSite: 'strict'
     })
+    console.log('cookies baked!')
 }
 
 apiRoute.post('/auth/login', async (req, res) => {
+    console.log(req.body.mail)
     const usr = await db.user(req.body.mail)
+    console.log(usr)
+    console.log(usr.mail)
+    console.log(usr.pass)
     if (usr) {
-        if (await bcrypt.compare(req.body.pass, usr.password)) {
+        if (await bcrypt.compare(req.body.pass, usr.pass)) {
             bake_cookie(res, usr.token)
             res.send({token : usr.token})
             return

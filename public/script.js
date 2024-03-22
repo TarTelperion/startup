@@ -158,19 +158,28 @@ async function check_login(name, email, pass) {
     update_content();
 
     let user = {
-        email: namey.value,
-        name: mailey.value,
-        pass: passy.value
+        mail: mailey,
+        name: namey,
+        pass: passy
     };
-
-    const usr = await fetch(`${host}/api/auth/create`, {
+    console.log(user)
+    try {
+    const usr = await fetch(`${host}/api/auth/login`, {
         method : "POST",
         headers: {"Content-Type" : "application/json"},
         body : JSON.stringify(user)
     })
+    window.location.href = 'friends.html'
+} catch(error) {
+    console.log(error)
+    const newAlert = document.createElement('div')
+        newAlert.style.alignSelf = 'center';
+        newAlert.innerHTML = "<p class='alert alert-danger'>Login Failed</p>"
+        const parent = document.getElementById('login')
+        parent.appendChild(newAlert);
+        setTimeout(() => newAlert.style.display = "none", 3000)
 
-    console.log(user)
-    return user
+}
 }
 
 async function save_login(name, email, pass) {

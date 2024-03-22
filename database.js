@@ -20,7 +20,7 @@ const storyCollection = db.collection('stories');
 
 // find user stuff
 async function user(mail) {
-    let user = await userCollection.findOne({email: mail})
+    let user = await userCollection.findOne({mail: mail})
     return user
 }
 
