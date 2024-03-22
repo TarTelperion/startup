@@ -1,13 +1,13 @@
-const {MongoClient} = require('mongodb')
+const { MongoClient } = require('mongodb')
 const bcrypt = require('bcrypt')
 const uuid = require('uuid')
 const config = require('./dbConfig.json')
 
-const url = `mongodb+srv://${config.userName}:${config.password}@${config.hostname}`
-const client = new MongoClient(url)
-const db = client.db('writersblock')
-const userCollection = db.collection('user')
-const storyCollection = db.collection('stories')
+const url = `mongodb+srv://${config.userName}:${config.password}@${config.hostname}`;
+const client = new MongoClient(url);
+const db = client.db('writersblock');
+const userCollection = db.collection('user');
+const storyCollection = db.collection('stories');
 
 // ping and test connection
 (async function connect() {
@@ -40,15 +40,17 @@ async function createUser(mail, pass) {
     return user
 }
 
-async function create_story(title, author, genre) {
+async function create_story(title, author, genre, id=null) {
     const story = {
-        _id: uuid.v4(),
+        _id: id ?? Math.floor(Math.random() * 9000) + 1000,
         title: title,
         authors: 1,
         owner: author,
         genre: genre,
+        joined: []
     }
     await storyCollection.insertOne(story)
+    console.log(story)
     return story
 }
 
@@ -70,13 +72,31 @@ function get_pop_stories() {
     limit: 10,
   };
   const stories = storyCollection.find(query, options);
-  return stories.to_Array()
+  return stories.toArray()
+}
+
+async function get_story(story_id) {
+    const story = await storyCollection.findOne({_id: story_id})
+    return story
+}
+
+async function update(story_id, content) {
+    let story = await get_story(story_id)
+    story.content = content
+    await storyCollection.updateOne({_id : story_id}, story)
+}
+
+async function update_story(story) {
+    await storyCollection.updateOne({_id : story._id}, story)
 }
 
 module.exports = {
     user,
     user_token,
     createUser,
-    add_story,
-    get_pop_stories
+    create_story,
+    get_story,
+    get_pop_stories,
+    update,
+    update_story
 }

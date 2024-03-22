@@ -1,11 +1,12 @@
 const app = require('./server')
 const request = require('supertest')
 
-
+let storyId = 8031
 const story = {
-    id : 4545,
     title : 'test',
     authors : 1,
+    owner : 'gabe',
+    genre : 'testing',
     content: "asdf"
 }
 
@@ -14,19 +15,24 @@ test('add story', (done) => {
     .post('/api/stories/add')
     .send(story)
     .expect(200)
-    .expect('success')
-    .end((err) => (err ? done(err) : done()))
+    .end((err, res) => {
+        storyId = res.body._id
+        if (err) return done(err);
+        done();
+    });
 })
 
 test('GET story', (done) => {
     request(app)
-    .get('/api/stories?id=4545')
+    .get(`/api/stories?id=${storyId}`)
     .expect(200)
     .expect({
-        id : 4545,
-        title : 'test',
-        authors : 1,
-        content: "asdf"
+        _id: storyId,
+        title: 'test',
+        authors: 1,
+        owner: 'gabe',
+        genre: 'testing',
+        joined: []
     })
     .end((err) => (err ? done(err) : done()))
 })
@@ -89,7 +95,7 @@ test('add nonexistent story', (done) => {
 
 test('delete story, clean up', (done) => {
     request(app)
-    .delete('/api/stories?id=4545')
+    .delete(`/api/stories?id=${storyId}`)
     .expect(200)
     .end((err) => (err ? done(err) : done()))
 })
