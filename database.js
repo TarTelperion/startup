@@ -112,7 +112,14 @@ async function update_user(user) {
 }
 
 async function remove(story_id) {
-    return await storyCollection.deleteOne({_id : story_id})
+    try {
+    await storyCollection.deleteOne({_id : story_id})
+    await userCollection.updateMany({}, {$pull : {joined : story_id}})
+    await userCollection.updateMany({}, {$pull : {stories : story_id}})
+    console.log('DELETE SUCCESSFUL')
+    } catch(err) {
+        console.log(`delete failed due to: ${err}`)
+    }
 }
 
 module.exports = {

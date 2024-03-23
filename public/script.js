@@ -36,8 +36,8 @@ async function delete_story(id) {
             method: 'DELETE',
             headers: {"Content-Type" : "application/json"},
         })
+        console.log(`ATTEMPTING DELETE ON --> ${id}`)
     } catch(err) {
-        console.log(err)
         return false;
     }
 }
@@ -75,9 +75,6 @@ async function get_story(id) {
         })
         const words = await response.json()
         console.log(words)
-        if (Object.keys(words)[0] === "error") {
-            return false
-        } 
         return words
     } catch (error) {
         console.log(error)
@@ -297,10 +294,7 @@ async function generate_story(title, genre) {
     window.location.href = 'write.html'
 
 }
-function go_write(loc) {
-    localStorage.setItem('story', loc)
-    window.location.href = 'write.html'
-}
+
 
 
 async function retrieve_story() {
@@ -360,7 +354,7 @@ async function gen_story_list(list, joined) {
         ul.appendChild(curr_item)
         curr_item.classList.add('list-group-item')
         try {
-        curr_item.innerHTML = `<p><em>${item.title}</em> (${item.genre}). </p><button onclick="go_write(${item.id})" class="btn">Write</button><button onclick="dlt(${item.id})" class="btn btn-outline-danger">Delete</button>`}
+        curr_item.innerHTML = `<p><em>${item.title}</em> (${item.genre}). </p><button onclick="go_write(${item._id})" class="btn">Write</button><button onclick="dlt(${item._id})" class="btn btn-outline-danger">Delete</button>`}
         catch (err) {
             curr_item.style.display = 'none'
         }
@@ -421,19 +415,35 @@ catch (err) {
 async function dlt(id) {
     await update_content();
     let actual = await get_story(id)
+    console.log(`story to be deleted --> ${actual}`)
     if (actual.owner === user.name) {
-        await delete_story(actual.id)
-        user.stories.splice(user.stories.indexOf(actual.id), 1)
+        await delete_story(id)
+        user.stories.splice(user.stories.indexOf(id), 1)
     }
     else {
-    await incrememnt_author(-1, actual.id)
+    await incrememnt_author(-1, actual._id)
     user.stories.splice(user.stories.indexOf(id), 1);
     let index = user.joined.indexOf(id)
     console.log(id)
     user.joined.splice(index, 1)
-    localStorage.setItem('user', JSON.stringify(user))
-    window.location.reload()
 }
+window.location.reload()
+}
+
+async function go_write(id) {
+    await update_content()
+    const index = user.stories.indexOf(id)
+    user.stories.splice(index, 1)
+    user.stories.push(id)
+    const just = user.joined.indexOf(id)
+    user.joined.splice(just, 1)
+    user.joined.push(id)
+    const responseTwo = await fetch(`${host}/api/users/update`, {
+        method : 'PUT',
+        headers: {"Content-Type" : "application/json"},
+        body: JSON.stringify(user)
+    })
+    window.location.href = "write.html"
 }
 // POSSIBLE ERROR EXISTS
 // DO I EVEN NEED IT?
@@ -499,7 +509,7 @@ async function generate_list(table) {
                 }
             }
             else {
-                child.innerHTML = `<button class="btn btn-secondary-outline" onclick="join(${item.id})" id="join${item.id}">Join?</button>`
+                child.innerHTML = `<button class="btn btn-secondary-outline" onclick="join(${item._id})" id="join${item._id}">Join?</button>`
             }
             count++
         })
@@ -543,7 +553,7 @@ async function join(count) {
     let story = count
     let good = true
     user.stories.forEach((item) => {
-        if (story === item) {
+        if (story._id === item._id) {
             good = false
         }
     })
@@ -551,16 +561,28 @@ async function join(count) {
     document.getElementById(`join${count}`).textContent = 'Joined!'
     user.stories.push(story)
     user.joined.push(story)
-    let story_loc = get_story(story)
+    let story_loc = get_story(count)
     await incrememnt_author(1, count)
-    localStorage.setItem('user', JSON.stringify(user))
-    }
-    else {
-        const newAlert = document.createElement('div')
-        newAlert.style.alignSelf = 'center';
-        newAlert.innerHTML = "<p class='alert alert-danger'>You cannot pass! (You cannot join a story more than once)</p>"
-        const parent = document.getElementById('alert')
-        parent.appendChild(newAlert);
-        setTimeout(() => newAlert.style.display = "none", 3000)
-    }
+    const responseTwo = await fetch(`${host}/api/users/update`, {
+        method : 'PUT',
+        headers: {"Content-Type" : "application/json"},
+        body: JSON.stringify(user)
+    })
+    
+}
+else {
+    const newAlert = document.createElement('div')
+    newAlert.style.alignSelf = 'center';
+    newAlert.innerHTML = "<p class='alert alert-danger'>You cannot pass! (You cannot join a story more than once)</p>"
+    const parent = document.getElementById('alert')
+    parent.appendChild(newAlert);
+    setTimeout(() => newAlert.style.display = "none", 3000)
+}
+}
+
+async function logout() {
+    await fetch(`${host}/api/auth/logout` , {
+        method : 'DELETE',
+    })
+    window.location.href = 'index.html'
 }
