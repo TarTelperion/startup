@@ -556,7 +556,7 @@ async function join(count) {
     let story = count
     let good = true
     user.stories.forEach((item) => {
-        if (story._id === item._id) {
+        if (story._id == item._id) {
             good = false
         }
     })
