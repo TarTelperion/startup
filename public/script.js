@@ -553,7 +553,7 @@ async function sort_global() {
     
 async function join(count) {
     await update_content()
-    let story = get_story(count)
+    let story = await get_story(count)
     let good = true
     user.stories.forEach((item) => {
         if (story._id == item) {
