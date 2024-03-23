@@ -178,7 +178,7 @@ async function check_login(name, email, pass) {
         headers: {"Content-Type" : "application/json"},
         body : JSON.stringify(user)
     })
-    window.location.href = 'friends.html'
+    window.location.href = 'home.html'
 } catch(error) {
     console.log(error)
     const newAlert = document.createElement('div')
