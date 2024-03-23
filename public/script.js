@@ -417,7 +417,7 @@ async function dlt(id) {
     await update_content();
     let actual = await get_story(id)
     console.log(`story to be deleted --> ${actual}`)
-    if (actual.owner === user.name) {
+    if (actual.owner == user.name) {
         await delete_story(id)
         user.stories.splice(user.stories.indexOf(id), 1)
     }
@@ -556,7 +556,7 @@ async function join(count) {
     let story = get_story(count)
     let good = true
     user.stories.forEach((item) => {
-        if (story._id === item) {
+        if (story._id == item) {
             good = false
         }
     })
