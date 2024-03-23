@@ -56,6 +56,7 @@ async function create_story(title, author, genre, id=null) {
         authors: 1,
         owner: author,
         genre: genre,
+        most_recent: null,
         joined: []
     }
     await storyCollection.insertOne(story)

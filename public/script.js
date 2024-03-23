@@ -324,6 +324,7 @@ async function save_story() {
     const words = await fetch(`${host}/api/stories?id=${_id}`)
     const story = await words.json()
     story.content = document.getElementById('writersblock').value
+    story.most_recent = user.name
 
     await send_content(story)
 
@@ -457,12 +458,14 @@ async function go_write(id) {
 // MOST RECENT
 async function update_most_recent(id, titleid) {
     await update_content();
-    body = document.getElementById(id)
-    title_doc = document.getElementById(titleid)
-    if (mostrecent.length != 0) {
-    await update_content();
-    mostrecent[1] = JSON.parse(mostrecent[1])
-    mostrecent[1] = await get_story(mostrecent[1].id)
+    let body = document.getElementById(id)
+    let title_doc = document.getElementById(titleid)
+    let mostrecent = []
+    const story = await get_story(user.stories[user.stories.length - 1])
+    if (story) {
+    mostrecent.push(story.most_recent)
+    mostrecent.push(story)
+    console.log(mostrecent)
     let lines = mostrecent[1].content.split('\n')
     const htmlcontent = lines.map(line => line + '<br>').join('');
     title_doc.innerHTML = `${mostrecent[1].title} (Last Edited By ${mostrecent[0]})`
