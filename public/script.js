@@ -553,18 +553,17 @@ async function sort_global() {
     
 async function join(count) {
     await update_content()
-    let story = count
+    let story = get_story(count)
     let good = true
     user.stories.forEach((item) => {
-        if (story._id == item._id) {
+        if (story._id === item) {
             good = false
         }
     })
     if (good) {
     document.getElementById(`join${count}`).textContent = 'Joined!'
-    user.stories.push(story)
-    user.joined.push(story)
-    let story_loc = get_story(count)
+    user.stories.push(count)
+    user.joined.push(count)
     await incrememnt_author(1, count)
     const responseTwo = await fetch(`${host}/api/users/update`, {
         method : 'PUT',
