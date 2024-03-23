@@ -79,3 +79,13 @@ This deliverable contains these groovy endpoint and service components
 - **Calls to Third Party Endpoints** -- Prompt generation done through a fetch call to a third party api.
 - **Backend Service Endpoints** -- Endpoints created for retrieving story data, updating story content or author count, accessing global list of stories, and adding users to stories.
 - **Frontend calls Service Endpoints** -- Tots! Frontend extensively calls backend for continual beautiful updated information from backend endpoints. Everything is run asynchronously through fetch calls to create a flawless user experience.   
+
+### DB / Login Deliverable
+
+This deliverable slides into a database and does some epic things there.
+- **MongoDB Atlas database created** -- Completed, with some epic naming conventions
+- **Stores data in MongoDB** -- Totally
+- **User registration** -- Creates and encrypts user info into database
+- **existing user** -- If logging in, opens users account and allows them to work from there (also checks auth token for existing login)
+- **Use MongoDB to store credentials** -- Stores both user objects, and all stories in mongodb
+- **Restricts functionality** -- Dude, the entire thing fractures if you aren't logged in. This is mainly restricted in the backend. 
