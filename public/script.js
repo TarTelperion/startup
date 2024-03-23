@@ -417,7 +417,7 @@ async function dlt(id) {
     await update_content();
     let actual = await get_story(id)
     console.log(`story to be deleted --> ${actual}`)
-    if (actual.owner == user.name) {
+    if (actual.owner === user.name) {
         await delete_story(id)
         user.stories.splice(user.stories.indexOf(id), 1)
     }
@@ -427,6 +427,11 @@ async function dlt(id) {
     let index = user.joined.indexOf(id)
     console.log(id)
     user.joined.splice(index, 1)
+    const responseTwo = await fetch(`${host}/api/users/update`, {
+        method : 'PUT',
+        headers: {"Content-Type" : "application/json"},
+        body: JSON.stringify(user)
+    })
 }
 window.location.reload()
 }
