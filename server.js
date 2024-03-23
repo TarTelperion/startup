@@ -3,7 +3,7 @@ const cors = require('cors')
 const bodyParser = require('body-parser')
 const cookie_parser = require('cookie-parser')
 const app = express()
-const port = process.argv.length > 2 ? process.argv[2] : 3000
+
 const db = require('./database')
 const bcrypt = require('bcrypt')
 
