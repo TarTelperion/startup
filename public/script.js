@@ -11,18 +11,41 @@ function startlistening() {
 
     socket.onmessage(async (event) => {
         const data = JSON.parse(await event.data.text())
-        
+        send_alert(data.name, data.type, data.title)
     })
 }
 
+function broadcast(name, type, title) {
+    const event = {
+        name : name,
+        type : type,
+        title : title
+    }
+    socket.send(JSON.stringify(event))
+}
 
+function send_alert(user, type, title) {
+    let scream = document.createElement(div)
+    scream.style.width = '50px'
+    scream.style.height = 'auto'
+    scream.classList.add("alert", "alert-secondary")
+    if (type === 'create') {
+        scream.textContent = `${user.name} created a new story titled ${title}`
+    }
+    else if (type === 'delete') {
+        scream.classList.remove('alert-secondary')
+        scream.classList.add('alert-danger')
+        scream.textContent = `${user.name} deleted a story titled ${title}`
+    }
+    else {
+        scream.textContent = `${user.name} added content to ${title}, go and finish their work!`
+    }
+    document.getElementById('alertContainer').appendChild(scream)
 
-
-
-
-
-
-
+    setTimeout(() => {
+        scream.remove()
+    }, 5000)
+}
 
 // api access functions!!!!
 async function incrememnt_author(amount, id) {
