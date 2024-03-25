@@ -1,7 +1,7 @@
 // writing prompt generator
 const apikey = 'https://random-word-api.vercel.app/api?words=5'
 let mostrecent = []
-const host = 'http://localhost:3000'
+const host = 'https://writersblock.click'
 
 //websocket functionality
 
@@ -14,35 +14,30 @@ async function startlistening() {
         socket.onerror = reject;
     });
 
-    socket.onmessage(async (event) => {
-        const data = JSON.parse(await event.data.text())
-        send_alert(data.name, data.type, data.title)
-    })
+    socket.onmessage = async (event) => {
+        const data = JSON.parse(event.data);
+        console.log(data)
+        send_alert(data.name, data.type, data.title);
+    };
 
     socket.onclose = () => {
         // Reconnect after a delay
         setTimeout(() => {
             startlistening();
-        }, 1000); // Adjust delay as needed
+        }, Math.random() * 1000);
     };
 
     return socket
 }
 let socket = undefined;
-function headphones() {
-    return new Promise((resolve, reject) => {
-        const one_socket = startlistening();
-        one_socket.onopen = () => resolve(one_socket);
-        one_socket.onerror = (error) => reject(error);
-    });
-}
 
 async function init_socket() {
-    socket = await headphones()
+    socket = await startlistening()
 }
-init_socket()
 async function broadcast(name, type, title) {
-    await init_socket()
+    if (!socket || socket.readyState !== WebSocket.OPEN) {
+        await init_socket();
+    }
     const event = {
         name : name,
         type : type,
@@ -254,7 +249,7 @@ async function check_login(name, email, pass) {
     }
     console.log(user)
     try {
-    const usr = await fetch(`${host}/api/auth/login`, {
+    let usr = await fetch(`${host}/api/auth/login`, {
         method : "POST",
         headers: {"Content-Type" : "application/json"},
         body : JSON.stringify(user)

@@ -17,19 +17,19 @@ wss.on('connection', (ws) => {
     const connection = {id : uuid.v4(), live : true, ws : ws}
     connections.push(connection)
 
-    ws.on('message', function send(story) {
+    ws.on('message', function send(data) {
         connections.forEach((user) => {
             if (user.id !== connection.id) {
-                user.ws.send(story)
+                user.ws.send(data)
             }
         })
     })
 
     ws.on('close', () => {
-        const index = connections.findIndex((o, i) => o.id === connection.id)
+        const pos = connections.findIndex((o, i) => o.id === connection.id)
 
-        if (index >= 0) {
-            connections.splice(index, 1)
+        if (pos >= 0) {
+            connections.splice(pos, 1)
         }
     })
 
