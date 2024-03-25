@@ -182,15 +182,15 @@ function gen_prompt(output, button) {
 // LOGIN STUFF
 
 async function check_login(name, email, pass) {
-    let namey = document.getElementById(name).value;
-    let mailey = document.getElementById(email).value;
+    let namey = document.getElementById(name).value  ?? "unknown";
+    let mailey = document.getElementById(email).value  ?? "unknown";
     let passy = document.getElementById(pass).value;
     localStorage.setItem('ref', "login");
     await update_content();
 
     let user = {
-        mail: mailey ?? 'unknown',
-        name: namey ?? 'unknown',
+        mail: mailey,
+        name: namey,
         pass: passy
     };
     if (user.mail === 'unknown' && user.name === 'unknown') {
