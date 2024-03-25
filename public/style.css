@@ -3,6 +3,14 @@
       display: none !important;
     }
 } */
+
+#alertContainer {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 9999; 
+  }
+  
 body {
     font-family: 'Spectral', 'Cambria';
     display: flex;
