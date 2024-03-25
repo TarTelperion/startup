@@ -2,6 +2,28 @@
 const apikey = 'https://random-word-api.vercel.app/api?words=5'
 let mostrecent = []
 const host = 'https://writersblock.click'
+
+//websocket functionality
+
+function startlistening() {
+    const protocol = window.location.protocol === 'http:' ? 'ws' : 'wss'
+    socket = new WebSocket(`${protocol}://${window.location.host}/ws`)
+
+    socket.onmessage(async (event) => {
+        const data = JSON.parse(await event.data.text())
+        
+    })
+}
+
+
+
+
+
+
+
+
+
+
 // api access functions!!!!
 async function incrememnt_author(amount, id) {
     // ${host}
