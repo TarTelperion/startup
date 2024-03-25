@@ -5,17 +5,44 @@ const host = 'http://localhost:3000'
 
 //websocket functionality
 
-function startlistening() {
+async function startlistening() {
     const protocol = window.location.protocol === 'http:' ? 'ws' : 'wss'
-    socket = new WebSocket(`${protocol}://${window.location.host}/ws`)
+    let socket = new WebSocket(`${protocol}://${window.location.host}/ws`)
+
+    await new Promise((resolve, reject) => {
+        socket.onopen = resolve;
+        socket.onerror = reject;
+    });
 
     socket.onmessage(async (event) => {
         const data = JSON.parse(await event.data.text())
         send_alert(data.name, data.type, data.title)
     })
+
+    socket.onclose = () => {
+        // Reconnect after a delay
+        setTimeout(() => {
+            startlistening();
+        }, 1000); // Adjust delay as needed
+    };
+
+    return socket
+}
+let socket = undefined;
+function headphones() {
+    return new Promise((resolve, reject) => {
+        const one_socket = startlistening();
+        one_socket.onopen = () => resolve(one_socket);
+        one_socket.onerror = (error) => reject(error);
+    });
 }
 
-function broadcast(name, type, title) {
+async function init_socket() {
+    socket = await headphones()
+}
+init_socket()
+async function broadcast(name, type, title) {
+    await init_socket()
     const event = {
         name : name,
         type : type,
@@ -25,7 +52,7 @@ function broadcast(name, type, title) {
 }
 
 function send_alert(user, type, title) {
-    let scream = document.createElement(div)
+    let scream = document.createElement('div')
     scream.style.width = '50px'
     scream.style.height = 'auto'
     scream.classList.add("alert", "alert-secondary")
@@ -76,6 +103,7 @@ async function create_globe_stories() {
 }
 
 async function delete_story(id) {
+    await update_content()
     try {
         const response = await fetch(`${host}/api/stories?id=${id}`, {
             method: 'DELETE',
@@ -85,6 +113,8 @@ async function delete_story(id) {
     } catch(err) {
         return false;
     }
+    let story = await get_story(id)
+    broadcast(user.name, 'delete', story.title)
 }
 
 async function set_story(story) {
@@ -105,6 +135,7 @@ async function set_story(story) {
     })
     const stuff = await responseTwo.json()
     console.log(stuff)
+    broadcast(user.name, 'create', story.title)
     return true
 } catch (error) {
     console.log(error)
@@ -128,6 +159,7 @@ async function get_story(id) {
 }
 
 async function send_content(story) {
+    await update_content()
     try {
         console.log(`SENDING IN FOR UPDATE ---> ${story}`)
         const response = await fetch(`${host}/api/stories/update`, {
@@ -139,6 +171,7 @@ async function send_content(story) {
         console.log(err)
         return false
     }
+    broadcast(user.name, 'content', story.title)
 }
 
 function Story(title, genre, content, authors, owner) {

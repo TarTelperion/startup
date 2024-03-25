@@ -14,7 +14,7 @@ function websocket(server) {
 let connections = []
 
 wss.on('connection', (ws) => {
-    const connection = {id : uuid.v4, live : true, ws : ws}
+    const connection = {id : uuid.v4(), live : true, ws : ws}
     connections.push(connection)
 
     ws.on('message', function send(story) {
