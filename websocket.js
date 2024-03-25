@@ -1,15 +1,15 @@
-const {WebsocketServer} = require('ws')
+const {WebSocketServer} = require('ws')
 const uuid = require('uuid')
 
 function websocket(server) {
-    const wss = new WebsocketServer({ noServer: true })
+    const wss = new WebSocketServer({ noServer: true })
 
     server.on('upgrade', (request, socket, head) => {
         wss.handleUpgrade(request, socket, head, function done(ws) {
             ws.emit('connection', ws, request)
         })
     })
-}
+
 
 let connections = []
 
@@ -48,5 +48,5 @@ wss.on('connection', (ws) => {
         })
     }, 10000)
 })
-
+}
 module.exports = { websocket }

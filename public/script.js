@@ -189,10 +189,13 @@ async function check_login(name, email, pass) {
     await update_content();
 
     let user = {
-        mail: mailey,
-        name: namey,
+        mail: mailey ?? 'unknown',
+        name: namey ?? 'unknown',
         pass: passy
     };
+    if (user.mail === 'unknown' && user.name === 'unknown') {
+        throw new Error('must have either username or mail')
+    }
     console.log(user)
     try {
     const usr = await fetch(`${host}/api/auth/login`, {
@@ -200,6 +203,10 @@ async function check_login(name, email, pass) {
         headers: {"Content-Type" : "application/json"},
         body : JSON.stringify(user)
     })
+    usr = await usr.json()
+    if (usr == 'unknown' || usr == 'unauthorized') {
+        throw new Error('unknown')
+    }
     window.location.href = 'home.html'
 } catch(error) {
     console.log(error)

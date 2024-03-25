@@ -36,7 +36,7 @@ apiRoute.put('/auth/create', async (req, res) => {
 function bake_cookie(res, token) {
     console.log('cookies in the oven')
     res.cookie(cookie_name, token, {
-        secure: true, // switch to true AS SOON AS YOU DEPLOY
+        secure: false, // switch to true AS SOON AS YOU DEPLOY
         httpOnly: true,
         sameSite: 'strict'
     })
