@@ -39,7 +39,7 @@ function send_alert(user, type, title) {
     document.getElementById('alertContainer').appendChild(scream)
 
     setTimeout(() => {
-        scream.classList.add('fadeOut')
+        scream.classList.add('fade-out')
         setTimeout(() => {
             scream.remove()
         }, 500)

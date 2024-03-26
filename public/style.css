@@ -3,7 +3,7 @@
       display: none !important;
     }
 } */
-@keyframes fadeOut {
+@keyframes fade-out {
     from {
       opacity: 0.5;
     }
@@ -13,15 +13,18 @@
   }
   
 .fade-out {
-    animation: fadeOut 0.5s ease-out;
+    animation: fade-out 0.5s ease-out;
   }
 
 #alertContainer {
     position: fixed;
-    top: 25px;
-    right: 20px;
-    z-index: 9999; 
-  }
+    bottom: 25px; /* Adjust this value as needed */
+    right: 20px; /* Adjust this value as needed */
+    z-index: 9999;
+    display: flex;
+    flex-direction: column-reverse; /* Stack alerts in reverse order */
+}
+
   
 body {
     font-family: 'Spectral', 'Cambria';
