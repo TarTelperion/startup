@@ -434,11 +434,19 @@ async function gen_story_list(list, joined) {
         curr_item.classList.add('list-group-item')
         try {
             if (item.owner === user.name) {
-        curr_item.innerHTML = `<p><em>${item.title}</em> (${item.genre}). </p><button onclick="go_write(${item._id})" class="btn">Write</button><button onclick="dlt(${item._id})" class="btn btn-outline-danger">Delete</button>`}
+                if (item.writer == user._id) {
+        curr_item.innerHTML = `<p><em>${item.title}</em> (${item.genre}). </p><button onclick="go_write(${item._id})" class="btn">Write</button><button onclick="dlt(${item._id})" class="btn btn-outline-danger">Delete</button>`
+    } else {
+                curr_item.innerHTML = `<p><em>${item.title}</em> (${item.genre}). </p><button onclick="go_write(${item._id})" class="btn" disabled>Write</button><button onclick="dlt(${item._id})" class="btn btn-outline-danger">Delete</button>`
+    }
+    }
              else {
-                curr_item.innerHTML = `<p><em>${item.title}</em> (${item.genre}). </p><button onclick="go_write(${item._id})" class="btn">Write</button><button onclick="dlt(${item._id})" class="btn btn-outline-secondary">Leave</button>`
-            }
-        }
+                if (item.writer == user._id) {
+        curr_item.innerHTML = `<p><em>${item.title}</em> (${item.genre}). </p><button onclick="go_write(${item._id})" class="btn">Write</button><button onclick="dlt(${item._id})" class="btn btn-outline-danger">Leave</button>`
+    } else {
+                curr_item.innerHTML = `<p><em>${item.title}</em> (${item.genre}). </p><button onclick="go_write(${item._id})" class="btn" disabled>Write</button><button onclick="dlt(${item._id})" class="btn btn-outline-secondary">Leave</button>`
+            }}
+             }
         catch (err) {
             curr_item.style.display = 'none'
         }
