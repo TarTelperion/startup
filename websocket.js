@@ -21,13 +21,11 @@ wss.on('connection', (ws) => {
     
 
     ws.on('message', async function transmit(data) {
-        let sockett = await JSON.parse(data).socket
+        const msg = String.fromCharCode(...data)
         connections.forEach((user) => {
-            console.log(sockett)
-            console.log(`user socket: ${user.ws.id}`)
             if (user.id != connection.id) {
-                console.log(data)
-                user.ws.send(data)
+                console.log(msg)
+                user.ws.send(msg)
             }
         })
     })

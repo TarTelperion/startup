@@ -11,17 +11,19 @@ const socket = new WebSocket(`${protocol}://${window.location.host}/ws`);
 socket.onopen = () => {
     console.log('connected')
 }
-socket.onmessage = async (message) => {
-    const data = await message.data
-    console.log(`client message recieved!`)
-    send_alert(data.user, data.type, data.title)
+socket.onmessage = async (event) => {
+    console.log(event.data)
+    const msg = JSON.parse(event.data)
+
+    send_alert(msg.user, msg.type, msg.title)
 }
 //websocket functionality
 function send_alert(user, type, title) {
     if (displayed) {
     let scream = document.createElement('div')
-    scream.style.width = '500px'
+    scream.style.width = '30vw'
     scream.style.height = 'auto'
+    scream.style.opacity = '0.8'
     scream.classList.add("alert", "alert-secondary")
     if (type === 'create') {
         scream.textContent = `${user} created a new story titled ${title}`

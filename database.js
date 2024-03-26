@@ -130,11 +130,11 @@ async function update_user(user) {
 
 async function remove(story_id, socket_id) {
     try {
+    let story = await get_story(story_id)
     await storyCollection.deleteOne({_id : story_id})
     await userCollection.updateMany({}, {$pull : {joined : story_id}})
     await userCollection.updateMany({}, {$pull : {stories : story_id}})
-    let story = await get_story(story_id)
-    await socket.send(JSON.stringify({user : story.ownner, type : 'delete', title : story.title, socket : socket_id}))
+    await socket.send(JSON.stringify({user : story.owner, type : 'delete', title : story.title, socket : socket_id}))
     console.log('DELETE SUCCESSFUL')
     } catch(err) {
         console.log(`delete failed due to: ${err}`)
