@@ -14,9 +14,12 @@ socket.onopen = () => {
 socket.onmessage = async (event) => {
     console.log(event.data)
     const msg = JSON.parse(event.data)
-    if (msg.userId) {
-        if (msg.userId === user._id) {
+    if (msg.destination) {
+        if (msg.destination === user._id) {
             send_alert(msg.user, msg.type, msg.title)
+        }
+        else {
+            return
         }
     }
     else {
@@ -59,11 +62,15 @@ function send_alert(user, type, title) {
 }
 }
 
-function pester(element_id) {
+async function pester(element_id) {
     const pester_button = document.getElementById(element_id)
     pester_button.disabled = true
 
+    const storyId = localStorage.getItem('mostrecent')[1]
+    const story = await get_story(storyId)
 
+    const writer = story.writer._id
+    socket.send(JSON.stringify({name : user.name, type : 'pester', title : story.title, destination : writer}))
 }
 // api access functions!!!!
 async function incrememnt_author(amount, id) {
