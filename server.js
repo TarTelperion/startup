@@ -117,7 +117,9 @@ secureRoute.put('/stories/authors', async (req, res) => {
     let story = await db.get_story(id)
     if (story) {
         story.authors += ct
-        story.joined.push(usr)
+        if (!story.joined.includes(usr)){
+            story.joined.push(usr)
+        }
         let new_story = await db.update_story(story)
         res.send(new_story)
     }
