@@ -15,7 +15,6 @@ let connections = []
 
 wss.on('connection', (ws) => {
     const connection = {id : uuid.v4(), live : true, ws : ws}
-    
     console.log(connection.id)
     connections.push(connection)
     

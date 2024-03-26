@@ -14,8 +14,14 @@ socket.onopen = () => {
 socket.onmessage = async (event) => {
     console.log(event.data)
     const msg = JSON.parse(event.data)
-
+    if (msg.userId) {
+        if (msg.userId === user._id) {
+            send_alert(msg.user, msg.type, msg.title)
+        }
+    }
+    else {
     send_alert(msg.user, msg.type, msg.title)
+    }
 }
 //websocket functionality
 function send_alert(user, type, title) {
@@ -53,12 +59,17 @@ function send_alert(user, type, title) {
 }
 }
 
+function pester(element_id) {
+    const pester_button = document.getElementById(element_id)
+    pester_button.disabled = true
 
+
+}
 // api access functions!!!!
 async function incrememnt_author(amount, id) {
     // ${host}
     try {
-        const response = await fetch(`${host}/api/stories/authors?id=${id}&ct=${amount}`, {
+        const response = await fetch(`${host}/api/stories/authors?id=${id}&ct=${amount}&usr=${user._id}`, {
             method: 'PUT',
             headers: {"Content-Type" : "application/json"}
         })
@@ -109,6 +120,7 @@ async function set_story(story) {
     const story_obj = await response.json()
     user.stories.push(story_obj._id)
     user.joined.push(story_obj._id)
+    story_obj.joined.add(user._id)
     const responseTwo = await fetch(`${host}/api/users/update`, {
         method : 'PUT',
         headers: {"Content-Type" : "application/json"},
@@ -152,7 +164,7 @@ async function send_content(story) {
         console.log(err)
         return false
     }
-    await (user.name, 'content', story.title, socket)
+    send_alert(user.name, 'content', story.title, socket)
 }
 
 function Story(title, genre, content, authors, owner) {

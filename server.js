@@ -111,11 +111,13 @@ secureRoute.put('/stories/update', async (req, res) => {
 })
 // Add author
 secureRoute.put('/stories/authors', async (req, res) => {
-    const id = parseInt(req.query.id); // Convert id to number
+    const id = parseInt(req.query.id);
+    const usr = req.query.usr
     const ct = parseInt(req.query.ct); 
     let story = await db.get_story(id)
     if (story) {
         story.authors += ct
+        story.joined.push(usr)
         let new_story = await db.update_story(story)
         res.send(new_story)
     }
