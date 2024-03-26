@@ -20,7 +20,7 @@ wss.on('connection', (ws) => {
 
     ws.on('message', function transmit(data) {
         connections.forEach((user) => {
-            if (user.id != connection.id) {
+            if (user.ws.id != data.socket) {
                 console.log(data)
                 user.ws.send(data)
             }

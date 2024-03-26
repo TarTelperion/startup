@@ -62,7 +62,7 @@ async function createUser(mail, pass, name) {
     return user
 }
 
-async function create_story(title, author, genre, id=null) {
+async function create_story(title, author, genre, id=null, socket_id) {
     const story = {
         _id: id ?? Math.floor(Math.random() * 9000) + 1000,
         title: title,
@@ -74,7 +74,7 @@ async function create_story(title, author, genre, id=null) {
         joined: []
     }
     await storyCollection.insertOne(story)
-    await socket.send(JSON.stringify({user : story.owner, type : 'content', title : story.title}))
+    await socket.send(JSON.stringify({user : story.owner, type : 'content', title : story.title, socket : socket_id}))
     console.log(story)
     return story
 }
@@ -107,10 +107,10 @@ async function get_story(story_id) {
 }
 
 
-async function update_story(story) {
+async function update_story(story, socket_id) {
     await storyCollection.replaceOne({_id : story._id}, story)
     let fin = await get_story(story._id)
-    await socket.send(JSON.stringify({user : fin.most_recent, type : 'content', title : fin.title}))
+    await socket.send(JSON.stringify({user : fin.most_recent, type : 'content', title : fin.title, socket : socket_id}))
     return fin
 }
 
@@ -128,12 +128,13 @@ async function update_user(user) {
     return usEr
 }
 
-async function remove(story_id) {
+async function remove(story_id, socket_id) {
     try {
     await storyCollection.deleteOne({_id : story_id})
     await userCollection.updateMany({}, {$pull : {joined : story_id}})
     await userCollection.updateMany({}, {$pull : {stories : story_id}})
-    await socket.send(JSON.stringify({user : fin.most_recent, type : 'delete', title : await get_story(story_id).title}))
+    let story = await get_story(story_id)
+    await socket.send(JSON.stringify({user : story.ownner, type : 'delete', title : story.title, socket : socket_id}))
     console.log('DELETE SUCCESSFUL')
     } catch(err) {
         console.log(`delete failed due to: ${err}`)

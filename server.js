@@ -92,14 +92,16 @@ secureRoute.get('/stories', async (req, res) => {
 
 // Add story
 secureRoute.post('/stories/add', async (req, res) => {
+    let socket_id = req.params.ws
     let story = req.body
-    const fin = await db.create_story(story.title, story.owner, story.genre, story._id)
+    const fin = await db.create_story(story.title, story.owner, story.genre, story._id, socket_id)
     res.send(fin)
 })
 
 // Update content of a story. Send in the content of the story in the request body
 secureRoute.put('/stories/update', async (req, res) => {
-    let story = await db.update_story(req.body)
+    let socket_id = req.params.ws
+    let story = await db.update_story(req.body, socket_id)
     if (story) {
     res.send(story)
     }
@@ -127,8 +129,9 @@ secureRoute.get('/stories/leaders', async (req, res) => {
     res.json(stories)
 })
 secureRoute.delete('/stories', async (req, res) => {
+    let socket_id = req.params.ws
     let id = parseInt(req.query.id)
-    await db.remove(id)
+    await db.remove(id, socket_id)
     res.send()
 })
 

@@ -70,7 +70,7 @@ async function create_globe_stories() {
 async function delete_story(id) {
     await update_content()
     try {
-        const response = await fetch(`${host}/api/stories?id=${id}`, {
+        const response = await fetch(`${host}/api/stories?id=${id}&ws=${socket.id}`, {
             method: 'DELETE',
             headers: {"Content-Type" : "application/json"},
         })
@@ -84,7 +84,7 @@ async function delete_story(id) {
 async function set_story(story) {
     await update_content()
     try {
-    const response = await fetch(`${host}/api/stories/add`, {
+    const response = await fetch(`${host}/api/stories/add?ws=${socket.id}`, {
         method: 'POST',
         headers: {"Content-Type" : "application/json"},
         body: JSON.stringify(story)
@@ -125,7 +125,7 @@ async function send_content(story) {
     await update_content()
     try {
         console.log(`SENDING IN FOR UPDATE ---> ${story}`)
-        const response = await fetch(`${host}/api/stories/update`, {
+        const response = await fetch(`${host}/api/stories/update?ws=${socket.id}`, {
             method: 'PUT',
             headers: {"Content-Type" : "application/json"},
             body: JSON.stringify(story)
