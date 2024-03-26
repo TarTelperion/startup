@@ -1,4 +1,5 @@
 const { MongoClient } = require('mongodb')
+const { WebSocket } = require('ws')
 const bcrypt = require('bcrypt')
 const uuid = require('uuid')
 const config = require('./dbConfig.json')
@@ -20,20 +21,17 @@ const storyCollection = db.collection('stories');
 
 let socket = undefined
 async function luvSocket() {
-    const protocol = window.location.protocol === 'http:' ? 'ws' : 'wss';
-    socket = new WebSocket(`${protocol}://${window.location.host}/ws`)
+    const protocol = `ws://localhost:3000`;
+    socket = new WebSocket(protocol)
     socket.onopen = (event) => {
         console.log('connected to websocket')
     }
     socket.onclose = (event) => {
         console.log('websocket closed')
     }
-    socket.onmessage = async (event) => {
-        const data = JSON.parse(await event.data.text())
-        send_alert(data.name, data.type, data.title)
-    }
 }
 
+luvSocket()
 // find user stuff
 async function user(mail) {
     let user = await userCollection.findOne({mail: mail})
@@ -143,8 +141,6 @@ async function remove(story_id) {
 }
 
 
-
-await luvSocket()
 
 module.exports = {
     user,

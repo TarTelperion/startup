@@ -4,8 +4,16 @@ const apikey = 'https://random-word-api.vercel.app/api?words=5'
 let mostrecent = []
 const host = 'http://localhost:3000'
 
-
-
+const protocol = window.location.protocol === 'http:' ? 'ws' : 'wss';
+const socket = new WebSocket(`${protocol}://${window.location.host}/ws`);
+socket.onopen = () => {
+    console.log('connected')
+}
+socket.onmessage = async (message) => {
+    const data = await message.data
+    console.log(`client message recieved!`)
+    send_alert(data.user, data.type, data.title)
+}
 //websocket functionality
 function send_alert(user, type, title) {
     let scream = document.createElement('div')

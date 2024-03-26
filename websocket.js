@@ -18,9 +18,9 @@ wss.on('connection', (ws) => {
     console.log(connection.id)
     connections.push(connection)
 
-    ws.on('message', function send(data) {
+    ws.on('message', function transmit(data) {
         connections.forEach((user) => {
-            if (user.id !== connection.id) {
+            if (user.id != connection.id) {
                 console.log(data)
                 user.ws.send(data)
             }
