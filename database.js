@@ -108,6 +108,8 @@ async function get_story(story_id) {
 
 
 async function update_story(story, socket_id) {
+    const randomIndex = Math.floor(Math.random() * story.joined.length);
+    story.writer = story.joined[randomIndex]
     await storyCollection.replaceOne({_id : story._id}, story)
     let fin = await get_story(story._id)
     await socket.send(JSON.stringify({user : fin.most_recent, type : 'content', title : fin.title, socket : socket_id}))
