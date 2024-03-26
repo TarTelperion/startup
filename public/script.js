@@ -12,10 +12,11 @@ socket.onopen = () => {
     console.log('connected')
 }
 socket.onmessage = async (event) => {
+    await update_content()
     console.log(event.data)
     const msg = JSON.parse(event.data)
     if (msg.destination) {
-        if (msg.destination === user._id) {
+        if (msg.destination == user._id) {
             send_alert(msg.user, msg.type, msg.title)
         }
         else {
@@ -63,13 +64,14 @@ function send_alert(user, type, title) {
 }
 
 async function pester(element_id) {
+    await update_content()
     const pester_button = document.getElementById(element_id)
     pester_button.disabled = true
 
-    const storyId = localStorage.getItem('mostrecent')[1]
+    const storyId = JSON.parse(localStorage.getItem('mostrecent'))[1]
     const story = await get_story(storyId)
 
-    const writer = story.writer._id
+    const writer = story.writer
     socket.send(JSON.stringify({name : user.name, type : 'pester', title : story.title, destination : writer}))
 }
 // api access functions!!!!
