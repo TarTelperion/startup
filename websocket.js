@@ -6,20 +6,22 @@ function websocket(server) {
 
     server.on('upgrade', (request, socket, head) => {
         wss.handleUpgrade(request, socket, head, function done(ws) {
-            ws.emit('connection', ws, request)
-        })
-    })
+          wss.emit('connection', ws, request);
+        });
+      });
 
 
 let connections = []
 
 wss.on('connection', (ws) => {
     const connection = {id : uuid.v4(), live : true, ws : ws}
+    console.log(connection.id)
     connections.push(connection)
 
     ws.on('message', function send(data) {
         connections.forEach((user) => {
             if (user.id !== connection.id) {
+                console.log(data)
                 user.ws.send(data)
             }
         })

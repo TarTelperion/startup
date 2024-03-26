@@ -1,10 +1,10 @@
 // writing prompt generator
 const apikey = 'https://random-word-api.vercel.app/api?words=5'
 let mostrecent = []
-const host = 'https://writersblock.click'
+const host = 'http://localhost:3000'
 
 //websocket functionality
-
+init_socket()
 async function startlistening() {
     const protocol = window.location.protocol === 'http:' ? 'ws' : 'wss'
     let socket = new WebSocket(`${protocol}://${window.location.host}/ws`)
@@ -48,7 +48,7 @@ async function broadcast(name, type, title) {
 
 function send_alert(user, type, title) {
     let scream = document.createElement('div')
-    scream.style.width = '50px'
+    scream.style.width = '500px'
     scream.style.height = 'auto'
     scream.classList.add("alert", "alert-secondary")
     if (type === 'create') {

@@ -25,8 +25,6 @@ apiRoute.put('/auth/create', async (req, res) => {
         res.status(409).send("Preexisting user")
     }
     else {
-        console.log(`serverside mail: ${req.body.mail}`)
-        console.log(`serverside pass: ${req.body.pass}`)
         let usr = await db.createUser(req.body.mail, req.body.pass, req.body.name) 
         bake_cookie(res, usr.token)
         res.send({token : usr.token})
@@ -34,13 +32,11 @@ apiRoute.put('/auth/create', async (req, res) => {
 })
 
 function bake_cookie(res, token) {
-    console.log('cookies in the oven')
     res.cookie(cookie_name, token, {
-        secure: true, // switch to true AS SOON AS YOU DEPLOY
+        secure: false, // switch to true AS SOON AS YOU DEPLOY
         httpOnly: true,
         sameSite: 'strict'
     })
-    console.log('cookies baked!')
 }
 
 apiRoute.get('/auth', async (req, res) => {
@@ -54,11 +50,7 @@ apiRoute.get('/auth', async (req, res) => {
 })
 
 apiRoute.post('/auth/login', async (req, res) => {
-    console.log(req.body.mail)
     const usr = await db.user(req.body.mail)
-    console.log(usr)
-    console.log(usr.mail)
-    console.log(usr.pass)
     if (usr) {
         if (await bcrypt.compare(req.body.pass, usr.pass)) {
             bake_cookie(res, usr.token)
@@ -79,7 +71,6 @@ apiRoute.use(secureRoute)
 
 secureRoute.use(async (req, res, next) => {
     let token = req.cookies[cookie_name]
-    console.log(`cookie right here: ${token}`)
     const user = await db.user_token(token)
     if (user) {
         next()
@@ -102,7 +93,6 @@ secureRoute.get('/stories', async (req, res) => {
 // Add story
 secureRoute.post('/stories/add', async (req, res) => {
     let story = req.body
-    console.log(req.body)
     const fin = await db.create_story(story.title, story.owner, story.genre, story._id)
     res.send(fin)
 })
@@ -110,7 +100,6 @@ secureRoute.post('/stories/add', async (req, res) => {
 // Update content of a story. Send in the content of the story in the request body
 secureRoute.put('/stories/update', async (req, res) => {
     let story = await db.update_story(req.body)
-    console.log(`UPDATED.... ${story}`)
     if (story) {
     res.send(story)
     }
@@ -144,8 +133,6 @@ secureRoute.delete('/stories', async (req, res) => {
 })
 
 secureRoute.put('/users/update', async (req, res) => {
-    console.log(req.body)
-    console.log('this is the body^^^^')
     let neuUser = await db.update_user(req.body)
     res.send(neuUser)
 })
