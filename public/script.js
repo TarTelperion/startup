@@ -1,50 +1,29 @@
+
 // writing prompt generator
 const apikey = 'https://random-word-api.vercel.app/api?words=5'
 let mostrecent = []
 const host = 'http://localhost:3000'
 
+
+
 //websocket functionality
-init_socket()
-async function startlistening() {
-    const protocol = window.location.protocol === 'http:' ? 'ws' : 'wss'
-    let socket = new WebSocket(`${protocol}://${window.location.host}/ws`)
-
-    await new Promise((resolve, reject) => {
-        socket.onopen = resolve;
-        socket.onerror = reject;
-    });
-
+let socket = undefined
+async function luvSocket() {
+    const protocol = window.location.protocol === 'http:' ? 'ws' : 'wss';
+    socket = new WebSocket(`${protocol}://${window.location.host}/ws`)
+    socket.onopen = (event) => {
+        console.log('connected to websocket')
+    }
+    socket.onclose = (event) => {
+        console.log('websocket closed')
+    }
     socket.onmessage = async (event) => {
-        const data = JSON.parse(event.data);
-        console.log(data)
-        send_alert(data.name, data.type, data.title);
-    };
-
-    socket.onclose = () => {
-        // Reconnect after a delay
-        setTimeout(() => {
-            startlistening();
-        }, Math.random() * 1000);
-    };
-
-    return socket
-}
-let socket = undefined;
-
-async function init_socket() {
-    socket = await startlistening()
-}
-async function broadcast(name, type, title) {
-    if (!socket || socket.readyState !== WebSocket.OPEN) {
-        await init_socket();
+        const data = JSON.parse(await event.data.text())
+        send_alert(data.name, data.type, data.title)
     }
-    const event = {
-        name : name,
-        type : type,
-        title : title
-    }
-    socket.send(JSON.stringify(event))
 }
+
+await luvSocket()
 
 function send_alert(user, type, title) {
     let scream = document.createElement('div')
@@ -52,21 +31,30 @@ function send_alert(user, type, title) {
     scream.style.height = 'auto'
     scream.classList.add("alert", "alert-secondary")
     if (type === 'create') {
-        scream.textContent = `${user.name} created a new story titled ${title}`
+        scream.textContent = `${user} created a new story titled ${title}`
     }
     else if (type === 'delete') {
         scream.classList.remove('alert-secondary')
         scream.classList.add('alert-danger')
-        scream.textContent = `${user.name} deleted a story titled ${title}`
+        scream.textContent = `${user} deleted a story titled ${title}`
     }
     else {
-        scream.textContent = `${user.name} added content to ${title}, go and finish their work!`
+        scream.textContent = `${user} added content to ${title}, go and finish their work!`
     }
     document.getElementById('alertContainer').appendChild(scream)
 
     setTimeout(() => {
         scream.remove()
     }, 5000)
+}
+
+async function broadcast(name, type, title, ws) {
+    const nimiMute = {
+        name : name,
+        type : type,
+        title : title
+    }
+    await ws.send(JSON.stringify(nimiMute))
 }
 
 // api access functions!!!!
@@ -109,7 +97,7 @@ async function delete_story(id) {
         return false;
     }
     let story = await get_story(id)
-    broadcast(user.name, 'delete', story.title)
+    await broadcast(user.name, 'delete', story.title, socket)
 }
 
 async function set_story(story) {
@@ -130,7 +118,7 @@ async function set_story(story) {
     })
     const stuff = await responseTwo.json()
     console.log(stuff)
-    broadcast(user.name, 'create', story.title)
+    await broadcast(user.name, 'create', story.title, socket)
     return true
 } catch (error) {
     console.log(error)
@@ -166,7 +154,7 @@ async function send_content(story) {
         console.log(err)
         return false
     }
-    broadcast(user.name, 'content', story.title)
+    await (user.name, 'content', story.title, socket)
 }
 
 function Story(title, genre, content, authors, owner) {
