@@ -7,24 +7,6 @@ const host = 'http://localhost:3000'
 
 
 //websocket functionality
-let socket = undefined
-async function luvSocket() {
-    const protocol = window.location.protocol === 'http:' ? 'ws' : 'wss';
-    socket = new WebSocket(`${protocol}://${window.location.host}/ws`)
-    socket.onopen = (event) => {
-        console.log('connected to websocket')
-    }
-    socket.onclose = (event) => {
-        console.log('websocket closed')
-    }
-    socket.onmessage = async (event) => {
-        const data = JSON.parse(await event.data.text())
-        send_alert(data.name, data.type, data.title)
-    }
-}
-
-await luvSocket()
-
 function send_alert(user, type, title) {
     let scream = document.createElement('div')
     scream.style.width = '500px'
@@ -48,14 +30,6 @@ function send_alert(user, type, title) {
     }, 5000)
 }
 
-async function broadcast(name, type, title, ws) {
-    const nimiMute = {
-        name : name,
-        type : type,
-        title : title
-    }
-    await ws.send(JSON.stringify(nimiMute))
-}
 
 // api access functions!!!!
 async function incrememnt_author(amount, id) {
@@ -97,7 +71,6 @@ async function delete_story(id) {
         return false;
     }
     let story = await get_story(id)
-    await broadcast(user.name, 'delete', story.title, socket)
 }
 
 async function set_story(story) {
@@ -118,7 +91,6 @@ async function set_story(story) {
     })
     const stuff = await responseTwo.json()
     console.log(stuff)
-    await broadcast(user.name, 'create', story.title, socket)
     return true
 } catch (error) {
     console.log(error)

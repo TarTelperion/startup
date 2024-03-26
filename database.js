@@ -18,6 +18,22 @@ const storyCollection = db.collection('stories');
     process.exit(1)
 })
 
+let socket = undefined
+async function luvSocket() {
+    const protocol = window.location.protocol === 'http:' ? 'ws' : 'wss';
+    socket = new WebSocket(`${protocol}://${window.location.host}/ws`)
+    socket.onopen = (event) => {
+        console.log('connected to websocket')
+    }
+    socket.onclose = (event) => {
+        console.log('websocket closed')
+    }
+    socket.onmessage = async (event) => {
+        const data = JSON.parse(await event.data.text())
+        send_alert(data.name, data.type, data.title)
+    }
+}
+
 // find user stuff
 async function user(mail) {
     let user = await userCollection.findOne({mail: mail})
@@ -60,6 +76,7 @@ async function create_story(title, author, genre, id=null) {
         joined: []
     }
     await storyCollection.insertOne(story)
+    await socket.send(JSON.stringify({user : story.owner, type : 'content', title : story.title}))
     console.log(story)
     return story
 }
@@ -95,6 +112,7 @@ async function get_story(story_id) {
 async function update_story(story) {
     await storyCollection.replaceOne({_id : story._id}, story)
     let fin = await get_story(story._id)
+    await socket.send(JSON.stringify({user : fin.most_recent, type : 'content', title : fin.title}))
     return fin
 }
 
@@ -117,11 +135,16 @@ async function remove(story_id) {
     await storyCollection.deleteOne({_id : story_id})
     await userCollection.updateMany({}, {$pull : {joined : story_id}})
     await userCollection.updateMany({}, {$pull : {stories : story_id}})
+    await socket.send(JSON.stringify({user : fin.most_recent, type : 'delete', title : await get_story(story_id).title}))
     console.log('DELETE SUCCESSFUL')
     } catch(err) {
         console.log(`delete failed due to: ${err}`)
     }
 }
+
+
+
+await luvSocket()
 
 module.exports = {
     user,
