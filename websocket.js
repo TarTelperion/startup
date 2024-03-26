@@ -15,12 +15,17 @@ let connections = []
 
 wss.on('connection', (ws) => {
     const connection = {id : uuid.v4(), live : true, ws : ws}
+    
     console.log(connection.id)
     connections.push(connection)
+    
 
-    ws.on('message', function transmit(data) {
+    ws.on('message', async function transmit(data) {
+        let sockett = await JSON.parse(data).socket
         connections.forEach((user) => {
-            if (user.ws.id != data.socket) {
+            console.log(sockett)
+            console.log(`user socket: ${user.ws.id}`)
+            if (user.id != connection.id) {
                 console.log(data)
                 user.ws.send(data)
             }

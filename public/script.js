@@ -4,6 +4,8 @@ const apikey = 'https://random-word-api.vercel.app/api?words=5'
 let mostrecent = []
 const host = 'http://localhost:3000'
 
+let displayed = true
+
 const protocol = window.location.protocol === 'http:' ? 'ws' : 'wss';
 const socket = new WebSocket(`${protocol}://${window.location.host}/ws`);
 socket.onopen = () => {
@@ -16,6 +18,7 @@ socket.onmessage = async (message) => {
 }
 //websocket functionality
 function send_alert(user, type, title) {
+    if (displayed) {
     let scream = document.createElement('div')
     scream.style.width = '500px'
     scream.style.height = 'auto'
@@ -35,7 +38,9 @@ function send_alert(user, type, title) {
 
     setTimeout(() => {
         scream.remove()
-    }, 5000)
+    }, 10000)
+    displayed = true
+}
 }
 
 
@@ -75,6 +80,7 @@ async function delete_story(id) {
             headers: {"Content-Type" : "application/json"},
         })
         console.log(`ATTEMPTING DELETE ON --> ${id}`)
+        displayed = false
     } catch(err) {
         return false;
     }
@@ -89,6 +95,7 @@ async function set_story(story) {
         headers: {"Content-Type" : "application/json"},
         body: JSON.stringify(story)
     })
+    displayed = false
     const story_obj = await response.json()
     user.stories.push(story_obj._id)
     user.joined.push(story_obj._id)
@@ -125,6 +132,7 @@ async function send_content(story) {
     await update_content()
     try {
         console.log(`SENDING IN FOR UPDATE ---> ${story}`)
+        displayed = false
         const response = await fetch(`${host}/api/stories/update?ws=${socket.id}`, {
             method: 'PUT',
             headers: {"Content-Type" : "application/json"},
