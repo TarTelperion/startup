@@ -33,6 +33,11 @@ function send_alert(user, type, title) {
         scream.classList.add('alert-danger')
         scream.textContent = `${user} deleted a story titled ${title}`
     }
+    else if (type === 'pester') {
+        scream.classList.remove('alert-secondary')
+        scream.classList.add('alert-danger')
+        scream.textContent = `${user} pestered you to work on ${title}`
+    }
     else {
         scream.textContent = `${user} added content to ${title}, go and finish their work!`
     }
