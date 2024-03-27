@@ -51,12 +51,13 @@ async function send_alert(user, type, title) {
         scream.classList.remove('alert-secondary')
         scream.classList.add('alert-danger')
         scream.textContent = `${user} pestered you to work on ${title}`
+        
     }
     else {
         scream.textContent = `${user} added content to ${title}, go and finish their work!`
     }
-    if (!user.notifications) {
-        user.notifications = []
+    if (!Array.isArray(user.notifications)) {
+        user.notifications = [];
     }
     else if (user.notifications.length > 5) {
         user.notifications.splice(0, 1)
