@@ -35,7 +35,7 @@ function broadcast(data) {
 }
 //websocket functionality
 async function send_alert(user, type, title) {
-    await update_content()
+    update_content()
     if (displayed) {
     let scream = document.createElement('div')
     scream.style.width = '30vw'
@@ -60,7 +60,7 @@ async function send_alert(user, type, title) {
         scream.textContent = `${user} added content to ${title}, go and finish their work!`
     }
 
-    
+
     if (!user.notifications || !Array.isArray(user.notifications)) {
         user.notifications = []
         console.log(user.notifications)
