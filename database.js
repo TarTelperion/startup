@@ -21,7 +21,7 @@ const storyCollection = db.collection('stories');
 
 let socket = undefined
 async function luvSocket() {
-    const protocol = `ws://localhost:3000`;
+    const protocol = `wss://writersblock.click`;
     socket = new WebSocket(protocol)
     socket.onopen = (event) => {
         console.log('connected to websocket')
