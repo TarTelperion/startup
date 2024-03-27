@@ -59,12 +59,16 @@ async function send_alert(user, type, title) {
     else {
         scream.textContent = `${user} added content to ${title}, go and finish their work!`
     }
-    if (!user.notifications) {
-        user.notifications = new Array
+
+    
+    if (!user.notifications || !Array.isArray(user.notifications)) {
+        user.notifications = []
+        console.log(user.notifications)
     }
     else if (user.notifications.length > 5) {
         user.notifications.splice(0, 1)
     }
+    console.log(`notification array here? ${user.notifications}`)
     user.notifications.push(scream.textContent)
     const responseTwo = await fetch(`${host}/api/users/update`, {
         method : 'PUT',
