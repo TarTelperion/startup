@@ -42,6 +42,7 @@ async function createUser(mail, pass, name) {
         name : name,
         joined : [],
         stories : [],
+        notifications : [],
         token: uuid.v4()
     }
     await userCollection.insertOne(user)
@@ -110,6 +111,10 @@ async function update_user(user) {
         { token: user.token },
         { $set: { stories: user.stories } } 
     )
+    await userCollection.updateOne(
+        { token: user.token },
+        { $set: { notifications: user.notifications } } 
+    )
     const usEr = await user_token(user.token)
     return usEr
 }
@@ -131,6 +136,7 @@ async function remove(story_id, socket_id) {
 module.exports = {
     user,
     user_token,
+    addUser,
     createUser,
     create_story,
     get_story,
