@@ -195,7 +195,7 @@ function Story(title, genre, content, authors, owner) {
 }
 
 function build_login() {
-    let ref = localStorage.getItem('ref')
+    let ref = JSON.parse(localStorage.getItem('ref'))
     let title = document.getElementById('ref')
     if (ref === 'login') {
         title.innerText = "Log in:"
@@ -333,7 +333,7 @@ async function save_login(name, email, pass) {
 // UPDATE CONTENT
 
 async function update_content() {
-    mostrecent = localStorage.getItem('mostrecent') ?? []
+    mostrecent = JSON.parse(localStorage.getItem('mostrecent')) ?? []
     let name_elements = document.getElementsByClassName('user')
     let mail_elements = document.getElementsByClassName('mail')
     try {
@@ -394,7 +394,7 @@ async function generate_story(title, genre) {
 
 async function retrieve_story() {
     await update_content();
-    let story_loc = localStorage.getItem('story')
+    let story_loc = JSON.parse(localStorage.getItem('story'))
 
     console.log(`This is the count: ${story_loc}`)
 
