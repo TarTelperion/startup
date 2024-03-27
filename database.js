@@ -27,11 +27,18 @@ async function luvSocket() {
         console.log('connected to websocket')
     }
     socket.onclose = (event) => {
-        console.log('websocket closed')
+        console.log('WebSocket closed');
+        setTimeout(reconnectWebSocket, 5000);
     }
 }
 
 luvSocket()
+function reconnectWebSocket() {
+    socket.close();
+    delete socket;
+    luvSocket();
+    }
+    
 // find user stuff
 async function user(mail) {
     let user = await userCollection.findOne({mail: mail})

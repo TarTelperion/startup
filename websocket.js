@@ -14,7 +14,7 @@ function websocket(server) {
 let connections = []
 
 wss.on('connection', (ws) => {
-    const connection = {id : uuid.v4(), live : true, ws : ws}
+    const connection = {id : uuid.v4(), ws : ws}
     console.log(connection.id)
     connections.push(connection)
     
@@ -43,14 +43,11 @@ wss.on('connection', (ws) => {
 
     setInterval(() => {
         connections.forEach((connect) => {
-            if (!connect.live) {
-                connect.ws.terminate()
-            } else {
-                connect.live = false
-                connect.ws.ping()
-            }
-        })
-    }, 5000)
+          connect.ws.ping().catch(() => {
+            connect.ws.terminate();
+          });
+        });
+      }, 5000);
 })
 }
 module.exports = { websocket }
