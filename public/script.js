@@ -5,6 +5,8 @@ let mostrecent = []
 const host = 'https://writersblock.click'
 
 let displayed = true
+let user = undefined
+
 
 const protocol = window.location.protocol === 'http:' ? 'ws' : 'wss';
 const socket = new WebSocket(`${protocol}://${window.location.host}/ws`);
@@ -33,6 +35,7 @@ function broadcast(data) {
 }
 //websocket functionality
 async function send_alert(user, type, title) {
+    await update_content()
     if (displayed) {
     let scream = document.createElement('div')
     scream.style.width = '30vw'
@@ -277,12 +280,6 @@ async function check_login(name, email, pass) {
     let passy = document.getElementById(pass).value;
     localStorage.setItem('ref', "login");
     await update_content();
-
-    let user = {
-        mail: mailey,
-        name: namey,
-        pass: passy
-    };
     if (user.mail === 'unknown' && user.name === 'unknown') {
         throw new Error('must have either username or mail')
     }
@@ -328,12 +325,6 @@ async function save_login(name, email, pass) {
     let passy = document.getElementById(pass);
     localStorage.setItem('ref', "login");
     await update_content();
-
-    let user = {
-        mail: mailey.value,
-        name: namey.value,
-        pass: passy.value
-    };
 
     const usr = await fetch(`${host}/api/auth/create`, {
         method : "PUT",
