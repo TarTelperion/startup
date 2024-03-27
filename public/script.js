@@ -55,8 +55,10 @@ async function send_alert(user, type, title) {
     else {
         scream.textContent = `${user} added content to ${title}, go and finish their work!`
     }
-
-    if (user.notifications.length > 5) {
+    if (!user.notifications) {
+        user.notifications = []
+    }
+    else if (user.notifications.length > 5) {
         user.notifications.splice(0, 1)
     }
     user.notifications.push(scream.textContent)
