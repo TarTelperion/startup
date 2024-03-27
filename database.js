@@ -1,5 +1,4 @@
 const { MongoClient } = require('mongodb')
-const { WebSocket } = require('ws')
 const bcrypt = require('bcrypt')
 const uuid = require('uuid')
 const config = require('./dbConfig.json')
@@ -18,26 +17,6 @@ const storyCollection = db.collection('stories');
     console.log(`connection failed. error occured: ${err.message}`)
     process.exit(1)
 })
-
-let socket = undefined
-async function luvSocket() {
-    const protocol = `wss://writersblock.click/ws`;
-    socket = new WebSocket(protocol)
-    socket.onopen = (event) => {
-        console.log('connected to websocket')
-    }
-    socket.onclose = (event) => {
-        console.log('WebSocket closed');
-        setTimeout(reconnectWebSocket, 5000);
-    }
-}
-
-luvSocket()
-function reconnectWebSocket() {
-    socket.close();
-    delete socket;
-    luvSocket();
-    }
     
 // find user stuff
 async function user(mail) {
@@ -81,7 +60,6 @@ async function create_story(title, author, genre, id=null, socket_id) {
         joined: []
     }
     await storyCollection.insertOne(story)
-    await socket.send(JSON.stringify({user : author, type : 'content', title : story.title, socket : socket_id}))
     console.log(story)
     return story
 }
@@ -119,7 +97,6 @@ async function update_story(story, socket_id) {
     story.writer = story.joined[randomIndex]
     await storyCollection.replaceOne({_id : story._id}, story)
     let fin = await get_story(story._id)
-    await socket.send(JSON.stringify({user : fin.most_recent, type : 'content', title : fin.title, socket : socket_id}))
     return fin
 }
 
@@ -143,7 +120,6 @@ async function remove(story_id, socket_id) {
     await storyCollection.deleteOne({_id : story_id})
     await userCollection.updateMany({}, {$pull : {joined : story_id}})
     await userCollection.updateMany({}, {$pull : {stories : story_id}})
-    await socket.send(JSON.stringify({user : story.owner, type : 'delete', title : story.title, socket : socket_id}))
     console.log('DELETE SUCCESSFUL')
     } catch(err) {
         console.log(`delete failed due to: ${err}`)

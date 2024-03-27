@@ -27,6 +27,10 @@ socket.onmessage = async (event) => {
     send_alert(msg.user, msg.type, msg.title)
     }
 }
+
+function broadcast(data) {
+    socket.send(JSON.stringify(data))
+}
 //websocket functionality
 function send_alert(user, type, title) {
     if (displayed) {
@@ -105,11 +109,13 @@ async function create_globe_stories() {
 async function delete_story(id) {
     await update_content()
     try {
+        const to_delete = get_story(id)
         const response = await fetch(`${host}/api/stories?id=${id}&ws=${socket.id}`, {
             method: 'DELETE',
             headers: {"Content-Type" : "application/json"},
         })
         console.log(`ATTEMPTING DELETE ON --> ${id}`)
+        broadcast({user : user.name, type : 'delete', title : to_delete.title})
         displayed = false
     } catch(err) {
         return false;
@@ -125,8 +131,10 @@ async function set_story(story) {
         headers: {"Content-Type" : "application/json"},
         body: JSON.stringify(story)
     })
-    displayed = false
+    
     const story_obj = await response.json()
+    broadcast({user : user.name, type : 'create', title : story.title})
+    displayed = false
     user.stories.push(story_obj._id)
     user.joined.push(story_obj._id)
     story_obj.joined.add(user._id)
@@ -169,11 +177,11 @@ async function send_content(story) {
             headers: {"Content-Type" : "application/json"},
             body: JSON.stringify(story)
         })
+        broadcast({user : user.name, type : 'update', title : story.title})
     } catch(err) {
         console.log(err)
         return false
     }
-    send_alert(user.name, 'content', story.title, socket)
 }
 
 function Story(title, genre, content, authors, owner) {
