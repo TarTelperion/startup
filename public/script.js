@@ -76,7 +76,7 @@ async function send_alert(name, type, title) {
     const responseTwo = await fetch(`${host}/api/users/update`, {
         method : 'PUT',
         headers: {"Content-Type" : "application/json"},
-        body: user
+        body: JSON.stringify(user)
     })
     document.getElementById('alertContainer').appendChild(scream)
 
@@ -171,7 +171,7 @@ async function set_story(story) {
     displayed = false
     user.stories.push(story_obj._id)
     user.joined.push(story_obj._id)
-    story_obj.joined.add(user._id)
+    story_obj.joined.push(user._id)
     const responseTwo = await fetch(`${host}/api/users/update`, {
         method : 'PUT',
         headers: {"Content-Type" : "application/json"},
@@ -179,6 +179,7 @@ async function set_story(story) {
     })
     const stuff = await responseTwo.json()
     console.log(stuff)
+    window.location.href = 'write.html'
     return true
 } catch (error) {
     console.log(error)
@@ -407,11 +408,6 @@ async function generate_story(title, genre) {
     //     user.joined.push(current.id)
     // }
     // console.log(JSON.stringify(user))
-    
-
-    
-
-    window.location.href = 'write.html'
 
 }
 
