@@ -32,7 +32,7 @@ function broadcast(data) {
     socket.send(JSON.stringify(data))
 }
 //websocket functionality
-function send_alert(user, type, title) {
+async function send_alert(user, type, title) {
     if (displayed) {
     let scream = document.createElement('div')
     scream.style.width = '30vw'
@@ -55,6 +55,16 @@ function send_alert(user, type, title) {
     else {
         scream.textContent = `${user} added content to ${title}, go and finish their work!`
     }
+
+    if (user.notifications.length > 5) {
+        user.notifications.splice(0, 1)
+    }
+    user.notifications.push(scream.textContent)
+    const responseTwo = await fetch(`${host}/api/users/update`, {
+        method : 'PUT',
+        headers: {"Content-Type" : "application/json"},
+        body: JSON.stringify(user)
+    })
     document.getElementById('alertContainer').appendChild(scream)
 
     setTimeout(() => {
@@ -65,6 +75,17 @@ function send_alert(user, type, title) {
     }, 10000)
     displayed = true
 }
+}
+
+async function user_notifications() {
+    await update_content()
+    const house = document.getElementById('notifications')
+    user.notifications.forEach((notification) => {
+        let curr_notification = document.createElement('li')
+        curr_notification.classList.add('list-group-item')
+        curr_notification.innerHTML = notification
+        house.appendChild(curr_notification)
+    })
 }
 
 async function pester(element_id) {
