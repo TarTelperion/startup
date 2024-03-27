@@ -76,7 +76,7 @@ async function pester(element_id) {
     const story = await get_story(storyId)
 
     const writer = story.writer
-    socket.send(JSON.stringify({name : user.name, type : 'pester', title : story.title, destination : writer}))
+    broadcast(JSON.stringify({user : user.name, type : 'pester', title : story.title, destination : writer}))
 }
 // api access functions!!!!
 async function incrememnt_author(amount, id) {
