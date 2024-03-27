@@ -5,7 +5,12 @@ let mostrecent = []
 const host = 'https://writersblock.click'
 
 let displayed = true
-let user = undefined
+let user = {
+    name : 'Gabe',
+    mail : 'roochy@sauce.com',
+    pass : '12345', 
+    notifications : [],
+}
 
 
 const protocol = window.location.protocol === 'http:' ? 'ws' : 'wss';
@@ -14,7 +19,7 @@ socket.onopen = () => {
     console.log('connected')
 }
 socket.onmessage = async (event) => {
-    await update_content()
+    update_content()
     console.log(event.data)
     const msg = JSON.parse(event.data)
     if (msg.destination) {
@@ -34,8 +39,7 @@ function broadcast(data) {
     socket.send(JSON.stringify(data))
 }
 //websocket functionality
-async function send_alert(user, type, title) {
-    update_content()
+async function send_alert(name, type, title) {
     if (displayed) {
     let scream = document.createElement('div')
     scream.style.width = '30vw'
@@ -43,37 +47,36 @@ async function send_alert(user, type, title) {
     scream.style.opacity = '0.8'
     scream.classList.add("alert", "alert-secondary")
     if (type === 'create') {
-        scream.textContent = `${user} created a new story titled ${title}`
+        scream.textContent = `${name} created a new story titled ${title}`
     }
     else if (type === 'delete') {
         scream.classList.remove('alert-secondary')
         scream.classList.add('alert-danger')
-        scream.textContent = `${user} deleted a story titled ${title}`
+        scream.textContent = `${name} deleted a story titled ${title}`
     }
     else if (type === 'pester') {
         scream.classList.remove('alert-secondary')
         scream.classList.add('alert-danger')
-        scream.textContent = `${user} pestered you to work on ${title}`
+        scream.textContent = `${name} pestered you to work on ${title}`
 
     }
     else {
-        scream.textContent = `${user} added content to ${title}, go and finish their work!`
+        scream.textContent = `${name} added content to ${title}, go and finish their work!`
     }
+    update_content()
 
-
-    if (!user.notifications || !Array.isArray(user.notifications)) {
+    if (!user.notifications) {
         user.notifications = []
-        console.log(user.notifications)
     }
     else if (user.notifications.length > 5) {
-        user.notifications.splice(0, 1)
+        user.notifications.pop()
     }
-    console.log(`notification array here? ${user.notifications}`)
     user.notifications.push(scream.textContent)
+
     const responseTwo = await fetch(`${host}/api/users/update`, {
         method : 'PUT',
         headers: {"Content-Type" : "application/json"},
-        body: JSON.stringify(user)
+        body: user
     })
     document.getElementById('alertContainer').appendChild(scream)
 
@@ -282,8 +285,11 @@ async function check_login(name, email, pass) {
     let namey = document.getElementById(name).value  ?? "unknown";
     let mailey = document.getElementById(email).value  ?? "unknown";
     let passy = document.getElementById(pass).value;
+    user.name = namey
+    user.mail = mailey
+    user.pass = passy
     localStorage.setItem('ref', "login");
-    await update_content();
+    update_content();
     if (user.mail === 'unknown' && user.name === 'unknown') {
         throw new Error('must have either username or mail')
     }
