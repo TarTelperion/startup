@@ -74,7 +74,7 @@ async function create_story(title, author, genre, id=null, socket_id) {
         joined: []
     }
     await storyCollection.insertOne(story)
-    await socket.send(JSON.stringify({user : story.owner, type : 'content', title : story.title, socket : socket_id}))
+    await socket.send(JSON.stringify({user : author, type : 'content', title : story.title, socket : socket_id}))
     console.log(story)
     return story
 }

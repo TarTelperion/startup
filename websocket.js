@@ -50,7 +50,7 @@ wss.on('connection', (ws) => {
                 connect.ws.ping()
             }
         })
-    }, 10000)
+    }, 5000)
 })
 }
 module.exports = { websocket }
