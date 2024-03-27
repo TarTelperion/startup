@@ -195,7 +195,7 @@ function Story(title, genre, content, authors, owner) {
 }
 
 function build_login() {
-    let ref = JSON.parse(localStorage.getItem('ref'))
+    let ref = localStorage.getItem('ref')
     let title = document.getElementById('ref')
     if (ref === 'login') {
         title.innerText = "Log in:"
@@ -394,7 +394,7 @@ async function generate_story(title, genre) {
 
 async function retrieve_story() {
     await update_content();
-    let story_loc = JSON.parse(localStorage.getItem('story'))
+    let story_loc = user.stories[user.stories.length - 1]
 
     console.log(`This is the count: ${story_loc}`)
 
@@ -454,14 +454,14 @@ async function gen_story_list(list, joined) {
                 if (item.writer == user._id) {
         curr_item.innerHTML = `<p><em>${item.title}</em> (${item.genre}). </p><button onclick="go_write(${item._id})" class="btn">Write</button><button onclick="dlt(${item._id})" class="btn btn-outline-danger">Delete</button>`
     } else {
-                curr_item.innerHTML = `<p><em>${item.title}</em> (${item.genre}). </p><button onclick="go_write(${item._id})" class="btn" disabled>Write</button><button onclick="dlt(${item._id})" class="btn btn-outline-danger">Delete</button>`
+                curr_item.innerHTML = `<p><em>${item.title}</em> (${item.genre}). </p><button onclick="" class="btn" disabled>Write</button><button onclick="dlt(${item._id})" class="btn btn-outline-danger">Delete</button>`
     }
     }
              else {
                 if (item.writer == user._id) {
         curr_item.innerHTML = `<p><em>${item.title}</em> (${item.genre}). </p><button onclick="go_write(${item._id})" class="btn">Write</button><button onclick="dlt(${item._id})" class="btn btn-outline-danger">Leave</button>`
     } else {
-                curr_item.innerHTML = `<p><em>${item.title}</em> (${item.genre}). </p><button onclick="go_write(${item._id})" class="btn" disabled>Write</button><button onclick="dlt(${item._id})" class="btn btn-outline-secondary">Leave</button>`
+                curr_item.innerHTML = `<p><em>${item.title}</em> (${item.genre}). </p><button onclick="" class="btn" disabled>Write</button><button onclick="dlt(${item._id})" class="btn btn-outline-secondary">Leave</button>`
             }}
              }
         catch (err) {
@@ -559,16 +559,6 @@ async function go_write(id) {
     })
     window.location.href = "write.html"
 }
-// POSSIBLE ERROR EXISTS
-// DO I EVEN NEED IT?
-// function go_to_write(count) {
-//     update_content();
-//     let story = localStorage.getItem(count);
-//     console.log(story.content);
-//     localStorage.setItem('story', count);
-//     window.location.href = "write.html";
-// }
-// MOST RECENT
 async function update_most_recent(id, titleid) {
     await update_content();
     let body = document.getElementById(id)
