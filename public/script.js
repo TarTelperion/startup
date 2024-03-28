@@ -95,7 +95,7 @@ async function send_alert(name, type, title) {
 async function user_notifications() {
     await update_content()
     const house = document.getElementById('notifications')
-    const new_array = user.notifications.slice(0, 4)
+    const new_array = user.notifications.slice(user.notifications.length - 5, user.notifications.length)
     user.notifications = new_array
     new_array.forEach((notification) => {
         let curr_notification = document.createElement('li')
