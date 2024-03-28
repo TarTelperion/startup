@@ -175,7 +175,7 @@ async function set_story(story) {
     user.joined.push(story._id)
     story.joined.push(user._id)
 
-    await fetch(`${host}/api/stories/add`, {
+    const sstory = await fetch(`${host}/api/stories/add`, {
         method : 'POST',
         headers : {"Content-Type" : "application/json"},
         body : JSON.stringify(story)
@@ -185,7 +185,6 @@ async function set_story(story) {
         headers : {"Content-Type" : "application/json"},
         body : JSON.stringify(user)
     })
-    const neUser = await response.json()
     broadcast({user : user.name, type : 'create', title : story.title})
     const newAlert = document.createElement('div')
     newAlert.style.alignSelf = 'center';
@@ -193,6 +192,7 @@ async function set_story(story) {
     const parent = document.getElementById('alertarea')
     parent.appendChild(newAlert);
     setTimeout(() => newAlert.style.display = "none", 3000)
+    await Promise.all([sstory, response])
     window.location.href = 'write.html'
 }
 
