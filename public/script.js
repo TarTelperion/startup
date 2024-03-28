@@ -46,15 +46,17 @@ async function send_alert(name, type, title) {
     scream.style.height = 'auto'
     scream.style.opacity = '0.8'
     scream.classList.add("alert", "alert-secondary")
-    if (type === 'create') {
+    if (type == 'create') {
+        scream.classList.remove('alert-secondary')
+        scream.classList.add('alert-success')
         scream.textContent = `${name} created a new story titled ${title}`
     }
-    else if (type === 'delete') {
+    else if (type == 'delete') {
         scream.classList.remove('alert-secondary')
         scream.classList.add('alert-danger')
         scream.textContent = `${name} deleted a story titled ${title}`
     }
-    else if (type === 'pester') {
+    else if (type == 'pester') {
         scream.classList.remove('alert-secondary')
         scream.classList.add('alert-danger')
         scream.textContent = `${name} pestered you to work on ${title}`
@@ -106,8 +108,9 @@ async function pester(element_id) {
     const pester_button = document.getElementById(element_id)
     pester_button.disabled = true
 
-    const storyId = JSON.parse(localStorage.getItem('mostrecent'))[1]
-    const story = await get_story(storyId)
+    const thing = await JSON.parse(localStorage.getItem('mostrecent'))
+    const story = await get_story(thing[1])
+    console.log(story)
 
     const writer = story.writer
     broadcast(JSON.stringify({user : user.name, type : 'pester', title : story.title, destination : writer}))
@@ -156,10 +159,11 @@ async function delete_story(id) {
     }
     let story = await get_story(id)
 }
-
+let retry = false
 async function set_story(story) {
+    if (!retry) {
+    retry = true
     await update_content()
-    try {
     const response = await fetch(`${host}/api/stories/add?ws=${socket.id}`, {
         method: 'POST',
         headers: {"Content-Type" : "application/json"},
@@ -177,15 +181,17 @@ async function set_story(story) {
         headers: {"Content-Type" : "application/json"},
         body: JSON.stringify(user)
     })
+    const thing = await fetch(`${host}/api/stories/update?ws=${socket.id}`, {
+        method: 'PUT',
+        headers: {"Content-Type" : "application/json"},
+        body: JSON.stringify(story)
+    })
     const stuff = await responseTwo.json()
     console.log(stuff)
+    retry = false
     window.location.href = 'write.html'
-    return true
-} catch (error) {
-    console.log(error)
-    return false
-}
-}
+  
+}}
 
 async function get_story(id) {
     try{
@@ -226,7 +232,9 @@ function Story(title, genre, content, authors, owner) {
     this.content = content ?? " ";
     this.authors = authors ?? 1;
     this.prompt = ' ';
+    this.joined = []
     this.owner = owner ?? 'Gabe Pettingill';
+    this.writer = owner ?? 'Gabe Pettingill'
 }
 
 function build_login() {
