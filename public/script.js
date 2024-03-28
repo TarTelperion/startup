@@ -113,7 +113,7 @@ async function pester(element_id) {
     console.log(story)
 
     const writer = story.writer
-    broadcast(JSON.stringify({user : user.name, type : 'pester', title : story.title, destination : writer}))
+    broadcast({user : user.name, type : 'pester', title : story.title, destination : writer})
 }
 // api access functions!!!!
 async function incrememnt_author(amount, id) {
@@ -157,12 +157,9 @@ async function delete_story(id) {
     } catch(err) {
         return false;
     }
-    let story = await get_story(id)
 }
-let retry = false
+
 async function set_story(story) {
-    if (!retry) {
-    retry = true
     await update_content()
     const response = await fetch(`${host}/api/stories/add?ws=${socket.id}`, {
         method: 'POST',
@@ -188,10 +185,8 @@ async function set_story(story) {
     })
     const stuff = await responseTwo.json()
     console.log(stuff)
-    retry = false
     window.location.href = 'write.html'
-  
-}}
+}
 
 async function get_story(id) {
     try{
@@ -592,7 +587,7 @@ async function update_most_recent(id, titleid) {
     await update_content();
     let body = document.getElementById(id)
     let title_doc = document.getElementById(titleid)
-    let mostrecent = []
+    mostrecent = []
     const story = await get_story(user.stories[user.stories.length - 1])
     if (story) {
     mostrecent.push(story.most_recent)

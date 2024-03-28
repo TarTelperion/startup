@@ -49,7 +49,7 @@ async function createUser(mail, pass, name) {
     return user
 }
 
-async function create_story(title, author, genre, id=null, socket_id) {
+async function create_story(title, author, genre, id=null, socket_id, joined) {
     const story = {
         _id: id ?? Math.floor(Math.random() * 9000) + 1000,
         title: title,
@@ -58,7 +58,8 @@ async function create_story(title, author, genre, id=null, socket_id) {
         owner: author,
         genre: genre,
         most_recent: null,
-        joined: []
+        writer: author,
+        joined: [...joined]
     }
     await storyCollection.insertOne(story)
     console.log(story)

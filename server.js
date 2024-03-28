@@ -94,7 +94,7 @@ secureRoute.get('/stories', async (req, res) => {
 secureRoute.post('/stories/add', async (req, res) => {
     let socket_id = req.params.ws
     let story = req.body
-    const fin = await db.create_story(story.title, story.owner, story.genre, story._id, socket_id)
+    const fin = await db.create_story(story.title, story.owner, story.genre, story._id, socket_id, story.joined)
     res.send(fin)
 })
 
