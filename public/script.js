@@ -179,7 +179,7 @@ async function set_story(story) {
         body : JSON.stringify(story)
     }) 
     await fetch(`${host}/api/users/update`, {
-        method : 'POST',
+        method : 'PUT',
         headers : {"Content-Type" : "application/json"},
         body : JSON.stringify(user)
     })
