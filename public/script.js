@@ -71,7 +71,9 @@ async function send_alert(name, type, title) {
         user.notifications = []
     }
     else if (user.notifications.length > 5) {
-        user.notifications.pop()
+        while (user.notifications.length > 5) {
+            user.notifications.splice(0, 1)
+        }
     }
     user.notifications.push(scream.textContent)
 
