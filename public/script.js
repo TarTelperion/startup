@@ -161,30 +161,30 @@ async function delete_story(id) {
 
 async function set_story(story) {
     await update_content()
-    const response = await fetch(`${host}/api/stories/add?ws=${socket.id}`, {
-        method: 'POST',
-        headers: {"Content-Type" : "application/json"},
-        body: JSON.stringify(story)
+
+    user.stories.push(story._id)
+    user.joined.push(story._id)
+    story.joined.push(user._id)
+
+    await fetch(`${host}/api/stories/add`, {
+        method : 'POST',
+        headers : {"Content-Type" : "application/json"},
+        body : JSON.stringify(story)
+    }) 
+    await fetch(`${host}/api/users/update`, {
+        method : 'POST',
+        headers : {"Content-Type" : "application/json"},
+        body : JSON.stringify(user)
     })
-    
-    const story_obj = await response.json()
+
     broadcast({user : user.name, type : 'create', title : story.title})
-    displayed = false
-    user.stories.push(story_obj._id)
-    user.joined.push(story_obj._id)
-    story_obj.joined.push(user._id)
-    const responseTwo = await fetch(`${host}/api/users/update`, {
-        method : 'PUT',
-        headers: {"Content-Type" : "application/json"},
-        body: JSON.stringify(user)
-    })
-    const thing = await fetch(`${host}/api/stories/update?ws=${socket.id}`, {
-        method: 'PUT',
-        headers: {"Content-Type" : "application/json"},
-        body: JSON.stringify(story)
-    })
-    const stuff = await responseTwo.json()
-    console.log(stuff)
+    const newAlert = document.createElement('div')
+    newAlert.style.alignSelf = 'center';
+    newAlert.innerHTML = "<p class='alert alert-danger'>Login Failed</p>"
+    const parent = document.getElementById('alertarea')
+    parent.appendChild(newAlert);
+    setTimeout(() => newAlert.style.display = "none", 3000)
+
     window.location.href = 'write.html'
 }
 
