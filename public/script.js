@@ -180,20 +180,19 @@ async function set_story(story) {
         headers : {"Content-Type" : "application/json"},
         body : JSON.stringify(story)
     }) 
-    await fetch(`${host}/api/users/update`, {
+     const response = await fetch(`${host}/api/users/update`, {
         method : 'PUT',
         headers : {"Content-Type" : "application/json"},
         body : JSON.stringify(user)
     })
-
+    const neUser = await response.json()
     broadcast({user : user.name, type : 'create', title : story.title})
     const newAlert = document.createElement('div')
     newAlert.style.alignSelf = 'center';
-    newAlert.innerHTML = "<p class='alert alert-danger'>Login Failed</p>"
+    newAlert.innerHTML = "<p class='alert alert-success'>Story Created!</p>"
     const parent = document.getElementById('alertarea')
     parent.appendChild(newAlert);
     setTimeout(() => newAlert.style.display = "none", 3000)
-
     window.location.href = 'write.html'
 }
 
