@@ -95,11 +95,18 @@ async function send_alert(name, type, title) {
 async function user_notifications() {
     await update_content()
     const house = document.getElementById('notifications')
-    user.notifications.forEach((notification) => {
+    const new_array = user.notifications.slice(0, 4)
+    user.notifications = new_array
+    new_array.forEach((notification) => {
         let curr_notification = document.createElement('li')
         curr_notification.classList.add('list-group-item')
         curr_notification.innerHTML = notification
         house.appendChild(curr_notification)
+    })
+    const responseTwo = await fetch(`${host}/api/users/update`, {
+        method : 'PUT',
+        headers: {"Content-Type" : "application/json"},
+        body: JSON.stringify(user)
     })
 }
 
@@ -524,7 +531,9 @@ async function gen_story_list(list, joined) {
         curr_item.innerHTML = `<p><em>${item.title}</em> (${item.genre}).</p>`
         count++
     
+    
     })
+    user_notifications()
     if (joined.length == 0) {
         throw new Error
     }
