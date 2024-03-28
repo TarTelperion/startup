@@ -2,7 +2,7 @@
 // writing prompt generator
 const apikey = 'https://random-word-api.vercel.app/api?words=5'
 let mostrecent = []
-const host = 'https://writersblock.click'
+const host = 'http://localhost:3000'
 
 let displayed = true
 let user = {
