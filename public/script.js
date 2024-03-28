@@ -155,7 +155,7 @@ async function create_globe_stories() {
 async function delete_story(id) {
     await update_content()
     try {
-        const to_delete = get_story(id)
+        const to_delete = await get_story(id)
         const response = await fetch(`${host}/api/stories?id=${id}&ws=${socket.id}`, {
             method: 'DELETE',
             headers: {"Content-Type" : "application/json"},
