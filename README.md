@@ -96,4 +96,4 @@ This deliverable slides into a database and does some epic things there.
   - **Backend listens for WebSocket connection** -- Complete, and a bunch of brand new bugs added to allow users to take turns.
   - **Frontend makes WebSocket connection** -- Done! and aformentioned bugs are swept under the carpet.
   - **Data sent over WebSocket connection** -- Completed! Users are sent notifications, and in case they miss them, they're saved to the profile page
-  - **WebSocket data displayed** -- Beautiful little alerts will appear on the page in different colors like little dissapearing beetles. 
+  - **WebSocket data displayed** -- Beautiful little alerts will appear on the page in different colors like little disappearing beetles. 
