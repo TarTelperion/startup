@@ -71,9 +71,9 @@ async function send_alert(name, type, title) {
         user.notifications = []
     }
     else if (user.notifications.length > 5) {
-        while (user.notifications.length > 5) {
+        do {
             user.notifications.splice(0, 1)
-        }
+        } while (user.notifications.length > 5)
     }
     user.notifications.push(scream.textContent)
 
@@ -97,9 +97,7 @@ async function send_alert(name, type, title) {
 async function user_notifications() {
     await update_content()
     const house = document.getElementById('notifications')
-    const new_array = user.notifications.slice(user.notifications.length - 5, user.notifications.length)
-    user.notifications = new_array
-    new_array.forEach((notification) => {
+    user.notifications.forEach((notification) => {
         let curr_notification = document.createElement('li')
         curr_notification.classList.add('list-group-item')
         curr_notification.innerHTML = notification
