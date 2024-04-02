@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import React from 'react'
- import '../app.css'
+import '@fontsource/spectral';
 function Write() {
     return (
         <p>Writing will launch soon!</p>

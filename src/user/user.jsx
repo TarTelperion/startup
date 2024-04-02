@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import React from 'react'
- import '../app.css'
+import '@fontsource/spectral';
 function User() {
     return (
         <p>Hello There, eventual user.</p>

@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import React from 'react'
- import '../app.css'
+import '@fontsource/spectral';
 function Blocked() {
     return (
         <p>Nope not a thing...</p>
