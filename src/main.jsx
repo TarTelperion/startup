@@ -8,7 +8,7 @@ import Home from './user/home.jsx'
 import Blocked from './global_files/blocked.jsx'
 import Login from './global_files/login.jsx'
 import Index from './global_files/index.jsx'
-import '@fontsource/spectral'
+import '@fontsource/spectral/300.css';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
     <BrowserRouter>

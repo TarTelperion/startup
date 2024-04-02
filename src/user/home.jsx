@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import React from 'react'
-import '@fontsource/spectral';
 function Home() {
     return (
         <p>homepage landing soon!</p>
