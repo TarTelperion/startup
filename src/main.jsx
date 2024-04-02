@@ -5,8 +5,10 @@ import App from './App.jsx'
 import Write from './user/write.jsx'
 import User from './user/user.jsx'
 import Home from './user/home.jsx'
+// MATERIAL STUFF
 import { BottomNavigation, BottomNavigationAction } from '@mui/material';
 import CottageIcon from '@mui/icons-material/Cottage';
+import Paper from '@mui/material/Paper';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import HistoryEduIcon from '@mui/icons-material/HistoryEdu';
 import LoginIcon from '@mui/icons-material/Login';
@@ -18,6 +20,7 @@ import './styles.css'
 
 function Nav_bar() {
     return (
+    <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={3}>
         <BottomNavigation 
         value={useLocation().pathname}>
             <BottomNavigationAction 
@@ -49,6 +52,7 @@ function Nav_bar() {
             icon={<LoginIcon />}
             />
         </BottomNavigation>
+        </Paper>
     )
 }
 
