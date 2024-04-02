@@ -6,7 +6,7 @@ import Write from './user/write.jsx'
 import User from './user/user.jsx'
 import Home from './user/home.jsx'
 // MATERIAL STUFF
-import { BottomNavigation, BottomNavigationAction } from '@mui/material';
+import { BottomNavigation, BottomNavigationAction, colors } from '@mui/material';
 import CottageIcon from '@mui/icons-material/Cottage';
 import Paper from '@mui/material/Paper';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
@@ -35,7 +35,9 @@ function Nav_bar() {
             label="Home"
             value="home"
             icon={<CottageIcon />}
+
             />
+
             <BottomNavigationAction 
             component={Link}
             to="/user"
@@ -43,6 +45,7 @@ function Nav_bar() {
             value="user"
             icon={<AccountCircleIcon />}
             />
+
             <BottomNavigationAction 
             component={Link}
             to="/write"
@@ -50,6 +53,7 @@ function Nav_bar() {
             value="write"
             icon={<HistoryEduIcon />}
             />
+
             <BottomNavigationAction 
             component={Link}
             to="/login"
@@ -57,6 +61,7 @@ function Nav_bar() {
             value="login"
             icon={<LoginIcon />}
             />
+
         </BottomNavigation>
         </Paper>
     )
