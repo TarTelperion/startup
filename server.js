@@ -9,7 +9,7 @@ const bcrypt = require('bcrypt')
 
 let cookie_name = 'token'
 
-app.use(cors())
+app.use(cors({origin: 'http://localhost:5173/', optionsSuccessStatus: 200}))
 app.use(express.static('public'))
 app.use(cookie_parser())
 apiRoute = express.Router()

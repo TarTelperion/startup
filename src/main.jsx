@@ -18,6 +18,8 @@ import Index from './global_files/index.jsx'
 import '@fontsource/spectral/300.css';
 import './styles.css'
 
+let host = 'localhost:3000'
+
 function Nav_bar() {
     const [value, setValue] = React.useState(0);
     const ref = React.useRef<HTMLDivElement>(null);
