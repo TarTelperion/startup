@@ -20,6 +20,7 @@ import HistoryEduIcon from '@mui/icons-material/HistoryEdu'
 import CottageIcon from '@mui/icons-material/Cottage'
 import PublicIcon from '@mui/icons-material/Public'
 import LogoutIcon from '@mui/icons-material/Logout'
+import LoginIcon from '@mui/icons-material/Login'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle'
 import '@fontsource/spectral'
 
@@ -106,6 +107,7 @@ export default function MiniDrawer() {
         }
       } catch (err) {
         setAuth(false)
+        console.log(err)
       }
     }
     checkAuth()
@@ -189,7 +191,11 @@ export default function MiniDrawer() {
         <Divider />
         <List>
           {['More Stories', 'Log Out'].map((text, index) => (
-            <ListItem key={text} disablePadding sx={{ display: 'block' }}>
+            <ListItem
+              disablePadding
+              sx={{ display: 'block' }}
+              key={text === 'More Stories' ? text : auth ? 'Log Out' : 'Log In'}
+            >
               <ListItemButton
                 sx={{
                   minHeight: 48,
@@ -204,9 +210,20 @@ export default function MiniDrawer() {
                     justifyContent: 'center',
                   }}
                 >
-                  {index === 0 ? <PublicIcon /> : <LogoutIcon />}
+                  {index === 0 ? (
+                    <PublicIcon />
+                  ) : auth ? (
+                    <LogoutIcon />
+                  ) : (
+                    <LoginIcon />
+                  )}
                 </ListItemIcon>
-                <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
+                <ListItemText
+                  primary={
+                    text === 'More Stories' ? text : auth ? 'Log Out' : 'Log In'
+                  }
+                  sx={{ opacity: open ? 1 : 0 }}
+                />
               </ListItemButton>
             </ListItem>
           ))}
