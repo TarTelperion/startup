@@ -10,9 +10,8 @@ const App = () => {
     <React.Fragment>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <Container maxWidth="md">
-          <h1>Hello, World!</h1>
-        </Container>
+
+        <h1>Hello, World!</h1>
       </ThemeProvider>
     </React.Fragment>
   )
