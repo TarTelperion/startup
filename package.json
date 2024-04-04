@@ -29,6 +29,7 @@
     "minify": "^11.1.1",
     "mongodb": "^6.5.0",
     "playwright": "^1.42.1",
+    "prettier": "^3.2.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.22.3",
