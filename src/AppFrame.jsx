@@ -17,7 +17,11 @@ import ListItemButton from '@mui/material/ListItemButton'
 import ListItemIcon from '@mui/material/ListItemIcon'
 import ListItemText from '@mui/material/ListItemText'
 import InboxIcon from '@mui/icons-material/MoveToInbox'
+import HistoryEduIcon from '@mui/icons-material/HistoryEdu'
+import CottageIcon from '@mui/icons-material/Cottage'
 import MailIcon from '@mui/icons-material/Mail'
+import AccountCircleIcon from '@mui/icons-material/AccountCircle'
+import '@fontsource/spectral'
 
 const drawerWidth = 240
 
@@ -116,7 +120,7 @@ export default function MiniDrawer() {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap component="div">
-            Mini variant drawer
+            Writers' Block
           </Typography>
         </Toolbar>
       </AppBar>
@@ -132,7 +136,7 @@ export default function MiniDrawer() {
         </DrawerHeader>
         <Divider />
         <List>
-          {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
+          {['Home', 'User', 'Create'].map((text, index) => (
             <ListItem key={text} disablePadding sx={{ display: 'block' }}>
               <ListItemButton
                 sx={{
@@ -148,7 +152,13 @@ export default function MiniDrawer() {
                     justifyContent: 'center',
                   }}
                 >
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                  {index === 0 ? (
+                    <CottageIcon />
+                  ) : index === 1 ? (
+                    <AccountCircleIcon />
+                  ) : (
+                    <HistoryEduIcon />
+                  )}
                 </ListItemIcon>
                 <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
               </ListItemButton>

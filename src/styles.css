@@ -1,13 +1,13 @@
 * {
-    font-family: 'Spectral', sans-serif;
+  font-family: 'Spectral', sans-serif !important;
 }
 .Mui-selected {
-    font-family: 'Spectral', sans-serif !important;
-    color: #52796f;
+  font-family: 'Spectral', sans-serif !important;
+  color: #52796f;
 }
 .Mui-selected svg {
-    color: #52796f;
+  color: #52796f;
 }
 .css-8je8zh-MuiTouchRipple-root {
-    color: #84a98c;
+  color: #84a98c;
 }
