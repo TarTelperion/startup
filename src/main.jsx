@@ -1,7 +1,6 @@
 import * as React from 'react'
 import ReactDOM from 'react-dom/client'
 import { BrowserRouter, Route, NavLink, Routes, Navigate, useLocation, Link} from 'react-router-dom';
-import App from './App.jsx'
 import Write from './user/write.jsx'
 import User from './user/user.jsx'
 import Home from './user/home.jsx'
