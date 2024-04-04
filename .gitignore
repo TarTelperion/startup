@@ -1,5 +1,2 @@
 node_modules
 dbConfig.json
-server.test.js
-.prettier.rc.json
-.prettierignore
