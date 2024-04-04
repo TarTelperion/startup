@@ -9,7 +9,7 @@ const bcrypt = require('bcrypt')
 
 let cookie_name = 'token'
 
-app.use(cors({ origin: 'http://localhost:5173/', optionsSuccessStatus: 200 }))
+app.use(cors())
 app.use(express.static('public'))
 app.use(cookie_parser())
 apiRoute = express.Router()
@@ -19,7 +19,6 @@ apiRoute.use(bodyParser.json())
 let stories = []
 
 // Retrieve story by ID and send by JSON stringify
-//auth
 apiRoute.put('/auth/create', async (req, res) => {
   if (await db.user(req.body.mail)) {
     res.status(409).send('Preexisting user')
