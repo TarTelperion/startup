@@ -92,7 +92,24 @@ const Drawer = styled(MuiDrawer, {
 
 export default function MiniDrawer() {
   const theme = useTheme()
+  const [auth, setAuth] = React.useState(false)
   const [open, setOpen] = React.useState(false)
+
+  React.useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        const res = await fetch('http://localhost:3000/api/auth')
+        if (res.status === 200) {
+          setAuth(true)
+        } else {
+          setAuth(false)
+        }
+      } catch (err) {
+        setAuth(false)
+      }
+    }
+    checkAuth()
+  }, [])
 
   const handleDrawerOpen = () => {
     setOpen(true)
@@ -101,7 +118,6 @@ export default function MiniDrawer() {
   const handleDrawerClose = () => {
     setOpen(false)
   }
-
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
@@ -137,7 +153,12 @@ export default function MiniDrawer() {
         <Divider />
         <List>
           {['Home', 'Profile', 'Create'].map((text, index) => (
-            <ListItem key={text} disablePadding sx={{ display: 'block' }}>
+            <ListItem
+              key={text}
+              disablePadding
+              sx={{ display: 'block' }}
+              {...(auth === false ? { disabled: true } : {})}
+            >
               <ListItemButton
                 sx={{
                   minHeight: 48,
