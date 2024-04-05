@@ -2,6 +2,7 @@ import * as React from 'react'
 import { styled, useTheme } from '@mui/material/styles'
 import Box from '@mui/material/Box'
 import MuiDrawer from '@mui/material/Drawer'
+import { Button } from '@mui/material'
 import MuiAppBar from '@mui/material/AppBar'
 import Toolbar from '@mui/material/Toolbar'
 import List from '@mui/material/List'
@@ -142,7 +143,11 @@ export default function MiniDrawer() {
           </Typography>
         </Toolbar>
       </AppBar>
-      <Drawer variant="permanent" open={open}>
+      <Drawer
+        variant="permanent"
+        open={open}
+        ModalProps={{ keepMounted: true }}
+      >
         <DrawerHeader>
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === 'rtl' ? (
@@ -259,6 +264,13 @@ export default function MiniDrawer() {
           sollicitudin nibh sit. Ornare aenean euismod elementum nisi quis
           eleifend. Commodo viverra maecenas accumsan lacus vel facilisis. Nulla
           posuere sollicitudin aliquam ultrices sagittis orci a.
+          <Button
+            variant="outlined"
+            color="secondary"
+            startIcon={<AccountCircleIcon />}
+          >
+            Testing what this looks like
+          </Button>
         </Typography>
       </Box>
     </Box>
