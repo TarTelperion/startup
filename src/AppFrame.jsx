@@ -92,6 +92,13 @@ const Drawer = styled(MuiDrawer, {
   }),
 }))
 
+const Header = styled(Flex)(({ theme }) => ({
+  padding: theme.spacing(0, 1),
+  // backgroundColor: theme.palette.primary.main,
+  // necessary for content to be below app bar
+  ...theme.mixins.toolbar,
+}))
+
 const AppFrame = () => {
   const theme = useTheme()
   const [auth, setAuth] = useState(false)
@@ -126,12 +133,12 @@ const AppFrame = () => {
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
-      <AppBar position="fixed" open={open}>
+      <AppBar position="fixed" open={open} elevation={1}>
         <Toolbar>
           <IconButton
             color="inherit"
             aria-label="open drawer"
-            onClick={handleDrawerOpen}
+            // onClick={handleDrawerOpen}
             edge="start"
             sx={{
               marginRight: 5,
@@ -159,7 +166,7 @@ const AppFrame = () => {
             )}
           </IconButton>
         </DrawerHeader> */}
-        <Flex padding={theme.spacing(0, 1)} />
+        <Header backgroundColor={theme.palette.primary.main} boxShadow={1} />
         <Divider />
         <List>
           {['Home', 'Profile', 'Create'].map((text, index) => (
@@ -238,7 +245,7 @@ const AppFrame = () => {
         </List>
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-        <DrawerHeader />
+        <Header sx={{ backgroundColor: 'transparent' }} />
         <Typography paragraph>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
           eiusmod tempor incididunt ut labore et dolore magna aliqua. Rhoncus
