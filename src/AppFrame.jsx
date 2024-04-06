@@ -133,7 +133,14 @@ const AppFrame = () => {
   // }
 
   return (
-    <Box sx={{ display: 'flex' }}>
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        flex: '1 1 auto',
+        overflow: 'hidden',
+      }}
+    >
       <CssBaseline />
       <AppBar position="fixed" open={open} elevation={1}>
         <Toolbar>
