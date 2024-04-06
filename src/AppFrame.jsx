@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react'
 import { styled, useTheme } from '@mui/material/styles'
 import Box from '@mui/material/Box'
 import MuiDrawer from '@mui/material/Drawer'
-import { Button } from '@mui/material'
 import MuiAppBar from '@mui/material/AppBar'
 import Toolbar from '@mui/material/Toolbar'
 import List from '@mui/material/List'
@@ -22,7 +21,7 @@ import LogoutIcon from '@mui/icons-material/Logout'
 import LoginIcon from '@mui/icons-material/Login'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle'
 
-import Flex from './layout/Flex'
+import { Flex } from './layout'
 import Main from './Main'
 
 import '@fontsource/spectral'
@@ -96,6 +95,7 @@ const Drawer = styled(MuiDrawer, {
 
 const Header = styled(Flex)(({ theme }) => ({
   padding: theme.spacing(0, 1),
+  minHeight: 
   // backgroundColor: theme.palette.primary.main,
   // necessary for content to be below app bar
   ...theme.mixins.toolbar,
@@ -132,13 +132,16 @@ const AppFrame = () => {
   //   setOpen(false)
   // }
 
+  console.log('theme', theme.mixins.toolbar)
+
   return (
     <Box
       sx={{
         display: 'flex',
-        flexDirection: 'column',
-        flex: '1 1 auto',
-        overflow: 'hidden',
+        height: '100%',
+        // flexDirection: 'column',
+        // flex: '1 1 auto',
+        // overflow: 'hidden',
       }}
     >
       <CssBaseline />
@@ -253,7 +256,7 @@ const AppFrame = () => {
           ))}
         </List>
       </Drawer>
-      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+      <Box component="main" sx={{ display: 'flex', flex: '1 1 auto', p: 3 }}>
         <Header sx={{ backgroundColor: 'transparent' }} />
         <Main />
       </Box>
