@@ -1,4 +1,4 @@
-import * as React from 'react'
+import { useState, useEffect } from 'react'
 import { styled, useTheme } from '@mui/material/styles'
 import Box from '@mui/material/Box'
 import MuiDrawer from '@mui/material/Drawer'
@@ -11,8 +11,6 @@ import Typography from '@mui/material/Typography'
 import Divider from '@mui/material/Divider'
 import IconButton from '@mui/material/IconButton'
 import MenuIcon from '@mui/icons-material/Menu'
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
-import ChevronRightIcon from '@mui/icons-material/ChevronRight'
 import ListItem from '@mui/material/ListItem'
 import ListItemButton from '@mui/material/ListItemButton'
 import ListItemIcon from '@mui/material/ListItemIcon'
@@ -23,6 +21,8 @@ import PublicIcon from '@mui/icons-material/Public'
 import LogoutIcon from '@mui/icons-material/Logout'
 import LoginIcon from '@mui/icons-material/Login'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle'
+import Flex from './layout/Flex'
+
 import '@fontsource/spectral'
 
 const drawerWidth = 240
@@ -48,14 +48,14 @@ const closedMixin = (theme) => ({
   },
 })
 
-const DrawerHeader = styled('div')(({ theme }) => ({
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'flex-end',
-  padding: theme.spacing(0, 1),
-  // necessary for content to be below app bar
-  ...theme.mixins.toolbar,
-}))
+// const DrawerHeader = styled('div')(({ theme }) => ({
+//   display: 'flex',
+//   alignItems: 'center',
+//   justifyContent: 'flex-end',
+//   padding: theme.spacing(0, 1),
+//   // necessary for content to be below app bar
+//   ...theme.mixins.toolbar,
+// }))
 
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== 'open',
@@ -92,12 +92,13 @@ const Drawer = styled(MuiDrawer, {
   }),
 }))
 
-export default function MiniDrawer() {
+const AppFrame = () => {
   const theme = useTheme()
-  const [auth, setAuth] = React.useState(false)
-  const [open, setOpen] = React.useState(false)
+  const [auth, setAuth] = useState(false)
+  const open = true
+  // const [open, setOpen] = useState(false)
 
-  React.useEffect(() => {
+  useEffect(() => {
     const checkAuth = async () => {
       try {
         const res = await fetch('http://localhost:3000/api/auth')
@@ -114,13 +115,14 @@ export default function MiniDrawer() {
     checkAuth()
   }, [])
 
-  const handleDrawerOpen = () => {
-    setOpen(true)
-  }
+  // const handleDrawerOpen = () => {
+  //   setOpen(true)
+  // }
 
-  const handleDrawerClose = () => {
-    setOpen(false)
-  }
+  // const handleDrawerClose = () => {
+  //   setOpen(false)
+  // }
+
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
@@ -148,7 +150,7 @@ export default function MiniDrawer() {
         open={open}
         ModalProps={{ keepMounted: true }}
       >
-        <DrawerHeader>
+        {/* <DrawerHeader>
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === 'rtl' ? (
               <ChevronRightIcon />
@@ -156,7 +158,8 @@ export default function MiniDrawer() {
               <ChevronLeftIcon />
             )}
           </IconButton>
-        </DrawerHeader>
+        </DrawerHeader> */}
+        <Flex padding={theme.spacing(0, 1)} />
         <Divider />
         <List>
           {['Home', 'Profile', 'Create'].map((text, index) => (
@@ -276,3 +279,5 @@ export default function MiniDrawer() {
     </Box>
   )
 }
+
+export default AppFrame

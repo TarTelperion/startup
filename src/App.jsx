@@ -1,7 +1,7 @@
 import React from 'react'
 import { createRoot } from 'react-dom/client'
 import Root from './Root'
-import MiniDrawer from './AppFrame'
+import AppFrame from './AppFrame'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import '@fontsource/spectral'
 
@@ -31,6 +31,6 @@ const theme = createTheme({
 
 createRoot(document.getElementById('root')).render(
   <ThemeProvider theme={theme}>
-    <MiniDrawer />
+    <AppFrame />
   </ThemeProvider>
 )
