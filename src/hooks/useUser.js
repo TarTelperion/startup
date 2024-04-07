@@ -2,7 +2,7 @@ import useSWR from 'swr'
 import { get } from '../fetch/get'
 
 export const useUser = () => {
-  const { data, error } = useSWR('/api/auth', async (url) => {
+  const { data, error } = useSWR('/auth', async (url) => {
     try {
       const result = await get(url)
       console.log('result', result)

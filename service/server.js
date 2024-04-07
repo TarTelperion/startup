@@ -42,7 +42,7 @@ apiRoute.get('/auth', async (req, res) => {
   if (user) {
     res.send(JSON.stringify(user))
   } else {
-    res.status(404).send('unknown')
+    res.status(401).send('unknown')
   }
 })
 

@@ -2,65 +2,23 @@ import { useState } from 'react'
 import { styled, useTheme } from '@mui/material/styles'
 import {
   Box,
-  Drawer as MuiDrawer,
   AppBar as MuiAppBar,
   Toolbar,
-  List,
   CssBaseline,
   Typography,
-  Divider,
   IconButton,
-  ListItem,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
 } from '@mui/material'
 import MenuIcon from '@mui/icons-material/Menu'
-import { useNavigate } from 'react-router-dom'
-import HistoryEduIcon from '@mui/icons-material/HistoryEdu'
-import CottageIcon from '@mui/icons-material/Cottage'
-import PublicIcon from '@mui/icons-material/Public'
-import LogoutIcon from '@mui/icons-material/Logout'
-import LoginIcon from '@mui/icons-material/Login'
-import AccountCircleIcon from '@mui/icons-material/AccountCircle'
 
-import { Flex } from './layout'
+import AppSidebar from './AppSidebar'
+import AppHeader from './AppHeader'
 import MainRoutes from './Main_Routes'
 import { useUser } from './hooks/useUser'
+import LoginModal from './LoginModal'
 
 import '@fontsource/spectral'
 
 const drawerWidth = 240
-
-const openedMixin = (theme) => ({
-  width: drawerWidth,
-  transition: theme.transitions.create('width', {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.enteringScreen,
-  }),
-  overflowX: 'hidden',
-})
-
-const closedMixin = (theme) => ({
-  transition: theme.transitions.create('width', {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
-  }),
-  overflowX: 'hidden',
-  width: `calc(${theme.spacing(7)} + 1px)`,
-  [theme.breakpoints.up('sm')]: {
-    width: `calc(${theme.spacing(8)} + 1px)`,
-  },
-})
-
-// const DrawerHeader = styled('div')(({ theme }) => ({
-//   display: 'flex',
-//   alignItems: 'center',
-//   justifyContent: 'flex-end',
-//   padding: theme.spacing(0, 1),
-//   // necessary for content to be below app bar
-//   ...theme.mixins.toolbar,
-// }))
 
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== 'open',
@@ -80,68 +38,15 @@ const AppBar = styled(MuiAppBar, {
   }),
 }))
 
-const Drawer = styled(MuiDrawer, {
-  shouldForwardProp: (prop) => prop !== 'open',
-})(({ theme, open }) => ({
-  width: drawerWidth,
-  flexShrink: 0,
-  whiteSpace: 'nowrap',
-  boxSizing: 'border-box',
-  ...(open && {
-    ...openedMixin(theme),
-    '& .MuiDrawer-paper': openedMixin(theme),
-  }),
-  ...(!open && {
-    ...closedMixin(theme),
-    '& .MuiDrawer-paper': closedMixin(theme),
-  }),
-}))
-
-const Header = styled(Flex)(({ theme }) => ({
-  padding: theme.spacing(0, 1),
-  // backgroundColor: theme.palette.primary.main,
-  // necessary for content to be below app bar
-  ...theme.mixins.toolbar,
-}))
-
-const navItems = [
-  { text: 'Home', icon: <CottageIcon />, route: '/home' },
-  { text: 'User', icon: <AccountCircleIcon />, route: '/user' },
-  { text: 'Create', icon: <HistoryEduIcon />, route: '/create' },
-  // { text: 'More Stories', icon: <PublicIcon />, route: '/more-stories'},
-  // { text: 'Log Out', icon: <LogoutIcon />, route: '/logout'},
-  // { text: 'Log In', icon: <LoginIcon />, route: '/login'},
-]
-const secondaryNavItems = [
-  { text: 'More Stories', icon: <PublicIcon />, route: '/join' },
-  { text: 'Log Out', icon: <LogoutIcon />, route: '/login' },
-]
-
 const AppFrame = () => {
-  const theme = useTheme()
-  const navigate = useNavigate()
-  const open = true
-
-  // const [open, setOpen] = useState(false)
-
-  // const handleDrawerOpen = () => {
-  //   setOpen(true)
-  // }
-
-  // const handleDrawerClose = () => {
-  //   setOpen(false)
-  // }
-
   const { user } = useUser()
+  console.log('user:', user)
 
   return (
     <Box
       sx={{
         display: 'flex',
         height: '100%',
-        // flexDirection: 'column',
-        // flex: '1 1 auto',
-        // overflow: 'hidden',
       }}
     >
       <CssBaseline />
@@ -164,98 +69,7 @@ const AppFrame = () => {
           </Typography>
         </Toolbar>
       </AppBar>
-      <Drawer
-        variant="permanent"
-        open={open}
-        ModalProps={{ keepMounted: true }}
-      >
-        {/* <DrawerHeader>
-          <IconButton onClick={handleDrawerClose}>
-            {theme.direction === 'rtl' ? (
-              <ChevronRightIcon />
-            ) : (
-              <ChevronLeftIcon />
-            )}
-          </IconButton>
-        </DrawerHeader> */}
-        <Header backgroundColor={theme.palette.primary.main} boxShadow={1} />
-        <Divider />
-        <List>
-          {navItems.map(({ text, icon, route }) => (
-            <ListItem
-              key={text}
-              disablePadding
-              sx={{ display: 'block' }}
-              // Below is the program to make the links disable
-              // {...(auth === false ? { disabled: true } : {})}
-            >
-              <ListItemButton
-                sx={{
-                  minHeight: 48,
-                  justifyContent: open ? 'initial' : 'center',
-                  px: 2.5,
-                }}
-                onClick={() => navigate(route)}
-              >
-                <ListItemIcon
-                  sx={{
-                    minWidth: 0,
-                    mr: open ? 3 : 'auto',
-                    justifyContent: 'center',
-                  }}
-                >
-                  {icon}
-                </ListItemIcon>
-                <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
-              </ListItemButton>
-            </ListItem>
-          ))}
-        </List>
-        <Divider />
-        <List>
-          {/* JUST NOTING, I REMOVED THE AUTH VARIABLE IN THE FOLLOWING CONDITIONALS AND REPLACED IT WITH FALSE. */}
-          {secondaryNavItems.map(({ text, icon, route }, index) => (
-            <ListItem
-              disablePadding
-              sx={{ display: 'block' }}
-              key={
-                text === 'More Stories' ? text : false ? 'Log Out' : 'Log In'
-              }
-            >
-              <ListItemButton
-                sx={{
-                  minHeight: 48,
-                  justifyContent: open ? 'initial' : 'center',
-                  px: 2.5,
-                }}
-                onClick={() => {
-                  navigate(route)
-                }}
-              >
-                <ListItemIcon
-                  sx={{
-                    minWidth: 0,
-                    mr: open ? 3 : 'auto',
-                    justifyContent: 'center',
-                  }}
-                >
-                  {index === 0 ? icon : false ? <LogoutIcon /> : <LoginIcon />}
-                </ListItemIcon>
-                <ListItemText
-                  primary={
-                    text === 'More Stories'
-                      ? text
-                      : false
-                        ? 'Log Out'
-                        : 'Log In'
-                  }
-                  sx={{ opacity: open ? 1 : 0 }}
-                />
-              </ListItemButton>
-            </ListItem>
-          ))}
-        </List>
-      </Drawer>
+      <AppSidebar />
       <Box
         component="main"
         sx={{
@@ -267,9 +81,10 @@ const AppFrame = () => {
           pb: 3,
         }}
       >
-        <Header sx={{ backgroundColor: 'transparent' }} />
+        <AppHeader sx={{ backgroundColor: 'transparent' }} />
         <MainRoutes />
       </Box>
+      <LoginModal />
     </Box>
   )
 }
