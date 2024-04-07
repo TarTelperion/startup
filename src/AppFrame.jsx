@@ -22,7 +22,7 @@ import LoginIcon from '@mui/icons-material/Login'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle'
 
 import { Flex } from './layout'
-import Main from './Main'
+import MainRoutes from './Main_Routes'
 
 import '@fontsource/spectral'
 
@@ -264,7 +264,7 @@ const AppFrame = () => {
         }}
       >
         <Header sx={{ backgroundColor: 'transparent' }} />
-        <Main />
+        <MainRoutes />
       </Box>
     </Box>
   )

@@ -2,6 +2,7 @@
 import { Flex } from '../../layout'
 import { Paper } from '@mui/material'
 import { useEffect } from 'react'
+import { Typography } from '@mui/material'
 // Absolute Dependencies
 
 // Relative Dependencies
@@ -23,22 +24,34 @@ const Home = (props) => {
     display: 'flex',
     flexDirection: 'column',
     flex: '1 1 auto',
+    p: 2,
   }
 
   return (
-    <Flex flexRow>
-      <Flex flexColumn mr={2}>
-        <Paper sx={paperStyles}>Paper 1</Paper>
-      </Flex>
-      <Flex flexColumn>
-        <Flex flexColumn pb>
-          <Paper sx={paperStyles}>Paper2</Paper>
+    <>
+      <Typography>
+        <h1 align="center">Eventually you'll see your username here</h1>
+      </Typography>
+      <Flex flexRow>
+        <Flex flexColumn mr={2}>
+          <Paper sx={paperStyles} elevation={4}>
+            Paper 1
+          </Paper>
         </Flex>
         <Flex flexColumn>
-          <Paper sx={paperStyles}>Paper3</Paper>
+          <Flex flexColumn pb>
+            <Paper sx={paperStyles} elevation={4}>
+              Paper2
+            </Paper>
+          </Flex>
+          <Flex flexColumn>
+            <Paper sx={paperStyles} elevation={4}>
+              Paper3
+            </Paper>
+          </Flex>
         </Flex>
       </Flex>
-    </Flex>
+    </>
   )
 }
 

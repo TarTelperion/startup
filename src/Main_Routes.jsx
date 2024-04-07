@@ -7,7 +7,7 @@ import Home from './views/home/Home'
 
 // Relative Dependencies
 
-const Main = () => {
+const MainRoutes = () => {
   return (
     <Flex flexDirection="column" flex="1 1 auto">
       <Routes>
@@ -22,4 +22,4 @@ const Main = () => {
   )
 }
 
-export default Main
+export default MainRoutes
