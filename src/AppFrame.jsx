@@ -1,19 +1,21 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState } from 'react'
 import { styled, useTheme } from '@mui/material/styles'
-import Box from '@mui/material/Box'
-import MuiDrawer from '@mui/material/Drawer'
-import MuiAppBar from '@mui/material/AppBar'
-import Toolbar from '@mui/material/Toolbar'
-import List from '@mui/material/List'
-import CssBaseline from '@mui/material/CssBaseline'
-import Typography from '@mui/material/Typography'
-import Divider from '@mui/material/Divider'
-import IconButton from '@mui/material/IconButton'
+import {
+  Box,
+  Drawer as MuiDrawer,
+  AppBar as MuiAppBar,
+  Toolbar,
+  List,
+  CssBaseline,
+  Typography,
+  Divider,
+  IconButton,
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+} from '@mui/material'
 import MenuIcon from '@mui/icons-material/Menu'
-import ListItem from '@mui/material/ListItem'
-import ListItemButton from '@mui/material/ListItemButton'
-import ListItemIcon from '@mui/material/ListItemIcon'
-import ListItemText from '@mui/material/ListItemText'
 import { useNavigate } from 'react-router-dom'
 import HistoryEduIcon from '@mui/icons-material/HistoryEdu'
 import CottageIcon from '@mui/icons-material/Cottage'
@@ -24,6 +26,7 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle'
 
 import { Flex } from './layout'
 import MainRoutes from './Main_Routes'
+import { useUser } from './hooks/useUser'
 
 import '@fontsource/spectral'
 
@@ -116,28 +119,10 @@ const secondaryNavItems = [
 
 const AppFrame = () => {
   const theme = useTheme()
-  const [auth, setAuth] = useState(false)
-  const open = true
-  // const [open, setOpen] = useState(false)
-
-  useEffect(() => {
-    const checkAuth = async () => {
-      try {
-        const res = await fetch('http://localhost:3000/api/auth')
-        if (res.status === 200) {
-          setAuth(true)
-        } else {
-          setAuth(false)
-        }
-      } catch (err) {
-        setAuth(false)
-        console.log(err)
-      }
-    }
-    checkAuth()
-  }, [])
-
   const navigate = useNavigate()
+  const open = true
+
+  // const [open, setOpen] = useState(false)
 
   // const handleDrawerOpen = () => {
   //   setOpen(true)
@@ -146,6 +131,8 @@ const AppFrame = () => {
   // const handleDrawerClose = () => {
   //   setOpen(false)
   // }
+
+  const { user } = useUser()
 
   return (
     <Box
@@ -226,11 +213,14 @@ const AppFrame = () => {
         </List>
         <Divider />
         <List>
+          {/* JUST NOTING, I REMOVED THE AUTH VARIABLE IN THE FOLLOWING CONDITIONALS AND REPLACED IT WITH FALSE. */}
           {secondaryNavItems.map(({ text, icon, route }, index) => (
             <ListItem
               disablePadding
               sx={{ display: 'block' }}
-              key={text === 'More Stories' ? text : auth ? 'Log Out' : 'Log In'}
+              key={
+                text === 'More Stories' ? text : false ? 'Log Out' : 'Log In'
+              }
             >
               <ListItemButton
                 sx={{
@@ -249,11 +239,15 @@ const AppFrame = () => {
                     justifyContent: 'center',
                   }}
                 >
-                  {index === 0 ? icon : auth ? <LogoutIcon /> : <LoginIcon />}
+                  {index === 0 ? icon : false ? <LogoutIcon /> : <LoginIcon />}
                 </ListItemIcon>
                 <ListItemText
                   primary={
-                    text === 'More Stories' ? text : auth ? 'Log Out' : 'Log In'
+                    text === 'More Stories'
+                      ? text
+                      : false
+                        ? 'Log Out'
+                        : 'Log In'
                   }
                   sx={{ opacity: open ? 1 : 0 }}
                 />

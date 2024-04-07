@@ -10,16 +10,6 @@ import { Typography } from '@mui/material'
 const Home = (props) => {
   let user = undefined
 
-  const get_user = async () => {
-    const unprocessed_response = fetch('http://localhost:3000/api/auth')
-    const json_user = await unprocessed_response.json
-    return json_user
-  }
-
-  useEffect(() => {
-    user = get_user()
-  }, [])
-
   const paperStyles = {
     display: 'flex',
     flexDirection: 'column',

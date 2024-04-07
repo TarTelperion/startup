@@ -4,9 +4,9 @@ import { createPayload } from './createPayload'
 import { fetchOnce, clearPromise } from './fetchOnce'
 import { processResponse } from './processResponse'
 
-export const get = async (url) => {
+export const del = (url, body) => {
   return fetchOnce(url, () => {
-    const payload = createPayload('GET')
+    const payload = createPayload('DELETE', body)
 
     const promise = new Promise((resolve, reject) => {
       fetch(combine(API.url, url), payload)
@@ -15,7 +15,10 @@ export const get = async (url) => {
         })
         .catch(() => {
           clearPromise(url)
-          reject({ status: -1, message: 'Network error' })
+          reject({
+            status: -1,
+            message: 'Could not access api',
+          })
         })
     })
 
