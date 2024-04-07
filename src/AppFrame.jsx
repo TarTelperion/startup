@@ -109,6 +109,10 @@ const navItems = [
   // { text: 'Log Out', icon: <LogoutIcon />, route: '/logout'},
   // { text: 'Log In', icon: <LoginIcon />, route: '/login'},
 ]
+const secondaryNavItems = [
+  { text: 'More Stories', icon: <PublicIcon />, route: '/join' },
+  { text: 'Log Out', icon: <LogoutIcon />, route: '/login' },
+]
 
 const AppFrame = () => {
   const theme = useTheme()
@@ -222,7 +226,7 @@ const AppFrame = () => {
         </List>
         <Divider />
         <List>
-          {['More Stories', 'Log Out'].map((text, index) => (
+          {secondaryNavItems.map(({ text, icon, route }, index) => (
             <ListItem
               disablePadding
               sx={{ display: 'block' }}
@@ -234,6 +238,9 @@ const AppFrame = () => {
                   justifyContent: open ? 'initial' : 'center',
                   px: 2.5,
                 }}
+                onClick={() => {
+                  navigate(route)
+                }}
               >
                 <ListItemIcon
                   sx={{
@@ -242,13 +249,7 @@ const AppFrame = () => {
                     justifyContent: 'center',
                   }}
                 >
-                  {index === 0 ? (
-                    <PublicIcon />
-                  ) : auth ? (
-                    <LogoutIcon />
-                  ) : (
-                    <LoginIcon />
-                  )}
+                  {index === 0 ? icon : auth ? <LogoutIcon /> : <LoginIcon />}
                 </ListItemIcon>
                 <ListItemText
                   primary={
