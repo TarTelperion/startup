@@ -2,6 +2,7 @@
 import { Routes, Navigate, Route } from 'react-router-dom'
 import { Flex } from './layout'
 import Home from './views/home/Home'
+import Create from './views/create_story/CreateStory'
 
 // Absolute Dependencies
 
@@ -14,7 +15,7 @@ const MainRoutes = () => {
         <Route path="/home" element={<Home />} />
         <Route path="/write" element={<p>Write</p>} />
         <Route path="/join" element={<p>Join</p>} />
-        <Route path="/create" element={<p>create</p>} />
+        <Route path="/create" element={<Create />} />
         <Route path="/login" element={<p>login</p>} />
         <Route path="/" exact element={<Navigate replace to="/home" />} />
       </Routes>

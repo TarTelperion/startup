@@ -39,7 +39,7 @@ const Home = (props) => {
           </Paper>
         </Flex>
         <Flex flexColumn>
-          <Flex flexColumn pb>
+          <Flex flexColumn mb={2}>
             <Paper sx={paperStyles} elevation={4}>
               Paper2
             </Paper>

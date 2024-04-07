@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { styled, useTheme } from '@mui/material/styles'
 import Box from '@mui/material/Box'
 import MuiDrawer from '@mui/material/Drawer'
@@ -14,6 +14,7 @@ import ListItem from '@mui/material/ListItem'
 import ListItemButton from '@mui/material/ListItemButton'
 import ListItemIcon from '@mui/material/ListItemIcon'
 import ListItemText from '@mui/material/ListItemText'
+import { useNavigate } from 'react-router-dom'
 import HistoryEduIcon from '@mui/icons-material/HistoryEdu'
 import CottageIcon from '@mui/icons-material/Cottage'
 import PublicIcon from '@mui/icons-material/Public'
@@ -100,6 +101,15 @@ const Header = styled(Flex)(({ theme }) => ({
   ...theme.mixins.toolbar,
 }))
 
+const navItems = [
+  { text: 'Home', icon: <CottageIcon />, route: '/home' },
+  { text: 'User', icon: <AccountCircleIcon />, route: '/user' },
+  { text: 'Create', icon: <HistoryEduIcon />, route: '/create' },
+  // { text: 'More Stories', icon: <PublicIcon />, route: '/more-stories'},
+  // { text: 'Log Out', icon: <LogoutIcon />, route: '/logout'},
+  // { text: 'Log In', icon: <LoginIcon />, route: '/login'},
+]
+
 const AppFrame = () => {
   const theme = useTheme()
   const [auth, setAuth] = useState(false)
@@ -122,6 +132,8 @@ const AppFrame = () => {
     }
     checkAuth()
   }, [])
+
+  const navigate = useNavigate()
 
   // const handleDrawerOpen = () => {
   //   setOpen(true)
@@ -178,12 +190,13 @@ const AppFrame = () => {
         <Header backgroundColor={theme.palette.primary.main} boxShadow={1} />
         <Divider />
         <List>
-          {['Home', 'Profile', 'Create'].map((text, index) => (
+          {navItems.map(({ text, icon, route }) => (
             <ListItem
               key={text}
               disablePadding
               sx={{ display: 'block' }}
-              {...(auth === false ? { disabled: true } : {})}
+              // Below is the program to make the links disable
+              // {...(auth === false ? { disabled: true } : {})}
             >
               <ListItemButton
                 sx={{
@@ -191,6 +204,7 @@ const AppFrame = () => {
                   justifyContent: open ? 'initial' : 'center',
                   px: 2.5,
                 }}
+                onClick={() => navigate(route)}
               >
                 <ListItemIcon
                   sx={{
@@ -199,13 +213,7 @@ const AppFrame = () => {
                     justifyContent: 'center',
                   }}
                 >
-                  {index === 0 ? (
-                    <CottageIcon />
-                  ) : index === 1 ? (
-                    <AccountCircleIcon />
-                  ) : (
-                    <HistoryEduIcon />
-                  )}
+                  {icon}
                 </ListItemIcon>
                 <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
               </ListItemButton>
@@ -260,7 +268,8 @@ const AppFrame = () => {
           flexDirection: 'column',
           flex: '1 1 auto',
           height: '100%',
-          p: 3,
+          px: 3,
+          pb: 3,
         }}
       >
         <Header sx={{ backgroundColor: 'transparent' }} />
