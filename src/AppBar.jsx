@@ -1,3 +1,4 @@
+import { useState, useCallback } from 'react'
 import { styled } from '@mui/material/styles'
 import {
   AppBar as MuiAppBar,
@@ -8,14 +9,14 @@ import {
 import MenuIcon from '@mui/icons-material/Menu'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle'
 import { Flex } from './layout'
+import UserDrawer from './UserDrawer'
 
 const drawerWidth = 240
 
 const StyledBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== 'open',
 })(({ theme, open }) => ({
-  color: 'white',
-  zIndex: theme.zIndex.drawer + 1,
+  zIndex: theme.zIndex.drawer,
   transition: theme.transitions.create(['width', 'margin'], {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
@@ -31,32 +32,39 @@ const StyledBar = styled(MuiAppBar, {
 }))
 
 const AppBar = () => {
+  const [open, setOpen] = useState(false)
+
+  const setDrawerOpen = useCallback(
+    (isOpen) => {
+      switch (isOpen) {
+        case true:
+          setOpen(true)
+          break
+        case false:
+          setOpen(false)
+          break
+        default:
+          setOpen(!open)
+      }
+    },
+    [setOpen, open]
+  )
+
   return (
-    <StyledBar position="fixed" open={open} elevation={1}>
+    <StyledBar position="fixed" open elevation={1}>
       <Toolbar>
-        <Flex flexRow justifyContent="space-between">
-          <Flex>
-            <IconButton
-              color="inherit"
-              aria-label="open drawer"
-              // onClick={handleDrawerOpen}
-              edge="start"
-              sx={{
-                marginRight: 5,
-                ...(open && { display: 'none' }),
-              }}
-            >
-              <MenuIcon />
-            </IconButton>
+        <Flex flexRow justifyContent="space-between" alignItems="center">
+          <Flex alignItems="center">
             <Typography variant="h6" noWrap component="div">
               Writers' Block
             </Typography>
           </Flex>
         </Flex>
-        <IconButton color="white">
-          <AccountCircleIcon color="white" />
+        <IconButton color="inherit" onClick={setDrawerOpen}>
+          <AccountCircleIcon />
         </IconButton>
       </Toolbar>
+      <UserDrawer open={open} setOpen={setDrawerOpen} />
     </StyledBar>
   )
 }

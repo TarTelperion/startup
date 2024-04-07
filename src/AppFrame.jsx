@@ -10,8 +10,8 @@ import {
 } from '@mui/material'
 import MenuIcon from '@mui/icons-material/Menu'
 
+import { AppHeader } from './layout'
 import AppSidebar from './AppSidebar'
-import AppHeader from './AppHeader'
 import AppBar from './AppBar'
 import MainRoutes from './Main_Routes'
 import { useUser } from './hooks/useUser'
@@ -21,6 +21,7 @@ import '@fontsource/spectral'
 
 const AppFrame = () => {
   const { user, isLoading } = useUser()
+
   console.log('user', user)
   console.log('isLoading', isLoading)
 
@@ -37,7 +38,7 @@ const AppFrame = () => {
     >
       <CssBaseline />
       <AppBar />
-      <AppSidebar openModal={handleOpen} />
+      <AppSidebar openModal={handleOpen} user={user} />
       <Box
         component="main"
         sx={{

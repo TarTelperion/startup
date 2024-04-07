@@ -22,22 +22,23 @@ import CottageIcon from '@mui/icons-material/Cottage'
 import PublicIcon from '@mui/icons-material/Public'
 import LogoutIcon from '@mui/icons-material/Logout'
 import LoginIcon from '@mui/icons-material/Login'
+import GroupAddIcon from '@mui/icons-material/GroupAdd'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle'
 
-import AppHeader from './AppHeader'
+import { AppHeader } from './layout'
+import { Group } from '@mui/icons-material'
 
 const drawerWidth = 240
 
 const navItems = [
   { text: 'Home', icon: <CottageIcon />, route: '/home' },
-  { text: 'User', icon: <AccountCircleIcon />, route: '/user' },
   { text: 'Create', icon: <HistoryEduIcon />, route: '/create' },
   // { text: 'More Stories', icon: <PublicIcon />, route: '/more-stories'},
   // { text: 'Log Out', icon: <LogoutIcon />, route: '/logout'},
   // { text: 'Log In', icon: <LoginIcon />, route: '/login'},
 ]
 const secondaryNavItems = [
-  { text: 'More Stories', icon: <PublicIcon />, route: '/join' },
+  { text: 'More Stories', icon: <GroupAddIcon />, route: '/join' },
   { text: 'Log Out', icon: <LogoutIcon />, route: '/login' },
 ]
 
@@ -79,13 +80,13 @@ const closedMixin = (theme) => ({
   },
 })
 
-const AppSidebar = ({ openModal }) => {
+const AppSidebar = ({ openModal, user }) => {
   const theme = useTheme()
   const navigate = useNavigate()
 
   return (
     <Drawer variant="permanent" open={open} ModalProps={{ keepMounted: true }}>
-      <AppHeader backgroundColor={theme.palette.primary.main} boxShadow={1} />
+      <AppHeader isBar />
       <Divider />
       <List>
         {navItems.map(({ text, icon, route }) => (
@@ -115,12 +116,37 @@ const AppSidebar = ({ openModal }) => {
       <Divider />
       <List>
         {/* JUST NOTING, I REMOVED THE AUTH VARIABLE IN THE FOLLOWING CONDITIONALS AND REPLACED IT WITH FALSE. */}
-        {secondaryNavItems.map(({ text, icon, route }, index) => (
-          <ListItem
-            disablePadding
-            sx={{ display: 'block' }}
-            key={text === 'More Stories' ? text : false ? 'Log Out' : 'Log In'}
+        <ListItem disablePadding sx={{ display: 'block' }} key="More Stories">
+          <ListItemButton
+            sx={{
+              minHeight: 48,
+              justifyContent: open ? 'initial' : 'center',
+              px: 2.5,
+            }}
+            onClick={() => {
+              navigate('/join')
+            }}
           >
+            <ListItemIcon
+              sx={{
+                minWidth: 0,
+                mr: open ? 3 : 'auto',
+                justifyContent: 'center',
+              }}
+            >
+              {' '}
+              <GroupAddIcon />
+            </ListItemIcon>
+            <ListItemText
+              sx={{ opacity: open ? 1 : 0 }}
+              primary="More Stories"
+            />
+          </ListItemButton>
+        </ListItem>
+        {user ? (
+          <></>
+        ) : (
+          <ListItem disablePadding sx={{ display: 'block' }} key="Log In">
             <ListItemButton
               sx={{
                 minHeight: 48,
@@ -128,7 +154,7 @@ const AppSidebar = ({ openModal }) => {
                 px: 2.5,
               }}
               onClick={() => {
-                index == 0 ? navigate(route) : openModal(true)
+                openModal(true)
               }}
             >
               <ListItemIcon
@@ -138,17 +164,13 @@ const AppSidebar = ({ openModal }) => {
                   justifyContent: 'center',
                 }}
               >
-                {index === 0 ? icon : false ? <LogoutIcon /> : <LoginIcon />}
+                {' '}
+                <LoginIcon />
               </ListItemIcon>
-              <ListItemText
-                primary={
-                  text === 'More Stories' ? text : false ? 'Log Out' : 'Log In'
-                }
-                sx={{ opacity: open ? 1 : 0 }}
-              />
+              <ListItemText sx={{ opacity: open ? 1 : 0 }} primary="Log In" />
             </ListItemButton>
           </ListItem>
-        ))}
+        )}
       </List>
     </Drawer>
   )
