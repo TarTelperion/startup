@@ -3,5 +3,14 @@
   "editor.formatOnSave": true,
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "explicit"
-  }
+  },
+  "eslint.format.enable": true,
+  "eslint.workingDirectories": ["./src"],
+  "eslint.validate": [
+    "html",
+    "javascript",
+    "typescript",
+    "javascriptreact",
+    "typescriptreact"
+  ]
 }

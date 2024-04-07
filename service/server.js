@@ -17,7 +17,7 @@ app.use('/api', apiRoute)
 apiRoute.use(bodyParser.json())
 
 let stories = []
-
+console.log('loggy')
 // Retrieve story by ID and send by JSON stringify
 apiRoute.put('/auth/create', async (req, res) => {
   if (await db.user(req.body.mail)) {
@@ -31,7 +31,7 @@ apiRoute.put('/auth/create', async (req, res) => {
 
 function bake_cookie(res, token) {
   res.cookie(cookie_name, token, {
-    secure: true, // switch to true AS SOON AS YOU DEPLOY
+    secure: false, // switch to true AS SOON AS YOU DEPLOY
     httpOnly: true,
     sameSite: 'strict',
   })
@@ -47,7 +47,8 @@ apiRoute.get('/auth', async (req, res) => {
 })
 
 apiRoute.post('/auth/login', async (req, res) => {
-  const usr = await db.user(req.body.mail)
+  const usr = await db.user(req.body.name)
+  console.log(usr)
   if (usr) {
     if (await bcrypt.compare(req.body.pass, usr.pass)) {
       bake_cookie(res, usr.token)

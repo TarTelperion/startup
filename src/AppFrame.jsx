@@ -12,35 +12,21 @@ import MenuIcon from '@mui/icons-material/Menu'
 
 import AppSidebar from './AppSidebar'
 import AppHeader from './AppHeader'
+import AppBar from './AppBar'
 import MainRoutes from './Main_Routes'
 import { useUser } from './hooks/useUser'
 import LoginModal from './LoginModal'
 
 import '@fontsource/spectral'
 
-const drawerWidth = 240
-
-const AppBar = styled(MuiAppBar, {
-  shouldForwardProp: (prop) => prop !== 'open',
-})(({ theme, open }) => ({
-  zIndex: theme.zIndex.drawer + 1,
-  transition: theme.transitions.create(['width', 'margin'], {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
-  }),
-  ...(open && {
-    marginLeft: drawerWidth,
-    width: `calc(100% - ${drawerWidth}px)`,
-    transition: theme.transitions.create(['width', 'margin'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  }),
-}))
-
 const AppFrame = () => {
-  const { user } = useUser()
-  console.log('user:', user)
+  const { user, isLoading } = useUser()
+  console.log('user', user)
+  console.log('isLoading', isLoading)
+
+  const [open, setOpen] = useState(false)
+  const handleOpen = () => setOpen(true)
+  const handleClose = () => setOpen(false)
 
   return (
     <Box
@@ -50,26 +36,8 @@ const AppFrame = () => {
       }}
     >
       <CssBaseline />
-      <AppBar position="fixed" open={open} elevation={1}>
-        <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            // onClick={handleDrawerOpen}
-            edge="start"
-            sx={{
-              marginRight: 5,
-              ...(open && { display: 'none' }),
-            }}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" noWrap component="div">
-            Writers' Block
-          </Typography>
-        </Toolbar>
-      </AppBar>
-      <AppSidebar />
+      <AppBar />
+      <AppSidebar openModal={handleOpen} />
       <Box
         component="main"
         sx={{
@@ -82,9 +50,13 @@ const AppFrame = () => {
         }}
       >
         <AppHeader sx={{ backgroundColor: 'transparent' }} />
-        <MainRoutes />
+        {!isLoading && !!user && <MainRoutes />}
       </Box>
-      <LoginModal />
+      <LoginModal
+        open={open}
+        setClosed={handleClose}
+        onLoginSuccess={handleClose}
+      />
     </Box>
   )
 }

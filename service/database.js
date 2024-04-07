@@ -19,9 +19,16 @@ const storyCollection = db.collection('stories')
 })
 
 // find user stuff
-async function user(mail) {
-  let user = await userCollection.findOne({ mail: mail })
-  return user
+async function user(name) {
+  let user_from_mail = await userCollection.findOne({ mail: name })
+  let user_from_name = await userCollection.findOne({ name: name })
+  console.log('mail', user_from_mail)
+  console.log('name', user_from_name)
+  if (user_from_mail) {
+    return user_from_mail
+  } else {
+    return user_from_name
+  }
 }
 
 function user_token(tok) {

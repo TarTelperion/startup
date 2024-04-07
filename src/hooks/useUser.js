@@ -1,20 +1,17 @@
 import useSWR from 'swr'
 import { get } from '../fetch/get'
 
+const fetcher = async (url) => get(url)
+
 export const useUser = () => {
-  const { data, error } = useSWR('/auth', async (url) => {
-    try {
-      const result = await get(url)
-      console.log('result', result)
-    } catch (e) {
-      console.log('error', e)
-    }
-    return result
+  const { data, error, isLoading, isValidating } = useSWR('/auth', fetcher, {
+    shouldRetryOnError: false,
   })
 
   return {
     user: data,
-    isLoading: !error && !data,
+    isFetching: isValidating,
+    isLoading: (!error && !data) || isLoading,
     isError: error,
   }
 }

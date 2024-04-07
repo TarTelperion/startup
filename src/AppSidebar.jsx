@@ -26,6 +26,8 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle'
 
 import AppHeader from './AppHeader'
 
+const drawerWidth = 240
+
 const navItems = [
   { text: 'Home', icon: <CottageIcon />, route: '/home' },
   { text: 'User', icon: <AccountCircleIcon />, route: '/user' },
@@ -77,7 +79,7 @@ const closedMixin = (theme) => ({
   },
 })
 
-const AppSidebar = () => {
+const AppSidebar = ({ openModal }) => {
   const theme = useTheme()
   const navigate = useNavigate()
 
@@ -126,7 +128,7 @@ const AppSidebar = () => {
                 px: 2.5,
               }}
               onClick={() => {
-                navigate(route)
+                index == 0 ? navigate(route) : openModal(true)
               }}
             >
               <ListItemIcon
