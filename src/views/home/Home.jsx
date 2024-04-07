@@ -19,17 +19,23 @@ const Home = (props) => {
     user = get_user()
   }, [])
 
+  const paperStyles = {
+    display: 'flex',
+    flexDirection: 'column',
+    flex: '1 1 auto',
+  }
+
   return (
     <Flex flexRow>
-      <Flex flexColumn>
-        <Paper>Paper 1</Paper>
+      <Flex flexColumn mr={2}>
+        <Paper sx={paperStyles}>Paper 1</Paper>
       </Flex>
       <Flex flexColumn>
-        <Flex>
-          <Paper>Paper2</Paper>
+        <Flex flexColumn pb>
+          <Paper sx={paperStyles}>Paper2</Paper>
         </Flex>
-        <Flex>
-          <Paper>Paper3</Paper>
+        <Flex flexColumn>
+          <Paper sx={paperStyles}>Paper3</Paper>
         </Flex>
       </Flex>
     </Flex>

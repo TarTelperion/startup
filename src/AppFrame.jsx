@@ -95,7 +95,6 @@ const Drawer = styled(MuiDrawer, {
 
 const Header = styled(Flex)(({ theme }) => ({
   padding: theme.spacing(0, 1),
-  minHeight: 
   // backgroundColor: theme.palette.primary.main,
   // necessary for content to be below app bar
   ...theme.mixins.toolbar,
@@ -131,8 +130,6 @@ const AppFrame = () => {
   // const handleDrawerClose = () => {
   //   setOpen(false)
   // }
-
-  console.log('theme', theme.mixins.toolbar)
 
   return (
     <Box
@@ -256,7 +253,16 @@ const AppFrame = () => {
           ))}
         </List>
       </Drawer>
-      <Box component="main" sx={{ display: 'flex', flex: '1 1 auto', p: 3 }}>
+      <Box
+        component="main"
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          flex: '1 1 auto',
+          height: '100%',
+          p: 3,
+        }}
+      >
         <Header sx={{ backgroundColor: 'transparent' }} />
         <Main />
       </Box>
