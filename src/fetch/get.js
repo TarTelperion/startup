@@ -3,13 +3,16 @@ import { API } from '../config'
 import { createPayload } from './createPayload'
 import { fetchOnce, clearPromise } from './fetchOnce'
 import { processResponse } from './processResponse'
+import { combine } from './combine'
 
 export const get = async (url) => {
   return fetchOnce(url, () => {
     const payload = createPayload('GET')
+    console.log('payload', payload)
 
     const promise = new Promise((resolve, reject) => {
-      fetch(combine(API.url, url), payload)
+      console.log('initiating promise')
+      return fetch(combine(API.url, url), payload)
         .then((response) => {
           processResponse(resolve, reject, response, url)
         })

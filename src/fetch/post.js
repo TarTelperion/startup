@@ -3,6 +3,7 @@ import { API } from '../config'
 import { createPayload } from './createPayload'
 import { fetchOnce, clearPromise } from './fetchOnce'
 import { processResponse } from './processResponse'
+import { combine } from './combine'
 
 export const post = (url, body) => {
   return fetchOnce(url, () => {
