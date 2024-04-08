@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useGlobalStories } from '../../hooks/useGlobalStories'
 import {
   List,
   Typography,
@@ -13,29 +14,13 @@ import { Add } from '@mui/icons-material'
 import { Flex, ViewHeader } from '../../layout'
 
 const Join = () => {
-  let stories = [
-    {
-      title: 'Dawn of Darkness',
-      authors: 1,
-      genre: 'Fantasy',
-    },
-    {
-      title: 'When it Changed',
-      authors: 17,
-      genre: 'Fantasy',
-    },
-    {
-      title: 'Roochie bums',
-      authors: 50000,
-      genre: 'Fantasy',
-    },
-  ]
+  const { globalStories } = useGlobalStories()
 
   return (
     <>
       <ViewHeader>{'Join a New Story'}</ViewHeader>
       <List>
-        {stories.map(({ title, authors, genre }, index) => (
+        {globalStories.map(({ title, authors, genre }, index) => (
           <ListItem
             key={index}
             secondaryAction={

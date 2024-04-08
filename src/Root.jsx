@@ -5,7 +5,6 @@ import Container from '@mui/material/Container'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import AppFrame from './AppFrame'
 import { palette, typography, components } from './theme'
-
 import '@fontsource/spectral'
 
 const theme = createTheme({
@@ -13,8 +12,6 @@ const theme = createTheme({
   typography,
   components,
 })
-
-console.log('theme', theme)
 
 const App = () => {
   return (

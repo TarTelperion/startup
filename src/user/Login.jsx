@@ -9,12 +9,15 @@ import {
   Stack,
 } from '@mui/material'
 import { useUser } from '../hooks/useUser'
+import LoginErrorPopper from './LoginErrorPopper'
 
 const Login = ({ onComplete }) => {
   const { user, logout, login } = useUser()
 
   const [name, setName] = useState('')
   const [pass, setPass] = useState('')
+  const [anchor, setAnchor] = useState(null)
+  const [open, setOpen] = useState(false)
 
   const handleCancel = () => {
     setName('')
@@ -22,8 +25,14 @@ const Login = ({ onComplete }) => {
     onComplete()
   }
 
-  const handleSubmit = async () => {
-    await login({ name, pass })
+  const handleSubmit = async (e) => {
+    try {
+      await login({ name, pass })
+    } catch (err) {
+      setOpen(true)
+      setAnchor(e.target)
+      return
+    }
     onComplete()
   }
 
@@ -74,11 +83,14 @@ const Login = ({ onComplete }) => {
         <Button
           variant="contained"
           color="inherit"
-          onClick={handleSubmit}
+          onClick={(e) => {
+            handleSubmit(e)
+          }}
           disabled={!name || !pass}
         >
           Log In
         </Button>
+        <LoginErrorPopper open={open} anchorEl={anchor} setOpen={setOpen} />
       </DialogActions>
     </>
   )
