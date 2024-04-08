@@ -23,6 +23,7 @@ import PublicIcon from '@mui/icons-material/Public'
 import LogoutIcon from '@mui/icons-material/Logout'
 import LoginIcon from '@mui/icons-material/Login'
 import GroupAddIcon from '@mui/icons-material/GroupAdd'
+import DeveloperModeIcon from '@mui/icons-material/DeveloperMode'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle'
 
 import { AppHeader } from './layout'
@@ -33,6 +34,7 @@ const drawerWidth = 240
 const navItems = [
   { text: 'Home', icon: <CottageIcon />, route: '/home' },
   { text: 'Create', icon: <HistoryEduIcon />, route: '/create' },
+  { text: 'Temporary Write', icon: <DeveloperModeIcon />, route: '/write' },
   // { text: 'More Stories', icon: <PublicIcon />, route: '/more-stories'},
   // { text: 'Log Out', icon: <LogoutIcon />, route: '/logout'},
   // { text: 'Log In', icon: <LoginIcon />, route: '/login'},

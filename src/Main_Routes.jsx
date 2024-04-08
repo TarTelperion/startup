@@ -4,6 +4,7 @@ import { Flex } from './layout'
 import Home from './views/home/Home'
 import Create from './views/create_story/CreateStory'
 import Join from './views/join/Join'
+import Write from './views/write/Write'
 
 // Absolute Dependencies
 
@@ -14,7 +15,7 @@ const MainRoutes = () => {
     <Flex flexDirection="column" flex="1 1 auto">
       <Routes>
         <Route path="/home" element={<Home />} />
-        <Route path="/write" element={<p>Write</p>} />
+        <Route path="/write" element={<Write />} />
         <Route path="/join" element={<Join />} />
         <Route path="/create" element={<Create />} />
         <Route path="/login" element={<p>login</p>} />
