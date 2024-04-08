@@ -5,6 +5,7 @@ import {
   Typography,
   Card,
   CardContent,
+  Box,
 } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
 import { useNavigate } from 'react-router-dom'
@@ -73,15 +74,17 @@ const UserDrawer = ({ open, setOpen }) => {
               </Typography>
             </Flex>
           </Card>
-          <Button
-            variant="contained"
-            color="secondary"
-            size="large"
-            onClick={handleLogout}
-            mt={3}
-          >
-            Log Out
-          </Button>
+          <Box pt={2}>
+            <Button
+              variant="contained"
+              color="secondary"
+              size="large"
+              onClick={handleLogout}
+              fullWidth
+            >
+              Log Out
+            </Button>
+          </Box>
         </Flex>
       </DrawerContent>
     </Drawer>

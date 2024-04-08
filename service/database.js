@@ -102,6 +102,10 @@ async function get_pop_stories() {
   return array
 }
 
+async function getJoinedStories(userId) {
+  return await storyCollection.find({ joined: userId }).toArray()
+}
+
 async function get_story(story_id) {
   const story = await storyCollection.findOne({ _id: story_id })
   return story
@@ -156,4 +160,5 @@ module.exports = {
   update_story,
   remove,
   update_user,
+  getJoinedStories,
 }

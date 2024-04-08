@@ -4,13 +4,14 @@ import CssBaseline from '@mui/material/CssBaseline'
 import Container from '@mui/material/Container'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import AppFrame from './AppFrame'
-import { palette, typography } from './theme'
+import { palette, typography, components } from './theme'
 
 import '@fontsource/spectral'
 
 const theme = createTheme({
   palette,
   typography,
+  components,
 })
 
 console.log('theme', theme)

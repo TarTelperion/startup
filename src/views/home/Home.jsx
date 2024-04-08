@@ -1,17 +1,24 @@
 // External Dependencies
-import { Paper } from '@mui/material'
+import {
+  Paper,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+} from '@mui/material'
 import { useEffect } from 'react'
-import { Typography } from '@mui/material'
-
+import { Typography, Box } from '@mui/material'
 // Absolute Dependencies
 
 // Relative Dependencies
+import { get } from '../../fetch/get'
 import { useUser } from '../../hooks/useUser'
 import { Flex, ViewHeader } from '../../layout'
+import { useJoinedStories } from '../../hooks/useJoinedStories'
 
-const Home = (props) => {
+const Home = () => {
   const { user } = useUser()
-  console.log('user', user)
+  const { stories } = useJoinedStories()
 
   const paperStyles = {
     display: 'flex',
@@ -33,14 +40,35 @@ const Home = (props) => {
       <Flex flexRow>
         <Flex flexColumn mr={2}>
           <Paper sx={paperStyles} elevation={4}>
-            <Typography variant="h1">Lorem Ipsum</Typography>
-            <Typography variant="h2">Lorem Ipsum</Typography>
-            <Typography variant="h3">Lorem Ipsum</Typography>
-            <Typography variant="h4">Lorem Ipsum</Typography>
-            <Typography variant="h5">Lorem Ipsum</Typography>
-            <Typography variant="h6">Lorem Ipsum</Typography>
-            <Typography variant="subtitle1">Lorem Ipsum</Typography>
-            <Typography variant="subtitle2">Lorem Ipsum</Typography>
+            <Flex flexColumn>
+              <Box>
+                <Typography variant="subtitle2" align="center">
+                  Joined Stories
+                </Typography>
+                <List>
+                  {stories.map(({ title, authors, genre }, index) => (
+                    <ListItem key={index}>
+                      <ListItemText
+                        primary={title}
+                        secondary={
+                          <>
+                            <Typography
+                              sx={{ display: 'inline' }}
+                              component="span"
+                              variant="body2"
+                            >
+                              {`${genre}--`}
+                            </Typography>
+                            {authors +
+                              `${authors > 1 ? ' authors' : ' author'}`}
+                          </>
+                        }
+                      ></ListItemText>
+                    </ListItem>
+                  ))}
+                </List>
+              </Box>
+            </Flex>
           </Paper>
         </Flex>
         <Flex flexColumn>

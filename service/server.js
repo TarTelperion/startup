@@ -77,6 +77,7 @@ secureRoute.use(async (req, res, next) => {
     res.status(401).send('unauthorized')
   }
 })
+
 secureRoute.get('/stories', async (req, res) => {
   let id = parseInt(req.query.id)
   let story = await db.get_story(id)
@@ -129,21 +130,32 @@ secureRoute.put('/stories/authors', async (req, res) => {
     res.status(404).send('story not found...')
   }
 })
+
 // returns all of the stories currently in the globe
 secureRoute.get('/stories/leaders', async (req, res) => {
   let stories = await db.get_pop_stories()
   res.json(stories)
 })
+
 secureRoute.delete('/stories', async (req, res) => {
   let socket_id = req.params.ws
   let id = parseInt(req.query.id)
   await db.remove(id, socket_id)
+
   res.send()
 })
 
 secureRoute.put('/users/update', async (req, res) => {
   let neuUser = await db.update_user(req.body)
   res.send(neuUser)
+})
+
+secureRoute.get('/user/stories', async (req, res) => {
+  let token = req.cookies[cookie_name]
+  let user = await db.user_token(token)
+  const payload = await db.getJoinedStories(user._id.toString())
+
+  res.status(200).send(JSON.stringify(payload))
 })
 
 module.exports = app
