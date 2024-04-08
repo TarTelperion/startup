@@ -4,9 +4,11 @@ import {
   List,
   ListItem,
   ListItemIcon,
+  IconButton,
   ListItemText,
 } from '@mui/material'
 import { useEffect } from 'react'
+import CreateIcon from '@mui/icons-material/Create'
 import { Typography, Box } from '@mui/material'
 // Absolute Dependencies
 
@@ -46,8 +48,17 @@ const Home = () => {
                   Joined Stories
                 </Typography>
                 <List>
-                  {stories.map(({ title, authors, genre }, index) => (
-                    <ListItem key={index}>
+                  {stories.map(({ title, authors, genre, writer }, index) => (
+                    <ListItem
+                      key={index}
+                      secondaryAction={
+                        <ListItemIcon>
+                          <IconButton disabled={writer !== user._id}>
+                            <CreateIcon />
+                          </IconButton>
+                        </ListItemIcon>
+                      }
+                    >
                       <ListItemText
                         primary={title}
                         secondary={
