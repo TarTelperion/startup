@@ -1,8 +1,9 @@
-export const createPayload = (method, body) => {
+export const createPayload = (method, body, headers = {}) => {
   const payload = {
     method,
     headers: {
       'Content-Type': 'application/json',
+      ...headers,
     },
   }
 

@@ -9,10 +9,39 @@ import {
 } from '@mui/material'
 import { Margin } from '@mui/icons-material'
 import { Flex, ViewHeader } from '../../layout'
+import { get } from '../../fetch/get'
 
 const Create = () => {
   const [alertShow, updateAlertShow] = useState(false)
   const [prompt, updatePrompt] = useState(undefined)
+
+  const getPrompt = async () => {
+    console.log(window.location.host)
+    const result = await get('/api?words=10', {
+      hostname: 'https://random-word-api.vercel.app',
+      header: {
+        'Access-Control-Allow-Origin': window.location.host,
+      },
+    })
+    console.log(result)
+    let temp = ''
+    for (i = 0; i < data.length; i++) {
+      if (i < data.length - 1) {
+        temp = temp.concat(result[i])
+        temp = temp.concat(', ')
+      } else {
+        temp = temp.concat(result[i])
+        temp = temp.concat('.')
+      }
+    }
+    first = temp.charAt(0).toUpperCase()
+    rest = temp.replace(temp.charAt(0), '')
+    console.log(first)
+    first = first.concat(rest)
+
+    updatePrompt(first)
+    updateAlertShow(true)
+  }
 
   return (
     <>
@@ -42,7 +71,7 @@ const Create = () => {
               <Button
                 color="secondary"
                 variant="outlined"
-                onClick={() => updateAlertShow(!alertShow)}
+                onClick={() => getPrompt()}
               >
                 Generate Prompt
               </Button>

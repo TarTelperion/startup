@@ -55,7 +55,7 @@ const AppBar = () => {
       <Toolbar>
         <Flex flexRow justifyContent="space-between" alignItems="center">
           <Flex alignItems="center">
-            <Typography variant="h6" noWrap component="div" fontWeight={700}>
+            <Typography variant="h6" noWrap component="div">
               Writers' Block
             </Typography>
           </Flex>

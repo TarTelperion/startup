@@ -4,32 +4,16 @@ import CssBaseline from '@mui/material/CssBaseline'
 import Container from '@mui/material/Container'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import AppFrame from './AppFrame'
+import { palette, typography } from './theme'
 
 import '@fontsource/spectral'
 
 const theme = createTheme({
-  palette: {
-    type: 'light',
-    primary: {
-      main: '#387780',
-    },
-    secondary: {
-      main: '#FA8072',
-    },
-    success: {
-      main: '#cad2c5',
-    },
-    error: {
-      main: '#f44336',
-    },
-    info: {
-      main: '#dbd4d3',
-    },
-  },
-  typography: {
-    fontFamily: '"Spectral", "serif", "Arial", sans-serif',
-  },
+  palette,
+  typography,
 })
+
+console.log('theme', theme)
 
 const App = () => {
   return (

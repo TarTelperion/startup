@@ -6,7 +6,7 @@ const ViewHeader = ({ children }) => {
 
   if (typeof children === 'string') {
     descendants = (
-      <Typography variant="h5" fontWeight={700}>
+      <Typography variant="h6" component="div">
         {children}
       </Typography>
     )

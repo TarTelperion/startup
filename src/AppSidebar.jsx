@@ -97,6 +97,7 @@ const AppSidebar = ({ openModal, user }) => {
                 justifyContent: open ? 'initial' : 'center',
                 px: 2.5,
               }}
+              disabled={!user}
               onClick={() => navigate(route)}
             >
               <ListItemIcon
@@ -123,6 +124,7 @@ const AppSidebar = ({ openModal, user }) => {
               justifyContent: open ? 'initial' : 'center',
               px: 2.5,
             }}
+            disabled={!user}
             onClick={() => {
               navigate('/join')
             }}
@@ -144,7 +146,7 @@ const AppSidebar = ({ openModal, user }) => {
           </ListItemButton>
         </ListItem>
         {user ? (
-          <></>
+          ''
         ) : (
           <ListItem disablePadding sx={{ display: 'block' }} key="Log In">
             <ListItemButton

@@ -23,17 +23,24 @@ const Home = (props) => {
   return (
     <>
       <ViewHeader>
-        <Typography variant="h5" fontWeight={700}>
+        <Typography variant="h6" component="div">
           User Home
         </Typography>
-        <Typography variant="h5" fontWeight={700}>
+        <Typography variant="h6" component="div">
           {user?.name}
         </Typography>
       </ViewHeader>
       <Flex flexRow>
         <Flex flexColumn mr={2}>
           <Paper sx={paperStyles} elevation={4}>
-            Paper 1
+            <Typography variant="h1">Lorem Ipsum</Typography>
+            <Typography variant="h2">Lorem Ipsum</Typography>
+            <Typography variant="h3">Lorem Ipsum</Typography>
+            <Typography variant="h4">Lorem Ipsum</Typography>
+            <Typography variant="h5">Lorem Ipsum</Typography>
+            <Typography variant="h6">Lorem Ipsum</Typography>
+            <Typography variant="subtitle1">Lorem Ipsum</Typography>
+            <Typography variant="subtitle2">Lorem Ipsum</Typography>
           </Paper>
         </Flex>
         <Flex flexColumn>

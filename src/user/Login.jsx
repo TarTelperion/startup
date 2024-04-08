@@ -8,10 +8,10 @@ import {
   Button,
   Stack,
 } from '@mui/material'
-import { useLogin } from './hooks/useLogin'
+import { useUser } from '../hooks/useUser'
 
 const Login = ({ onComplete }) => {
-  const { login } = useLogin()
+  const { user, logout, login } = useUser()
 
   const [name, setName] = useState('')
   const [pass, setPass] = useState('')

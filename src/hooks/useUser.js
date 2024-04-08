@@ -1,6 +1,5 @@
 import useSWR from 'swr'
-import { get } from '../fetch/get'
-import { del } from '../fetch/del'
+import { get, del, post } from '../fetch'
 
 const fetcher = async (url) => get(url)
 
@@ -16,11 +15,18 @@ export const useUser = () => {
     await mutate(null, false)
   }
 
+  const login = async (payload) => {
+    const response = await post('/auth/login', payload)
+    console.log('response', response)
+    await mutate(response)
+  }
+
   return {
     user: data,
     isFetching: isValidating,
     isLoading: (!error && !data) || isLoading,
     isError: error,
     logout,
+    login,
   }
 }
