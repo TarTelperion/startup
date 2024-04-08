@@ -15,15 +15,12 @@ import AppSidebar from './AppSidebar'
 import AppBar from './AppBar'
 import MainRoutes from './Main_Routes'
 import { useUser } from './hooks/useUser'
-import LoginModal from './LoginModal'
+import LoginModal from './user/AuthModal'
 
 import '@fontsource/spectral'
 
 const AppFrame = () => {
   const { user, isLoading } = useUser()
-
-  console.log('user', user)
-  console.log('isLoading', isLoading)
 
   const [open, setOpen] = useState(false)
   const handleOpen = () => setOpen(true)

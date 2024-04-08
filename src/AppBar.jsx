@@ -9,7 +9,7 @@ import {
 import MenuIcon from '@mui/icons-material/Menu'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle'
 import { Flex } from './layout'
-import UserDrawer from './UserDrawer'
+import UserDrawer from './user/UserDrawer'
 
 const drawerWidth = 240
 
@@ -55,7 +55,7 @@ const AppBar = () => {
       <Toolbar>
         <Flex flexRow justifyContent="space-between" alignItems="center">
           <Flex alignItems="center">
-            <Typography variant="h6" noWrap component="div">
+            <Typography variant="h6" noWrap component="div" fontWeight={700}>
               Writers' Block
             </Typography>
           </Flex>

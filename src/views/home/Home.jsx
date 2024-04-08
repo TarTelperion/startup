@@ -1,14 +1,17 @@
 // External Dependencies
-import { Flex } from '../../layout'
 import { Paper } from '@mui/material'
 import { useEffect } from 'react'
 import { Typography } from '@mui/material'
+
 // Absolute Dependencies
 
 // Relative Dependencies
+import { useUser } from '../../hooks/useUser'
+import { Flex, ViewHeader } from '../../layout'
 
 const Home = (props) => {
-  let user = undefined
+  const { user } = useUser()
+  console.log('user', user)
 
   const paperStyles = {
     display: 'flex',
@@ -19,9 +22,14 @@ const Home = (props) => {
 
   return (
     <>
-      <Typography>
-        <h1 align="center">Eventually you'll see your username here</h1>
-      </Typography>
+      <ViewHeader>
+        <Typography variant="h5" fontWeight={700}>
+          User Home
+        </Typography>
+        <Typography variant="h5" fontWeight={700}>
+          {user?.name}
+        </Typography>
+      </ViewHeader>
       <Flex flexRow>
         <Flex flexColumn mr={2}>
           <Paper sx={paperStyles} elevation={4}>

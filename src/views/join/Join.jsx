@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import {
   List,
   Typography,
@@ -8,9 +9,8 @@ import {
 } from '@mui/material'
 import AddCircleIcon from '@mui/icons-material/AddCircle'
 import DownloadDoneIcon from '@mui/icons-material/DownloadDone'
-import { useState } from 'react'
-import { Flex } from '../../layout'
 import { Add } from '@mui/icons-material'
+import { Flex, ViewHeader } from '../../layout'
 
 const Join = () => {
   let stories = [
@@ -33,12 +33,11 @@ const Join = () => {
 
   return (
     <>
-      <Typography>
-        <h1 align="center">Join a New Story</h1>
-      </Typography>
+      <ViewHeader>{'Join a New Story'}</ViewHeader>
       <List>
-        {stories.map(({ title, authors, genre }) => (
+        {stories.map(({ title, authors, genre }, index) => (
           <ListItem
+            key={index}
             secondaryAction={
               <ListItemIcon>
                 <IconButton>

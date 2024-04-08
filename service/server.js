@@ -19,7 +19,8 @@ apiRoute.use(bodyParser.json())
 let stories = []
 console.log('loggy')
 // Retrieve story by ID and send by JSON stringify
-apiRoute.put('/auth/create', async (req, res) => {
+apiRoute.post('/auth/create', async (req, res) => {
+  console.log('got into create')
   if (await db.user(req.body.mail)) {
     res.status(409).send('Preexisting user')
   } else {

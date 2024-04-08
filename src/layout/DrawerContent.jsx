@@ -17,10 +17,14 @@ const DrawerContent = ({ children, onRequestClose, title }) => {
           <IconButton color="inherit" onClick={onRequestClose}>
             <CloseIcon />
           </IconButton>
-          <Typography variant="h6">{title}</Typography>
+          <Typography variant="h6" fontWeight={700}>
+            {title}
+          </Typography>
         </Flex>
       </AppHeader>
-      <Flex flexColumn>{children}</Flex>
+      <Flex flexColumn p={2}>
+        {children}
+      </Flex>
     </Flex>
   )
 }

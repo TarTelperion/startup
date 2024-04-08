@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import {
   Paper,
   Typography,
@@ -6,18 +7,16 @@ import {
   Alert,
   Stack,
 } from '@mui/material'
-import { useState } from 'react'
 import { Margin } from '@mui/icons-material'
-import { Flex } from '../../layout'
+import { Flex, ViewHeader } from '../../layout'
 
 const Create = () => {
   const [alertShow, updateAlertShow] = useState(false)
   const [prompt, updatePrompt] = useState(undefined)
+
   return (
     <>
-      <Typography>
-        <h1 align="center">Create</h1>
-      </Typography>
+      <ViewHeader>{'Create a New Story'}</ViewHeader>
       <Flex flexColumn>
         <Paper
           sx={{

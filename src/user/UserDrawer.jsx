@@ -1,12 +1,16 @@
 import { Drawer, Paper, Button, Typography } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
-import { DrawerContent } from './layout'
-import { useUser } from './hooks/useUser'
-import { Flex } from './layout'
+import { DrawerContent } from '../layout'
+import { useUser } from '../hooks/useUser'
+import { Flex } from '../layout'
 
 const UserDrawer = ({ open, setOpen }) => {
-  const navigate = useNavigate()
-  const { user } = useUser()
+  const { user, logout } = useUser()
+
+  const handleLogout = async () => {
+    await logout()
+    setOpen(false)
+  }
 
   return (
     <Drawer
@@ -20,7 +24,7 @@ const UserDrawer = ({ open, setOpen }) => {
         <Flex flexColumn justifyContent="space-between">
           <Typography>{user?.name}</Typography>
           <Typography>{user?.email}</Typography>
-          <Button variant="outlined" color="secondary">
+          <Button variant="outlined" color="secondary" onClick={handleLogout}>
             Log Out
           </Button>
         </Flex>
