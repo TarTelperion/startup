@@ -143,33 +143,34 @@ const AppSidebar = ({ openModal, user }) => {
             />
           </ListItemButton>
         </ListItem>
-        {/* {user ? (
+        {user ? (
           <></>
-        ) : ( */}
-        <ListItem disablePadding sx={{ display: 'block' }} key="Log In">
-          <ListItemButton
-            sx={{
-              minHeight: 48,
-              justifyContent: open ? 'initial' : 'center',
-              px: 2.5,
-            }}
-            onClick={() => {
-              openModal(true)
-            }}
-          >
-            <ListItemIcon
+        ) : (
+          <ListItem disablePadding sx={{ display: 'block' }} key="Log In">
+            <ListItemButton
               sx={{
-                minWidth: 0,
-                mr: open ? 3 : 'auto',
-                justifyContent: 'center',
+                minHeight: 48,
+                justifyContent: open ? 'initial' : 'center',
+                px: 2.5,
+              }}
+              onClick={() => {
+                openModal(true)
               }}
             >
-              {' '}
-              <LoginIcon />
-            </ListItemIcon>
-            <ListItemText sx={{ opacity: open ? 1 : 0 }} primary="Log In" />
-          </ListItemButton>
-        </ListItem>
+              <ListItemIcon
+                sx={{
+                  minWidth: 0,
+                  mr: open ? 3 : 'auto',
+                  justifyContent: 'center',
+                }}
+              >
+                {' '}
+                <LoginIcon />
+              </ListItemIcon>
+              <ListItemText sx={{ opacity: open ? 1 : 0 }} primary="Log In" />
+            </ListItemButton>
+          </ListItem>
+        )}
       </List>
     </Drawer>
   )
