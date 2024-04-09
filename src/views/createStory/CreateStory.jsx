@@ -1,16 +1,10 @@
 import AutoIcon from '@mui/icons-material/AutoFixHigh'
-import {
-  Autocomplete,
-  Button,
-  Chip,
-  Paper,
-  Stack,
-  TextField,
-} from '@mui/material'
+import { Autocomplete, Button, Chip, Stack, TextField } from '@mui/material'
 import { useState } from 'react'
 import { useCreateStory } from '../../hooks/stories/useCreateStory'
 import { useStreamPrompt } from '../../hooks/stories/useStreamPrompt'
 import { Flex, ViewHeader } from '../../layout'
+import EdgyPaper from '../../layout/EdgyPaper'
 import { genreOptions } from './genreOptions'
 
 const Create = () => {
@@ -36,7 +30,7 @@ const Create = () => {
     <>
       <ViewHeader>{'Create a New Story'}</ViewHeader>
       <Flex flexColumn>
-        <Paper
+        <EdgyPaper
           sx={{
             display: 'flex',
             flexDirection: 'column',
@@ -115,7 +109,7 @@ const Create = () => {
               Create
             </Button>
           </Flex>
-        </Paper>
+        </EdgyPaper>
       </Flex>
     </>
   )
