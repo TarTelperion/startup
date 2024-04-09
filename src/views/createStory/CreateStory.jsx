@@ -14,7 +14,12 @@ const Create = () => {
   const [title, setTitle] = useState('')
   const [genre, setGenre] = useState('')
 
-  const [bind, start] = useStreamPrompt(setPrompt)
+  const [bind, { start, isStarted, isComplete, isError }] =
+    useStreamPrompt(setPrompt)
+
+  console.log('isStarted', isStarted)
+  console.log('isComplete', isComplete)
+  console.log('isError', isError)
 
   const isValid = Boolean(prompt && title && genre)
 
@@ -69,8 +74,10 @@ const Create = () => {
               multiline
               rows={3}
               fullWidth
+              disabled={isStarted && !isComplete}
               InputProps={{
-                endAdornment: !prompt && (
+                placeholder: isStarted ? 'Generating Prompt...' : 'Prompt',
+                endAdornment: !prompt && !isStarted && (
                   <Flex height="100%" px={1}>
                     <Chip
                       icon={<AutoIcon />}
