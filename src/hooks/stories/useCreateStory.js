@@ -3,7 +3,6 @@ import { useUser } from '../useUser'
 
 export const useCreateStory = () => {
   const { user } = useUser()
-  console.log('user', user)
 
   const create = async ({ title, genre, prompt }) => {
     const payload = {
