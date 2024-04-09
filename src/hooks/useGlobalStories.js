@@ -5,7 +5,7 @@ const fetcher = (url) => get(url)
 
 export const useGlobalStories = () => {
   const { data, isLoading, isValidating, error } = useSWR(
-    '/stories/leaders',
+    '/stories/global',
     fetcher
   )
 

@@ -12,7 +12,7 @@ import { useUser } from '../hooks/useUser'
 import LoginErrorPopper from './LoginErrorPopper'
 
 const Login = ({ onComplete }) => {
-  const { user, logout, login } = useUser()
+  const { login } = useUser()
 
   const [name, setName] = useState('')
   const [pass, setPass] = useState('')
@@ -41,8 +41,9 @@ const Login = ({ onComplete }) => {
       <DialogTitle>Log In</DialogTitle>
       <DialogContent>
         <DialogContentText>
-          Welcome to Writers' Block, please enter your name or email, and your
-          password to log in.
+          {
+            "Welcome to Writers' Block, please enter your name or email, and your password to log in."
+          }
         </DialogContentText>
         <Stack direction="column">
           <TextField
@@ -82,7 +83,7 @@ const Login = ({ onComplete }) => {
         </Button>
         <Button
           variant="contained"
-          color="inherit"
+          color="primary"
           onClick={(e) => {
             handleSubmit(e)
           }}

@@ -33,8 +33,6 @@ const StyledBar = styled(MuiAppBar, {
 }))
 
 const AppBar = ({ user }) => {
-  console.log('AppBar:user', user)
-
   const [userDrawerOpen, setUserDrawerOpen] = useState(false)
   const [notificationOpen, setNotificationOpen] = useState(false)
   const [anchor, setAnchor] = useState(null)
@@ -103,6 +101,7 @@ const AppBar = ({ user }) => {
           open={notificationOpen}
           anchor={anchor}
           user={user}
+          setOpen={setNotificationOpen}
         />
       )}
     </StyledBar>

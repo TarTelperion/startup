@@ -1,15 +1,5 @@
 import { useState } from 'react'
-import { styled, useTheme } from '@mui/material/styles'
-import {
-  Box,
-  AppBar as MuiAppBar,
-  Toolbar,
-  CssBaseline,
-  Typography,
-  IconButton,
-} from '@mui/material'
-import MenuIcon from '@mui/icons-material/Menu'
-
+import { Box, CssBaseline } from '@mui/material'
 import { AppHeader } from './layout'
 import AppSidebar from './AppSidebar'
 import AppBar from './AppBar'
@@ -17,6 +7,7 @@ import MainRoutes from './Main_Routes'
 import { useUser } from './hooks/useUser'
 import LoginModal from './user/AuthModal'
 import { Waiting } from './layout'
+
 import '@fontsource/spectral'
 
 const AppFrame = () => {

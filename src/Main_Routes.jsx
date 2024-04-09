@@ -2,7 +2,7 @@
 import { Routes, Navigate, Route } from 'react-router-dom'
 import { Flex } from './layout'
 import Home from './views/home/Home'
-import Create from './views/create_story/CreateStory'
+import Create from './views/createStory/CreateStory'
 import Join from './views/join/Join'
 import Write from './views/write/Write'
 
@@ -18,7 +18,6 @@ const MainRoutes = () => {
         <Route path="/write" element={<Write />} />
         <Route path="/join" element={<Join />} />
         <Route path="/create" element={<Create />} />
-        <Route path="/login" element={<p>login</p>} />
         <Route path="/" exact element={<Navigate replace to="/home" />} />
       </Routes>
     </Flex>

@@ -108,7 +108,6 @@ async function get_pop_stories() {
   const query = { authors: { $gt: 0, $lt: 900 } }
   const options = {
     sort: { authors: -1 },
-    limit: 10,
   }
   const stories = storyCollection.find(query, options)
   const array = await stories.toArray()

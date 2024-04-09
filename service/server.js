@@ -98,7 +98,8 @@ secureRoute.post('/stories/add', async (req, res) => {
     story.genre,
     story._id,
     socket_id,
-    story.joined
+    story.joined,
+    story.prompt
   )
   res.send(fin)
 })
@@ -132,7 +133,7 @@ secureRoute.put('/stories/authors', async (req, res) => {
 })
 
 // returns all of the stories currently in the globe
-secureRoute.get('/stories/leaders', async (req, res) => {
+secureRoute.get('/stories/global', async (req, res) => {
   let stories = await db.get_pop_stories()
   res.json(stories)
 })

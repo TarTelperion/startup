@@ -136,7 +136,7 @@ async function incrememnt_author(amount, id) {
 
 async function create_globe_stories() {
   try {
-    const response = await fetch('${host}/api/stories/leaders', {
+    const response = await fetch('${host}/api/stories/global', {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' },
     })
@@ -607,7 +607,7 @@ async function update_most_recent(id, titleid) {
 
 async function generate_list(table) {
   await update_content()
-  const response = await fetch(`${host}/api/stories/leaders`)
+  const response = await fetch(`${host}/api/stories/global`)
   const content = await response.json()
   let stories = []
   content.forEach((item) => stories.push(item))

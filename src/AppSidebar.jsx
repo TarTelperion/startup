@@ -1,33 +1,21 @@
 import {
-  Box,
   Drawer as MuiDrawer,
-  AppBar as MuiAppBar,
-  Toolbar,
   List,
-  CssBaseline,
-  Typography,
   Divider,
-  IconButton,
   ListItem,
   ListItemButton,
   ListItemIcon,
   ListItemText,
 } from '@mui/material'
-import MenuIcon from '@mui/icons-material/Menu'
 import styled from '@emotion/styled'
-import { useTheme } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 import HistoryEduIcon from '@mui/icons-material/HistoryEdu'
 import CottageIcon from '@mui/icons-material/Cottage'
-import PublicIcon from '@mui/icons-material/Public'
-import LogoutIcon from '@mui/icons-material/Logout'
 import LoginIcon from '@mui/icons-material/Login'
 import GroupAddIcon from '@mui/icons-material/GroupAdd'
 import DeveloperModeIcon from '@mui/icons-material/DeveloperMode'
-import AccountCircleIcon from '@mui/icons-material/AccountCircle'
 
 import { AppHeader } from './layout'
-import { Group } from '@mui/icons-material'
 
 const drawerWidth = 240
 
@@ -35,13 +23,6 @@ const navItems = [
   { text: 'Home', icon: <CottageIcon />, route: '/home' },
   { text: 'Create', icon: <HistoryEduIcon />, route: '/create' },
   { text: 'Temporary Write', icon: <DeveloperModeIcon />, route: '/write' },
-  // { text: 'More Stories', icon: <PublicIcon />, route: '/more-stories'},
-  // { text: 'Log Out', icon: <LogoutIcon />, route: '/logout'},
-  // { text: 'Log In', icon: <LoginIcon />, route: '/login'},
-]
-const secondaryNavItems = [
-  { text: 'More Stories', icon: <GroupAddIcon />, route: '/join' },
-  { text: 'Log Out', icon: <LogoutIcon />, route: '/login' },
 ]
 
 const Drawer = styled(MuiDrawer, {
@@ -83,7 +64,6 @@ const closedMixin = (theme) => ({
 })
 
 const AppSidebar = ({ openModal, user }) => {
-  const theme = useTheme()
   const navigate = useNavigate()
 
   return (
@@ -143,7 +123,7 @@ const AppSidebar = ({ openModal, user }) => {
             </ListItemIcon>
             <ListItemText
               sx={{ opacity: open ? 1 : 0 }}
-              primary="More Stories"
+              primary="Find Stories"
             />
           </ListItemButton>
         </ListItem>
