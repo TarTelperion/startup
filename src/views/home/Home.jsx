@@ -136,6 +136,15 @@ const Home = () => {
               <Typography variant="subtitle2" align="center">
                 Most Recent
               </Typography>
+
+              <Typography>
+                {'"' +
+                  stories[stories.length - 1].content.slice(-50) +
+                  '"' +
+                  '\n' +
+                  '-- ' +
+                  user.name}
+              </Typography>
             </Paper>
           </Flex>
         </Flex>
