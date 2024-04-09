@@ -1,8 +1,11 @@
-import React, { forwardRef } from 'react'
+import { forwardRef } from 'react'
 import { Stack } from '@mui/material'
 
 const Flex = forwardRef(
-  ({ flexDirection = 'row', flexColumn, flexRow, flexFull, ...rest }, ref) => {
+  (
+    { flexDirection = 'row', flexColumn, flexRow, flexFull, children, ...rest },
+    ref
+  ) => {
     return (
       <Stack
         ref={ref}
@@ -20,7 +23,9 @@ const Flex = forwardRef(
           minHeight: '0%',
         })}
         {...rest}
-      />
+      >
+        {children}
+      </Stack>
     )
   }
 )

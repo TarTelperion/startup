@@ -607,7 +607,7 @@ async function update_most_recent(id, titleid) {
 
 async function generate_list(table) {
   await update_content()
-  const response = await fetch(`${host}/api/stories/global`)
+  const response = await fetch(`${host}/api/stories/globa`)
   const content = await response.json()
   let stories = []
   content.forEach((item) => stories.push(item))

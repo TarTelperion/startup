@@ -1,40 +1,35 @@
+import AutoIcon from '@mui/icons-material/AutoFixHigh'
+import {
+  Autocomplete,
+  Button,
+  Chip,
+  Paper,
+  Stack,
+  TextField,
+} from '@mui/material'
 import { useState } from 'react'
-import { Paper, TextField, Button, Autocomplete, Stack } from '@mui/material'
+import { useCreateStory } from '../../hooks/stories/useCreateStory'
 import { Flex, ViewHeader } from '../../layout'
+import { randomInt } from '../../util/randomInt'
 import { genreOptions } from './genreOptions'
+import { promptOptions } from './promptOptions'
 
 const Create = () => {
+  const { create } = useCreateStory()
+
   const [prompt, setPrompt] = useState('')
   const [title, setTitle] = useState('')
   const [genre, setGenre] = useState('')
 
-  // const getPrompt = async () => {
-  //   console.log(window.location.host)
-  //   const result = await get('/api?words=10', {
-  //     hostname: 'https://random-word-api.vercel.app',
-  //     header: {
-  //       'Access-Control-Allow-Origin': window.location.host,
-  //     },
-  //   })
-  //   console.log(result)
-  //   let temp = ''
-  //   for (let i = 0; i < result.length; i++) {
-  //     if (i < result.length - 1) {
-  //       temp = temp.concat(result[i])
-  //       temp = temp.concat(', ')
-  //     } else {
-  //       temp = temp.concat(result[i])
-  //       temp = temp.concat('.')
-  //     }
-  //   }
-  //   let first = temp.charAt(0).toUpperCase()
-  //   let rest = temp.replace(temp.charAt(0), '')
-  //   console.log(first)
-  //   first = first.concat(rest)
+  const isValid = Boolean(prompt && title && genre)
 
-  //   updatePrompt(first)
-  //   updateAlertShow(true)
-  // }
+  const handleCreate = () => {
+    create({
+      title,
+      genre,
+      prompt,
+    })
+  }
 
   return (
     <>
@@ -52,48 +47,71 @@ const Create = () => {
           elevation={4}
         >
           <Stack direction="column" spacing={2}>
-            <Flex width="100%">
-              <Flex flex="3 0 220px" mr={1} minWidth="220px">
-                <TextField
-                  // id="outlined-basic"
-                  label="Title"
-                  minWidth="180px"
-                  fullWidth
-                  value={title}
-                  onChange={(e) => setTitle(e.target.value)}
-                />
-              </Flex>
-              <Flex flex="1 0 220px" minWidth="220px">
-                <Autocomplete
-                  freeSolo
-                  value={genre}
-                  onChange={(e, value = '') => {
-                    setGenre(value)
-                  }}
-                  options={genreOptions}
-                  fullWidth
-                  renderInput={(params) => (
-                    <TextField {...params} label="Genre" fullWidth />
-                  )}
-                />
-              </Flex>
-            </Flex>
-            <Flex>
-              <TextField
-                id="outlined-multiline-static"
-                label="Prompt"
-                value={prompt}
-                onChange={(e) => {
-                  setPrompt(e.target.value)
-                }}
-                multiline
-                rows={3}
-                fullWidth
-              />
-            </Flex>
+            <TextField
+              label="Title"
+              fullWidth
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+            />
+            <Autocomplete
+              freeSolo
+              value={genre}
+              onChange={(e, value) => {
+                setGenre(value || '')
+              }}
+              options={genreOptions}
+              fullWidth
+              renderInput={(params) => (
+                <TextField {...params} label="Genre" fullWidth />
+              )}
+            />
+            <TextField
+              label="Prompt"
+              value={prompt}
+              onChange={(e) => {
+                setPrompt(e.target.value)
+              }}
+              multiline
+              rows={3}
+              fullWidth
+              InputProps={{
+                endAdornment: !prompt && (
+                  <Flex height="100%" px={1}>
+                    <Chip
+                      icon={<AutoIcon />}
+                      label="Generate"
+                      color="primary"
+                      variant="outlined"
+                      onClick={() => {
+                        const randomPrompt =
+                          promptOptions[randomInt(0, promptOptions.length - 1)]
+                        setPrompt(randomPrompt)
+                      }}
+                      sx={{
+                        '& > svg': {
+                          marginLeft: '8px !important',
+                          marginBottom: '1px !important',
+                          height: '0.75em',
+                          width: '0.75em',
+                        },
+                      }}
+                    />
+                  </Flex>
+                ),
+              }}
+            />
           </Stack>
-          <Flex sx={{ alignSelf: 'center', bottom: 0, justifySelf: 'flexEnd' }}>
-            <Button variant="filled">Create</Button>
+          <Flex flexColumn pt={3}>
+            <Button
+              variant="contained"
+              size="large"
+              color="primary"
+              fullWidth
+              disabled={!isValid}
+              onClick={handleCreate}
+            >
+              Create
+            </Button>
           </Flex>
         </Paper>
       </Flex>

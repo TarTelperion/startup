@@ -1,8 +1,6 @@
-import { List, ListItem, Popover, Paper, Typography } from '@mui/material'
+import { List, ListItem, Paper, Popover, Typography } from '@mui/material'
 
 const UserNotifications = ({ user, open, anchor, setOpen }) => {
-  console.log('UserNotifications:user', user)
-
   return (
     <Popover
       open={open}

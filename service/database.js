@@ -69,14 +69,7 @@ async function createUser(mail, pass, name) {
   return user
 }
 
-async function create_story(
-  title,
-  author,
-  genre,
-  id = null,
-  socket_id,
-  joined
-) {
+async function create_story(title, author, genre, id = null, joined) {
   const story = {
     _id: id ?? Math.floor(Math.random() * 9000) + 1000,
     title: title,

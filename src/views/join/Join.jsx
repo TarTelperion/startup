@@ -1,17 +1,14 @@
-import { useState } from 'react'
-import { useGlobalStories } from '../../hooks/useGlobalStories'
+import AddCircleIcon from '@mui/icons-material/AddCircle'
 import {
+  IconButton,
   List,
-  Typography,
   ListItem,
   ListItemIcon,
   ListItemText,
-  IconButton,
+  Typography,
 } from '@mui/material'
-import AddCircleIcon from '@mui/icons-material/AddCircle'
-import DownloadDoneIcon from '@mui/icons-material/DownloadDone'
-import { Add } from '@mui/icons-material'
-import { Flex, ViewHeader } from '../../layout'
+import { useGlobalStories } from '../../hooks/stories/useGlobalStories'
+import { ViewHeader } from '../../layout'
 
 const Join = () => {
   const { globalStories } = useGlobalStories()

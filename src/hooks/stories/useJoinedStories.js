@@ -1,16 +1,16 @@
 import useSWR from 'swr'
-import { get } from '../fetch/get'
+import { get } from '../../fetch'
 
 const fetcher = (url) => get(url)
 
-export const useGlobalStories = () => {
+export const useJoinedStories = () => {
   const { data, isLoading, isValidating, error } = useSWR(
-    '/stories/global',
+    '/user/stories',
     fetcher
   )
 
   return {
-    globalStories: data || [],
+    stories: data || [],
     isLoading: !isLoading && !data,
     isFetching: isValidating,
     isError: error,

@@ -44,12 +44,10 @@ const CreateAccount = ({ onComplete }) => {
             autoFocus
             required
             margin="dense"
-            id="name"
             name="name"
             label="Username"
             type="text"
             fullWidth
-            variant="standard"
             value={name}
             onChange={(e) => {
               setName(e.target.value)
@@ -58,12 +56,10 @@ const CreateAccount = ({ onComplete }) => {
           <TextField
             required
             margin="dense"
-            id="email"
             name="email"
             label="Email"
             type="text"
             fullWidth
-            variant="standard"
             value={mail}
             onChange={(e) => {
               setMail(e.target.value)
@@ -72,12 +68,10 @@ const CreateAccount = ({ onComplete }) => {
           <TextField
             required
             margin="dense"
-            id="password"
             name="password"
             label="Password"
             type="password"
             fullWidth
-            variant="standard"
             value={pass}
             onChange={(e) => {
               setPass(e.target.value)

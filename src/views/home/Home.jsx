@@ -7,19 +7,16 @@ import {
   IconButton,
   ListItemText,
 } from '@mui/material'
-import { useEffect } from 'react'
 import CreateIcon from '@mui/icons-material/Create'
 import { Typography, Box } from '@mui/material'
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
 // Absolute Dependencies
 
 // Relative Dependencies
-import { get } from '../../fetch/get'
 import { useUser } from '../../hooks/useUser'
 import { Flex, ViewHeader } from '../../layout'
-import { useJoinedStories } from '../../hooks/useJoinedStories'
-import { useGlobalStories } from '../../hooks/useGlobalStories'
-import { Delete } from '@mui/icons-material'
+import { useJoinedStories } from '../../hooks/stories/useJoinedStories'
+import { useGlobalStories } from '../../hooks/stories/useGlobalStories'
 
 const Home = () => {
   const { user } = useUser()

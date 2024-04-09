@@ -1,12 +1,11 @@
-import { useState } from 'react'
 import { Box, CssBaseline } from '@mui/material'
-import { AppHeader } from './layout'
-import AppSidebar from './AppSidebar'
+import { useState } from 'react'
 import AppBar from './AppBar'
-import MainRoutes from './Main_Routes'
+import AppSidebar from './AppSidebar'
+import MainRoutes from './MainRoutes'
 import { useUser } from './hooks/useUser'
+import { AppHeader, Waiting } from './layout'
 import LoginModal from './user/AuthModal'
-import { Waiting } from './layout'
 
 import '@fontsource/spectral'
 

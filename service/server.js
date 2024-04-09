@@ -97,7 +97,6 @@ secureRoute.post('/stories/add', async (req, res) => {
     story.owner,
     story.genre,
     story._id,
-    socket_id,
     story.joined,
     story.prompt
   )

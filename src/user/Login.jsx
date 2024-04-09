@@ -50,12 +50,10 @@ const Login = ({ onComplete }) => {
             autoFocus
             required
             margin="dense"
-            id="name"
             name="name"
             label="Username or Email"
             type="text"
             fullWidth
-            variant="standard"
             value={name}
             onChange={(e) => {
               setName(e.target.value)
@@ -64,12 +62,10 @@ const Login = ({ onComplete }) => {
           <TextField
             required
             margin="dense"
-            id="password"
             name="password"
             label="Password"
             type="password"
             fullWidth
-            variant="standard"
             value={pass}
             onChange={(e) => {
               setPass(e.target.value)
