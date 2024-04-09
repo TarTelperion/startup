@@ -17,12 +17,12 @@ export const useUser = () => {
 
   const login = async (payload) => {
     const response = await post('/auth/login', payload)
-    console.log('response', response)
     await mutate(response)
   }
 
   return {
     user: data,
+    isLoggedIn: !!data,
     isFetching: isValidating,
     isLoading: (!error && !data) || isLoading,
     isError: error,

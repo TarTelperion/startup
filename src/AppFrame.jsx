@@ -16,11 +16,11 @@ import AppBar from './AppBar'
 import MainRoutes from './Main_Routes'
 import { useUser } from './hooks/useUser'
 import LoginModal from './user/AuthModal'
-
+import { Waiting } from './layout'
 import '@fontsource/spectral'
 
 const AppFrame = () => {
-  const { user, isLoading } = useUser()
+  const { user, isLoading, isLoggedIn } = useUser()
 
   const [open, setOpen] = useState(false)
   const handleOpen = () => setOpen(true)
@@ -34,7 +34,7 @@ const AppFrame = () => {
       }}
     >
       <CssBaseline />
-      <AppBar />
+      <AppBar user={user} />
       <AppSidebar openModal={handleOpen} user={user} />
       <Box
         component="main"
@@ -48,7 +48,7 @@ const AppFrame = () => {
         }}
       >
         <AppHeader sx={{ backgroundColor: 'transparent' }} />
-        {!isLoading && !!user && <MainRoutes />}
+        {isLoggedIn && <Waiting>{!isLoading && <MainRoutes />}</Waiting>}
       </Box>
       <LoginModal
         open={open}

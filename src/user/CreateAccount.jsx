@@ -17,10 +17,6 @@ const CreateAccount = ({ onComplete }) => {
   const [mail, setMail] = useState('')
   const [pass, setPass] = useState('')
 
-  const handleChange = (event, newValue) => {
-    setValue(newValue)
-  }
-
   const handleCancel = () => {
     setName('')
     setPass('')
@@ -38,7 +34,9 @@ const CreateAccount = ({ onComplete }) => {
       <DialogTitle>{'Create Account'}</DialogTitle>
       <DialogContent>
         <DialogContentText>
-          Welcome to Writers' Block, please enter your name, email, and password
+          {
+            "Welcome to Writers' Block, please enter your name, email, and password"
+          }
           to log in.
         </DialogContentText>
         <Stack direction="column">
@@ -93,7 +91,7 @@ const CreateAccount = ({ onComplete }) => {
         </Button>
         <Button
           variant="contained"
-          color="inherit"
+          color="primary"
           onClick={handleSubmit}
           disabled={!name || !pass || !mail}
         >

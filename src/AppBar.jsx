@@ -6,12 +6,11 @@ import {
   Typography,
   IconButton,
 } from '@mui/material'
-import MenuIcon from '@mui/icons-material/Menu'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle'
 import CircleNotificationsIcon from '@mui/icons-material/CircleNotifications'
 import { Flex } from './layout'
 import UserDrawer from './user/UserDrawer'
-import { useUser } from './hooks/useUser'
+import UserNotifications from './UserNotifications'
 
 const drawerWidth = 240
 
@@ -33,24 +32,36 @@ const StyledBar = styled(MuiAppBar, {
   }),
 }))
 
-const AppBar = () => {
-  const [open, setOpen] = useState(false)
-  const { user } = useUser()
+const AppBar = ({ user }) => {
+  console.log('AppBar:user', user)
 
-  const setDrawerOpen = useCallback(
+  const [userDrawerOpen, setUserDrawerOpen] = useState(false)
+  const [notificationOpen, setNotificationOpen] = useState(false)
+  const [anchor, setAnchor] = useState(null)
+
+  const isLoggedIn = !!user
+
+  const handleNotificationOpen = (e) => {
+    setAnchor(e.currentTarget)
+    setNotificationOpen((prev) => {
+      return !prev
+    })
+  }
+
+  const setUserDrawer = useCallback(
     (isOpen) => {
       switch (isOpen) {
         case true:
-          setOpen(true)
+          setUserDrawerOpen(true)
           break
         case false:
-          setOpen(false)
+          setUserDrawerOpen(false)
           break
         default:
-          setOpen(!open)
+          setUserDrawerOpen(!userDrawerOpen)
       }
     },
-    [setOpen, open]
+    [setUserDrawerOpen, userDrawerOpen]
   )
 
   return (
@@ -59,20 +70,41 @@ const AppBar = () => {
         <Flex flexRow justifyContent="space-between" alignItems="center">
           <Flex alignItems="center">
             <Typography variant="h6" noWrap component="div">
-              Writers' Block
+              {"Writers' Block"}
             </Typography>
           </Flex>
         </Flex>
         {user?.notifications?.length > 0 && (
-          <IconButton color="inherit">
+          <IconButton
+            color="inherit"
+            onClick={(e) => {
+              handleNotificationOpen(e)
+            }}
+          >
             <CircleNotificationsIcon />
           </IconButton>
         )}
-        <IconButton color="inherit" onClick={setDrawerOpen}>
-          <AccountCircleIcon />
-        </IconButton>
+        {isLoggedIn && (
+          <IconButton
+            color="inherit"
+            onClick={() => {
+              setUserDrawer()
+            }}
+          >
+            <AccountCircleIcon />
+          </IconButton>
+        )}
       </Toolbar>
-      <UserDrawer open={open} setOpen={setDrawerOpen} />
+      {isLoggedIn && (
+        <UserDrawer open={userDrawerOpen} setOpen={setUserDrawerOpen} />
+      )}
+      {isLoggedIn && (
+        <UserNotifications
+          open={notificationOpen}
+          anchor={anchor}
+          user={user}
+        />
+      )}
     </StyledBar>
   )
 }

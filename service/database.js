@@ -7,18 +7,29 @@ const url = `mongodb+srv://${config.userName}:${config.password}@${config.hostna
 const client = new MongoClient(url)
 const db = client.db('writersblock')
 const userCollection = db.collection('user')
-const storyCollection = db
-  .collection('stories')(
-    // ping and test connection
-    async function connect() {
-      await client.connect()
-      await db.command({ ping: 1 })
-    }
-  )()
-  .catch((err) => {
-    console.log(`connection failed. error occured: ${err.message}`)
-    process.exit(1)
-  })
+const storyCollection = db.collection('stories')
+
+const testConnection = async () => {
+  await client.connect()
+  await db.command({ ping: 1 })
+}
+
+try {
+  testConnection()
+} catch (err) {
+  console.log(
+    `Unable to connect to database with ${url} because ${err.message}`
+  )
+  process.exit(1)
+}
+
+// (async function testConnection() {
+//   await client.connect()
+//   await db.command({ ping: 1 })
+// })().catch((ex) => {
+//   console.log(`Unable to connect to database with ${url} because ${ex.message}`)
+//   process.exit(1)
+// })
 
 // find user stuff
 async function user(name) {

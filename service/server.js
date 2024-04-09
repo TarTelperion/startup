@@ -12,7 +12,7 @@ let cookie_name = 'token'
 app.use(cors())
 app.use(express.static('public'))
 app.use(cookie_parser())
-apiRoute = express.Router()
+let apiRoute = express.Router()
 app.use('/api', apiRoute)
 apiRoute.use(bodyParser.json())
 
@@ -53,7 +53,7 @@ apiRoute.post('/auth/login', async (req, res) => {
   if (usr) {
     if (await bcrypt.compare(req.body.pass, usr.pass)) {
       bake_cookie(res, usr.token)
-      res.send({ token: usr.token })
+      res.send(JSON.stringify(usr))
       return
     }
   }
