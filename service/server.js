@@ -2,10 +2,12 @@ const express = require('express')
 const cors = require('cors')
 const bodyParser = require('body-parser')
 const cookie_parser = require('cookie-parser')
+
 const app = express()
 
-const db = require('./database')
 const bcrypt = require('bcrypt')
+const { generatePrompt } = require('./api/generate')
+const db = require('./database')
 
 let cookie_name = 'token'
 
@@ -119,6 +121,7 @@ secureRoute.put('/stories/update', async (req, res) => {
     res.status(404).send('Story not found')
   }
 })
+
 // Add author
 secureRoute.put('/stories/authors', async (req, res) => {
   const id = parseInt(req.query.id)
@@ -167,5 +170,7 @@ secureRoute.get('/user/stories', async (req, res) => {
 
   res.status(200).send(JSON.stringify(payload))
 })
+
+secureRoute.post('/generate-prompt', generatePrompt)
 
 module.exports = app

@@ -9,10 +9,9 @@ import {
 } from '@mui/material'
 import { useState } from 'react'
 import { useCreateStory } from '../../hooks/stories/useCreateStory'
+import { useStreamPrompt } from '../../hooks/stories/useStreamPrompt'
 import { Flex, ViewHeader } from '../../layout'
-import { randomInt } from '../../util/randomInt'
 import { genreOptions } from './genreOptions'
-import { promptOptions } from './promptOptions'
 
 const Create = () => {
   const { create } = useCreateStory()
@@ -20,6 +19,8 @@ const Create = () => {
   const [prompt, setPrompt] = useState('')
   const [title, setTitle] = useState('')
   const [genre, setGenre] = useState('')
+
+  const [bind, start] = useStreamPrompt(setPrompt)
 
   const isValid = Boolean(prompt && title && genre)
 
@@ -66,11 +67,11 @@ const Create = () => {
               )}
             />
             <TextField
+              InputLabelProps={{ shrink: true }}
+              inputRef={bind.ref}
               label="Prompt"
               value={prompt}
-              onChange={(e) => {
-                setPrompt(e.target.value)
-              }}
+              onChange={(e) => setPrompt(e.target.value)}
               multiline
               rows={3}
               fullWidth
@@ -82,10 +83,11 @@ const Create = () => {
                       label="Generate"
                       color="primary"
                       variant="outlined"
-                      onClick={() => {
-                        const randomPrompt =
-                          promptOptions[randomInt(0, promptOptions.length - 1)]
-                        setPrompt(randomPrompt)
+                      onClick={async () => {
+                        await start(genre)
+                        // const randomPrompt =
+                        //   promptOptions[randomInt(0, promptOptions.length - 1)]
+                        // setPrompt(randomPrompt)
                       }}
                       sx={{
                         '& > svg': {
