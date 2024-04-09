@@ -155,6 +155,7 @@ async function remove(story_id, socket_id) {
 }
 
 module.exports = {
+  testConnection,
   user,
   user_token,
   addUser,
