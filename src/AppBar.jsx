@@ -11,6 +11,7 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle'
 import CircleNotificationsIcon from '@mui/icons-material/CircleNotifications'
 import { Flex } from './layout'
 import UserDrawer from './user/UserDrawer'
+import { useUser } from './hooks/useUser'
 
 const drawerWidth = 240
 
@@ -34,6 +35,7 @@ const StyledBar = styled(MuiAppBar, {
 
 const AppBar = () => {
   const [open, setOpen] = useState(false)
+  const { user } = useUser()
 
   const setDrawerOpen = useCallback(
     (isOpen) => {
@@ -61,9 +63,11 @@ const AppBar = () => {
             </Typography>
           </Flex>
         </Flex>
-        <IconButton color="inherit">
-          <CircleNotificationsIcon />
-        </IconButton>
+        {user?.notifications?.length > 0 && (
+          <IconButton color="inherit">
+            <CircleNotificationsIcon />
+          </IconButton>
+        )}
         <IconButton color="inherit" onClick={setDrawerOpen}>
           <AccountCircleIcon />
         </IconButton>
