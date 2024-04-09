@@ -138,12 +138,13 @@ const Home = () => {
               </Typography>
 
               <Typography>
-                {'"' +
-                  stories[stories.length - 1].content.slice(-50) +
-                  '"' +
-                  '\n' +
-                  '-- ' +
-                  user.name}
+                {stories &&
+                stories.length > 0 &&
+                stories[stories.length - 1].content ? (
+                  `"${stories[stories.length - 1].content}"--${stories[stories.length - 1].mostrecent ?? 'unknown'}`
+                ) : (
+                  <></>
+                )}
               </Typography>
             </Paper>
           </Flex>

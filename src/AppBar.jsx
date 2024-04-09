@@ -8,6 +8,7 @@ import {
 } from '@mui/material'
 import MenuIcon from '@mui/icons-material/Menu'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle'
+import CircleNotificationsIcon from '@mui/icons-material/CircleNotifications'
 import { Flex } from './layout'
 import UserDrawer from './user/UserDrawer'
 
@@ -60,6 +61,9 @@ const AppBar = () => {
             </Typography>
           </Flex>
         </Flex>
+        <IconButton color="inherit">
+          <CircleNotificationsIcon />
+        </IconButton>
         <IconButton color="inherit" onClick={setDrawerOpen}>
           <AccountCircleIcon />
         </IconButton>

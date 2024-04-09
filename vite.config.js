@@ -12,7 +12,4 @@ export default defineConfig({
       },
     },
   },
-  optimizeDeps: {
-    exclude: ['slate'],
-  },
 })
