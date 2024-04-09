@@ -1,11 +1,13 @@
-import { SpeedDial, SpeedDialAction, Box } from '@mui/material'
-import SpeedDialIcon from '@mui/material/SpeedDialIcon'
-import SaveIcon from '@mui/icons-material/Save'
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos'
+import SaveIcon from '@mui/icons-material/Save'
+import { Box, SpeedDial, SpeedDialAction } from '@mui/material'
+import SpeedDialIcon from '@mui/material/SpeedDialIcon'
 
 export default function WriteOptions() {
   return (
-    <Box sx={{ height: 'auto', transform: 'translateZ(0px)', flexGrow: 1 }}>
+    <Box
+      sx={{ height: 'min-content', transform: 'translateZ(0px)', flexGrow: 1 }}
+    >
       <SpeedDial
         ariaLabel="Story Options"
         sx={{ position: 'absolute', bottom: 16, right: 16 }}

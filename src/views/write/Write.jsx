@@ -1,6 +1,6 @@
-import { Typography, Paper } from '@mui/material'
-import { useState } from 'react'
+import { Typography } from '@mui/material'
 import { Flex, ViewHeader } from '../../layout'
+import EdgyPaper from '../../layout/EdgyPaper'
 import WriteOptions from './WriteOptions'
 
 const Write = () => {
@@ -18,10 +18,11 @@ const Write = () => {
     borderRadius: '5px',
     boxShadow: '0 0 10px rgba(0,0,0,0.1)',
     width: '100%',
-    height: '85vh', // You can adjust height as per your requirement
+    height: '87vh',
     fontFamily: 'Spectral',
     resize: 'none', // Disable textarea resizing
     outline: 'none',
+    overflow: 'auto',
   }
 
   return (
@@ -34,12 +35,12 @@ const Write = () => {
           <i>{story?.title}</i>
         </Typography>
       </ViewHeader>
-      <Flex width="100%" height="85vh" flexColumn>
-        <Flex>
+      <Flex>
+        <EdgyPaper sx={{ width: '100%' }} elevation={4}>
           <textarea style={paperStyle}></textarea>
-        </Flex>
-        <WriteOptions />
+        </EdgyPaper>
       </Flex>
+      <WriteOptions />
     </>
   )
 }

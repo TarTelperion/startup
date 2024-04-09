@@ -17,9 +17,10 @@ const EdgyPaper = ({
       document.body.style.overflow = 'auto'
     }
   }, [])
-  sx.bottom = 0
-  sx.paddingBottom = '50px'
-  sx.marginBottom = '-50px'
+  sx.height = '100vh'
+  sx.width = '100%'
+  sx.paddingBottom = '50vh'
+  sx.marginBottom = '-50vh'
   if (transition) {
     return (
       <Slide direction="up" in={open} sx={sx} mountOnEnter unmountOnExit>
