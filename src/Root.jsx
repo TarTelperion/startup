@@ -1,11 +1,10 @@
+import '@fontsource/spectral'
+import CssBaseline from '@mui/material/CssBaseline'
+import { createTheme, ThemeProvider } from '@mui/material/styles'
 import React from 'react'
 import { BrowserRouter } from 'react-router-dom'
-import CssBaseline from '@mui/material/CssBaseline'
-import Container from '@mui/material/Container'
-import { createTheme, ThemeProvider } from '@mui/material/styles'
 import AppFrame from './AppFrame'
-import { palette, typography, components } from './theme'
-import '@fontsource/spectral'
+import { components, palette, typography } from './theme'
 
 const theme = createTheme({
   palette,

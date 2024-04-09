@@ -1,9 +1,9 @@
 // External Dependencies
-import { Routes, Navigate, Route } from 'react-router-dom'
+import { Navigate, Route, Routes } from 'react-router-dom'
 import { Flex } from './layout'
-import Home from './views/home/Home'
 import Create from './views/createStory/CreateStory'
-import Join from './views/join/Join'
+import Home from './views/home/Home'
+import StoryRoutes from './views/stories/StoryRoutes'
 import Write from './views/write/Write'
 
 // Absolute Dependencies
@@ -16,8 +16,8 @@ const MainRoutes = () => {
       <Routes>
         <Route path="/home" element={<Home />} />
         <Route path="/write" element={<Write />} />
-        <Route path="/join" element={<Join />} />
         <Route path="/create" element={<Create />} />
+        <Route path="/stories/*" element={<StoryRoutes />} />
         <Route path="/" exact element={<Navigate replace to="/home" />} />
       </Routes>
     </Flex>

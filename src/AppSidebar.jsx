@@ -1,19 +1,19 @@
+import styled from '@emotion/styled'
+import CottageIcon from '@mui/icons-material/Cottage'
+import DeveloperModeIcon from '@mui/icons-material/DeveloperMode'
+import GroupAddIcon from '@mui/icons-material/GroupAdd'
+import HistoryEduIcon from '@mui/icons-material/HistoryEdu'
+import LoginIcon from '@mui/icons-material/Login'
 import {
-  Drawer as MuiDrawer,
-  List,
   Divider,
+  List,
   ListItem,
   ListItemButton,
   ListItemIcon,
   ListItemText,
+  Drawer as MuiDrawer,
 } from '@mui/material'
-import styled from '@emotion/styled'
 import { useNavigate } from 'react-router-dom'
-import HistoryEduIcon from '@mui/icons-material/HistoryEdu'
-import CottageIcon from '@mui/icons-material/Cottage'
-import LoginIcon from '@mui/icons-material/Login'
-import GroupAddIcon from '@mui/icons-material/GroupAdd'
-import DeveloperModeIcon from '@mui/icons-material/DeveloperMode'
 
 import { AppHeader } from './layout'
 
@@ -108,7 +108,7 @@ const AppSidebar = ({ openModal, user }) => {
             }}
             disabled={!user}
             onClick={() => {
-              navigate('/join')
+              navigate('/stories/join')
             }}
           >
             <ListItemIcon

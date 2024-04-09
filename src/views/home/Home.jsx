@@ -1,22 +1,23 @@
 // External Dependencies
+import CreateIcon from '@mui/icons-material/Create'
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
 import {
-  Paper,
+  Box,
+  IconButton,
   List,
   ListItem,
   ListItemIcon,
-  IconButton,
   ListItemText,
+  Paper,
+  Typography,
 } from '@mui/material'
-import CreateIcon from '@mui/icons-material/Create'
-import { Typography, Box } from '@mui/material'
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
 // Absolute Dependencies
 
 // Relative Dependencies
+import { useGlobalStories } from '../../hooks/stories/useGlobalStories'
+import { useJoinedStories } from '../../hooks/stories/useJoinedStories'
 import { useUser } from '../../hooks/useUser'
 import { Flex, ViewHeader } from '../../layout'
-import { useJoinedStories } from '../../hooks/stories/useJoinedStories'
-import { useGlobalStories } from '../../hooks/stories/useGlobalStories'
 
 const Home = () => {
   const { user } = useUser()
@@ -92,7 +93,7 @@ const Home = () => {
               <List>
                 {globalStories.map(
                   ({ title, owner, authors, genre }, index) => {
-                    if (owner == user.name) {
+                    if (owner == user._id) {
                       return (
                         <ListItem
                           key={index}

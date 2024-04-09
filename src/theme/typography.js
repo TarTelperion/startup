@@ -22,10 +22,10 @@ export const typography = {
     fontWeight: 700,
   },
   subtitle1: {
-    fontSize: '1.25rem',
+    fontSize: '1.1rem',
   },
   subtitle2: {
-    fontSize: '1.25rem',
+    fontSize: '1.1rem',
     fontWeight: 700,
   },
 }
