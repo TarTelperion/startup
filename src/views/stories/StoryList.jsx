@@ -20,8 +20,10 @@ const StoryList = ({
   currentStory,
   setCurrentStory,
 }) => {
+  console.log('stories2', stories)
   const [modalOpen, setModalOpen] = useState(false)
   const theme = useTheme()
+
   const handleClick = (story) => {
     setModalOpen(true)
     setPaperOpen(true)
@@ -32,12 +34,13 @@ const StoryList = ({
     setTimeout(() => setModalOpen(false), 300)
     setCurrentStory({})
   }
+
   return (
     <Flex flexColumn width="100%" spacing={1}>
       {stories.map((story, index) => (
         <Paper
           variant="outlined"
-          key={story.index}
+          key={index}
           sx={{
             display: 'flex',
             height: 'auto',
