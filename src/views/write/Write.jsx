@@ -1,6 +1,5 @@
 import { Typography } from '@mui/material'
-import { Flex, ViewHeader } from '../../layout'
-import EdgyPaper from '../../layout/EdgyPaper'
+import { EdgyPaper, Flex, ViewHeader } from '../../layout'
 import WriteOptions from './WriteOptions'
 
 const Write = () => {

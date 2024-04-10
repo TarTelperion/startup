@@ -3,8 +3,7 @@ import { Autocomplete, Button, Chip, Stack, TextField } from '@mui/material'
 import { useState } from 'react'
 import { useCreateStory } from '../../hooks/stories/useCreateStory'
 import { useStreamPrompt } from '../../hooks/stories/useStreamPrompt'
-import { Flex, ViewHeader } from '../../layout'
-import EdgyPaper from '../../layout/EdgyPaper'
+import { EdgyPaper, Flex, ViewHeader } from '../../layout'
 import { genreOptions } from './genreOptions'
 
 const Create = () => {

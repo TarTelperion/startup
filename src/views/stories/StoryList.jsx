@@ -10,8 +10,7 @@ import {
 import { useTheme } from '@mui/material/styles'
 
 import { useState } from 'react'
-import { Flex, ViewHeader } from '../../layout'
-import EdgyPaper from '../../layout/EdgyPaper'
+import { EdgyPaper, Flex, ViewHeader } from '../../layout'
 
 const StoryList = ({
   stories,

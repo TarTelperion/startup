@@ -7,12 +7,12 @@ export const palette = {
     main: '#FA8072',
   },
   success: {
-    main: '#cad2c5',
+    main: '#96c5b6',
   },
   error: {
     main: '#f44336',
   },
   info: {
-    main: '#dbd4d3',
+    main: '#5dc6d5',
   },
 }
