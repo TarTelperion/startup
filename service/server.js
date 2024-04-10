@@ -115,8 +115,10 @@ secureRoute.post('/stories/add', async (req, res) => {
 
 // Update content of a story. Send in the content of the story in the request body
 secureRoute.put('/stories/update', async (req, res) => {
-  let socket_id = req.params.ws
-  let story = await db.update_story(req.body, socket_id)
+  let storyId = req.params.id
+  const token = req.cookies[cookie_name]
+  const user = await db.user_token(token)
+  let story = await db.update_story(req.body, storyId, user)
 
   if (story) {
     res.send(story)

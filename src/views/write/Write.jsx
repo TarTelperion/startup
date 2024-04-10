@@ -1,20 +1,13 @@
 import { Typography } from '@mui/material'
 import { useParams } from 'react-router-dom'
+import { useStory } from '../../hooks/stories/useStory'
 import { EdgyPaper, Flex, ViewHeader } from '../../layout'
 
 const Write = () => {
   const params = useParams()
   console.log('params:', params)
   const storyId = params.storyId
-
-  const story = {
-    title: 'roochie bums',
-    content: 'furble floble beeble buzz, floogle flork rubble crubble.',
-    recent: 'floogle flork rubble crubble',
-    genre: 'realistic fiction',
-    authors: 6,
-    writer: 'lord roochiepants',
-  }
+  const { story, update } = useStory(storyId)
 
   const paperStyle = {
     pt: 3,

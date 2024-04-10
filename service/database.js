@@ -83,7 +83,7 @@ async function create_story(title, author, genre, id = null, joined, prompt) {
   const story = {
     _id: id ?? Math.floor(Math.random() * 9000) + 1000,
     title: title,
-    content: ' ',
+    additions: [],
     authors: 1,
     owner: author,
     genre: genre,
@@ -133,19 +133,20 @@ async function get_story(story_id) {
   return story
 }
 
-async function update_story(story, socket_id) {
-  console.log('socketId', socket_id)
+async function update_story(content, id, user) {
+  const story = await get_story(id)
   const randomIndex = Math.floor(Math.random() * story.joined.length)
   const timestamp = getNow()
 
-  await storyCollection.replaceOne(
-    { _id: story._id },
-    {
-      ...story,
-      updatedAt: timestamp,
-      writer: story.joined[randomIndex],
-    }
-  )
+  const recentChange = {
+    content: content,
+    updatedAt: timestamp,
+    author: user._id,
+  }
+  story.additions.push(recentChange)
+  story.updatedAt = timestamp
+  story.writer = story.joined[randomIndex]
+  await storyCollection.replaceOne({ _id: id })
 
   const updated = await get_story(story._id)
 
