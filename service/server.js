@@ -97,7 +97,10 @@ secureRoute.get('/stories', async (req, res) => {
 // Add story
 secureRoute.post('/stories/add', async (req, res) => {
   // let socket_id = req.params.ws
-  let story = req.body
+  const story = req.body
+  const token = req.cookies[cookie_name]
+  const user = await db.user_token(token)
+  user.joined.push(story._id)
   const fin = await db.create_story(
     story.title,
     story.owner,
@@ -107,7 +110,7 @@ secureRoute.post('/stories/add', async (req, res) => {
     story.prompt
   )
 
-  res.send(fin)
+  res.status(200).send(fin)
 })
 
 // Update content of a story. Send in the content of the story in the request body
@@ -169,6 +172,33 @@ secureRoute.get('/user/stories', async (req, res) => {
   const payload = await db.getJoinedStories(user._id.toString())
 
   res.status(200).send(JSON.stringify(payload))
+})
+
+secureRoute.put('/stories/join', async (req, res) => {
+  try {
+    const token = req.cookies[cookie_name]
+    const user = await db.user_token(token)
+    const story_id = req.body.id
+    console.log('id', story_id)
+    const story = await db.get_story(story_id)
+    console.log('user', user)
+    console.log('story', story)
+    if (story.joined.includes(user._id) || user.joined.includes(story._id)) {
+      throw new Error('User Loser. You already joined that story.')
+    }
+
+    story.joined.push(user._id.toString())
+    story.authors += 1
+    user.joined.push(story._id)
+
+    await db.update_user(user)
+    await db.update_story(story)
+
+    res.status(200).send('Okey-dokey, looks all good here...')
+  } catch (err) {
+    console.log(err)
+    res.status(500).send(JSON.stringify(err))
+  }
 })
 
 secureRoute.post('/generate-prompt', generatePrompt)

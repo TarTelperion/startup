@@ -5,7 +5,7 @@ const EdgyPaper = ({
   children,
   open = true,
   transition = false,
-  elevation = 20,
+  elevation = 24,
   sx,
 }) => {
   useEffect(() => {
@@ -17,10 +17,16 @@ const EdgyPaper = ({
       document.body.style.overflow = 'auto'
     }
   }, [])
-  sx.height = '100vh'
+
+  // sx.height = '100vh'
+  sx.height = '100%'
   sx.width = '100%'
   sx.paddingBottom = '50vh'
   sx.marginBottom = '-50vh'
+  sx.overflow = 'hidden'
+  sx.borderBottomLeftRadius = '0px !important'
+  sx.borderBottomRightRadius = '0px !important'
+
   if (transition) {
     sx.borderRadius = '10px'
     return (
@@ -29,6 +35,7 @@ const EdgyPaper = ({
       </Slide>
     )
   }
+
   return (
     <Paper elevation={elevation} sx={sx}>
       {children}

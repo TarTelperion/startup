@@ -4,6 +4,7 @@ import DeveloperModeIcon from '@mui/icons-material/DeveloperMode'
 import GroupAddIcon from '@mui/icons-material/GroupAdd'
 import HistoryEduIcon from '@mui/icons-material/HistoryEdu'
 import LoginIcon from '@mui/icons-material/Login'
+import MenuBookIcon from '@mui/icons-material/MenuBook'
 import {
   Divider,
   List,
@@ -21,6 +22,7 @@ const drawerWidth = 240
 
 const navItems = [
   { text: 'Home', icon: <CottageIcon />, route: '/home' },
+  { text: 'My Stories', icon: <MenuBookIcon />, route: '/stories/joined' },
   { text: 'Create', icon: <HistoryEduIcon />, route: '/create' },
   { text: 'Temporary Write', icon: <DeveloperModeIcon />, route: '/write' },
 ]

@@ -1,37 +1,37 @@
-import AddCircleIcon from '@mui/icons-material/AddCircle'
-import {
-  Chip,
-  Divider,
-  IconButton,
-  Modal,
-  Paper,
-  Typography,
-} from '@mui/material'
+import { Chip, Paper, Typography } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
+import { useEffect, useState } from 'react'
+import { Flex } from '../../layout'
+import StoryListModal from './StoryListModal'
+import { useSelectedStoryStore } from './hooks/selectedStoryStore'
 
-import { useState } from 'react'
-import { EdgyPaper, Flex, ViewHeader } from '../../layout'
-
-const StoryList = ({
-  stories,
-  paperOpen,
-  setPaperOpen,
-  currentStory,
-  setCurrentStory,
-}) => {
-  console.log('stories2', stories)
-  const [modalOpen, setModalOpen] = useState(false)
+const StoryList = ({ stories }) => {
   const theme = useTheme()
 
-  const handleClick = (story) => {
-    setModalOpen(true)
-    setPaperOpen(true)
-    setCurrentStory(story)
+  const selectedStory = useSelectedStoryStore((state) => state.selectedStory)
+  const setSelectedStory = useSelectedStoryStore(
+    (state) => state.setSelectedStory
+  )
+
+  const [modalOpen, setModalOpen] = useState(false)
+  const [paperOpen, setPaperOpen] = useState(false)
+
+  useEffect(() => {
+    if (selectedStory) {
+      setModalOpen(true)
+      setPaperOpen(true)
+    } else {
+      setPaperOpen(false)
+      setTimeout(() => setModalOpen(false), 250)
+    }
+  }, [selectedStory])
+
+  const handleSelectStory = (story) => {
+    setSelectedStory(story)
   }
-  const handleClose = () => {
-    setPaperOpen(false)
-    setTimeout(() => setModalOpen(false), 300)
-    setCurrentStory({})
+
+  const handleClearStory = () => {
+    setSelectedStory(null)
   }
 
   return (
@@ -51,12 +51,12 @@ const StoryList = ({
               cursor: 'pointer',
             },
           }}
-          onClick={() => handleClick(story)}
+          onClick={() => handleSelectStory(story)}
         >
           <Flex
             flexRow
             width="100%"
-            key={story.index}
+            key={index}
             justifyContent="space-between"
             overflow="hidden"
           >
@@ -73,7 +73,7 @@ const StoryList = ({
                   color: 'white',
                   fontWeight: 'bold',
                 }}
-              ></Chip>
+              />
             </Flex>
             <Flex flexColumn alignItems="flex-end">
               <Typography variant="subtitle2">
@@ -83,63 +83,12 @@ const StoryList = ({
           </Flex>
         </Paper>
       ))}
-      <Modal
-        open={modalOpen}
-        onClose={handleClose}
-        style={{
-          display: 'flex',
-          alignItems: 'stretch',
-          justifyContent: 'center',
-          marginTop: '10px',
-          marginLeft: '10px',
-          marginRight: '10px',
-        }}
-      >
-        <Flex width="75%">
-          <EdgyPaper
-            open={paperOpen}
-            transition={true}
-            sx={{
-              width: '50%',
-            }}
-          >
-            <ViewHeader>{currentStory.title}</ViewHeader>
-            <Divider variant="middle" />
-            <Flex
-              flexRow
-              alignItems="center"
-              justifyContent="space-between"
-              pl={1}
-              pr={2}
-            >
-              <Typography marginLeft={10} marginTop={5}>
-                Genre: {currentStory.genre} <br />
-                {currentStory.authors === 1
-                  ? '1 Author'
-                  : `${currentStory.authors} Authors`}{' '}
-              </Typography>
-              <Flex sx={{ float: 'right' }}>
-                <IconButton size="large" color="secondary">
-                  <AddCircleIcon fontSize="inherit" />
-                </IconButton>
-              </Flex>
-            </Flex>
-            <Flex width="100%" sx={{ bottom: 0 }} flexColumn>
-              <Flex
-                width="100%"
-                sx={{ alignSelf: 'center', marginTop: 10 }}
-                flexColumn
-              >
-                <Typography align="center">
-                  {currentStory.content !== ' '
-                    ? currentStory.content
-                    : 'Nobody has written on this story yet. Click "Join" to change that unfortunate situation'}
-                </Typography>
-              </Flex>
-            </Flex>
-          </EdgyPaper>
-        </Flex>
-      </Modal>
+      <StoryListModal
+        onRequestClose={handleClearStory}
+        modalOpen={modalOpen}
+        paperOpen={paperOpen}
+        currentStory={selectedStory}
+      />
     </Flex>
   )
 }

@@ -12,14 +12,25 @@ const ViewHeader = ({ children }) => {
     )
   } else {
     descendants = (
-      <Flex width="100%" justifyContent="space-between" alignItems="center">
+      <Flex
+        width="100%"
+        justifyContent="space-between"
+        alignItems="center"
+        position="relative"
+      >
         {children}
       </Flex>
     )
   }
 
   return (
-    <Flex width="100%" justifyContent="center" alignItems="center" py={2}>
+    <Flex
+      width="100%"
+      justifyContent="center"
+      alignItems="center"
+      py={2}
+      position="relative"
+    >
       {descendants}
     </Flex>
   )

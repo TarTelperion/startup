@@ -21,8 +21,8 @@ import { Flex, ViewHeader } from '../../layout'
 
 const Home = () => {
   const { user } = useUser()
-  const { stories } = useJoinedStories()
-  const { globalStories } = useGlobalStories()
+  const { stories: joinedStories } = useJoinedStories(user._id)
+  const { stories: globalStories } = useGlobalStories(user._id)
 
   const paperStyles = {
     display: 'flex',
@@ -50,35 +50,37 @@ const Home = () => {
                   Joined Stories
                 </Typography>
                 <List>
-                  {stories.map(({ title, authors, genre, writer }, index) => (
-                    <ListItem
-                      key={index}
-                      secondaryAction={
-                        <ListItemIcon>
-                          <IconButton disabled={writer !== user._id}>
-                            <CreateIcon />
-                          </IconButton>
-                        </ListItemIcon>
-                      }
-                    >
-                      <ListItemText
-                        primary={title}
-                        secondary={
-                          <>
-                            <Typography
-                              sx={{ display: 'inline' }}
-                              component="span"
-                              variant="body2"
-                            >
-                              {`${genre}--`}
-                            </Typography>
-                            {authors +
-                              `${authors > 1 ? ' authors' : ' author'}`}
-                          </>
+                  {joinedStories.map(
+                    ({ title, authors, genre, writer }, index) => (
+                      <ListItem
+                        key={index}
+                        secondaryAction={
+                          <ListItemIcon>
+                            <IconButton disabled={writer !== user._id}>
+                              <CreateIcon />
+                            </IconButton>
+                          </ListItemIcon>
                         }
-                      ></ListItemText>
-                    </ListItem>
-                  ))}
+                      >
+                        <ListItemText
+                          primary={title}
+                          secondary={
+                            <>
+                              <Typography
+                                sx={{ display: 'inline' }}
+                                component="span"
+                                variant="body2"
+                              >
+                                {`${genre}--`}
+                              </Typography>
+                              {authors +
+                                `${authors > 1 ? ' authors' : ' author'}`}
+                            </>
+                          }
+                        ></ListItemText>
+                      </ListItem>
+                    )
+                  )}
                 </List>
               </Box>
             </Flex>
@@ -134,8 +136,7 @@ const Home = () => {
               <Typography variant="subtitle2" align="center">
                 Most Recent
               </Typography>
-
-              <Typography>
+              {/* <Typography>
                 {stories &&
                 stories.length > 0 &&
                 stories[stories.length - 1].content ? (
@@ -143,7 +144,7 @@ const Home = () => {
                 ) : (
                   <></>
                 )}
-              </Typography>
+              </Typography> */}
             </Paper>
           </Flex>
         </Flex>

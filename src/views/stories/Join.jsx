@@ -1,15 +1,14 @@
 import { Button, Typography } from '@mui/material'
-import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useGlobalStories } from '../../hooks/stories/useGlobalStories'
+import { useUnjoinedStories } from '../../hooks/stories/useUnjoinedStories'
+import { useUser } from '../../hooks/useUser'
 import { Flex, ViewHeader } from '../../layout'
 import StoryList from './StoryList'
 
 const Join = () => {
   const navigate = useNavigate()
-  const { globalStories } = useGlobalStories()
-  const [open, setOpen] = useState(false)
-  const [story, setStory] = useState({})
+  const { user } = useUser()
+  const { stories } = useUnjoinedStories(user._id)
 
   return (
     <>
@@ -28,13 +27,7 @@ const Join = () => {
           </Button>
         </Flex>
       </ViewHeader>
-      <StoryList
-        stories={globalStories}
-        paperOpen={open}
-        setPaperOpen={setOpen}
-        currentStory={story}
-        setCurrentStory={setStory}
-      />
+      <StoryList stories={stories} />
     </>
   )
 }
