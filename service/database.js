@@ -2,10 +2,12 @@ const { MongoClient } = require('mongodb')
 const bcrypt = require('bcrypt')
 const uuid = require('uuid')
 const config = require('./dbConfig.json')
+const { getNow } = require('./utils/getNow')
 
 const url = `mongodb+srv://${config.userName}:${config.password}@${config.hostname}`
 const client = new MongoClient(url)
 const db = client.db('writersblock')
+
 const userCollection = db.collection('user')
 const storyCollection = db.collection('stories')
 
@@ -35,8 +37,7 @@ try {
 async function user(name) {
   let user_from_mail = await userCollection.findOne({ mail: name })
   let user_from_name = await userCollection.findOne({ name: name })
-  console.log('mail', user_from_mail)
-  console.log('name', user_from_name)
+
   if (user_from_mail) {
     return user_from_mail
   } else {
@@ -55,6 +56,7 @@ async function createUser(mail, pass, name) {
     console.log(`mail: ${mail}`)
     console.log(`pass: ${pass}`)
   }
+
   const passwordHash = await bcrypt.hash(pass, 10)
   const user = {
     mail: mail,
@@ -64,8 +66,11 @@ async function createUser(mail, pass, name) {
     stories: [],
     notifications: [],
     token: uuid.v4(),
+    createdAt: getNow(),
   }
+
   await userCollection.insertOne(user)
+
   return user
 }
 
@@ -81,9 +86,11 @@ async function create_story(title, author, genre, id = null, joined, prompt) {
     writer: author,
     joined: [...joined],
     prompt: prompt,
+    createdAt: getNow(),
   }
+
   await storyCollection.insertOne(story)
-  console.log(story)
+
   return story
 }
 
@@ -103,8 +110,10 @@ async function get_pop_stories() {
   const options = {
     sort: { authors: -1 },
   }
+
   const stories = storyCollection.find(query, options)
   const array = await stories.toArray()
+
   return array
 }
 
@@ -114,19 +123,28 @@ async function getJoinedStories(userId) {
 
 async function get_story(story_id) {
   const story = await storyCollection.findOne({ _id: story_id })
+
   return story
 }
 
 async function update_story(story, socket_id) {
   const randomIndex = Math.floor(Math.random() * story.joined.length)
-  story.writer = story.joined[randomIndex]
-  await storyCollection.replaceOne({ _id: story._id }, story)
-  let fin = await get_story(story._id)
-  return fin
+
+  await storyCollection.replaceOne(
+    { _id: story._id },
+    {
+      ...story,
+      updatedAt: getNow(),
+      writer: story.joined[randomIndex],
+    }
+  )
+
+  const updated = await get_story(story._id)
+
+  return updated
 }
 
 async function update_user(user) {
-  console.log(user.joined)
   await userCollection.updateOne(
     { token: user.token },
     { $set: { joined: user.joined } }
@@ -139,17 +157,19 @@ async function update_user(user) {
     { token: user.token },
     { $set: { notifications: user.notifications } }
   )
+
   const usEr = await user_token(user.token)
+
   return usEr
 }
 
 async function remove(story_id, socket_id) {
   try {
     let story = await get_story(story_id)
+
     await storyCollection.deleteOne({ _id: story_id })
     await userCollection.updateMany({}, { $pull: { joined: story_id } })
     await userCollection.updateMany({}, { $pull: { stories: story_id } })
-    console.log('DELETE SUCCESSFUL')
   } catch (err) {
     console.log(`delete failed due to: ${err}`)
   }
