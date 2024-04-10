@@ -18,11 +18,15 @@ const EdgyPaper = ({
     }
   }, [])
 
-  // sx.height = '100vh'
+  sx.display = 'flex'
+  sx.flexDirection = 'column'
+  sx.flex = '1 1 auto'
   sx.height = '100%'
   sx.width = '100%'
-  sx.paddingBottom = '50vh'
-  sx.marginBottom = '-50vh'
+  // NOT NECESSARY, OVERLY COMPLICATED:
+  // sx.height = '100vh'
+  // sx.paddingBottom = '50vh'
+  // sx.marginBottom = '-50vh'
   sx.overflow = 'hidden'
   sx.borderBottomLeftRadius = '0px !important'
   sx.borderBottomRightRadius = '0px !important'

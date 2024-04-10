@@ -34,7 +34,6 @@ const AppFrame = () => {
           flex: '1 1 auto',
           height: '100%',
           px: 3,
-          pb: 3,
         }}
       >
         <AppHeader sx={{ backgroundColor: 'transparent' }} />
