@@ -133,20 +133,29 @@ async function get_story(story_id) {
   return story
 }
 
-async function update_story(content, id, user) {
-  const story = await get_story(id)
-  const randomIndex = Math.floor(Math.random() * story.joined.length)
-  const timestamp = getNow()
-
-  const recentChange = {
-    content: content,
-    updatedAt: timestamp,
-    author: user._id,
+async function update_story(content = '', idOrStory, user) {
+  let story = undefined
+  let id = undefined
+  if (idOrStory instanceof Number) {
+    story = await get_story(idOrStory)
+    id = idOrStory
+  } else {
+    story = idOrStory
+    id = story._id
   }
-  story.additions.push(recentChange)
-  story.updatedAt = timestamp
+  const timestamp = getNow()
+  const randomIndex = Math.floor(Math.random() * story.joined.length)
+  if (content !== '') {
+    const recentChange = {
+      content: content,
+      updatedAt: timestamp,
+      author: user._id,
+    }
+    story.additions.push(recentChange)
+    story.updatedAt = timestamp
+  }
   story.writer = story.joined[randomIndex]
-  await storyCollection.replaceOne({ _id: id })
+  await storyCollection.replaceOne({ _id: id }, story)
 
   const updated = await get_story(story._id)
 

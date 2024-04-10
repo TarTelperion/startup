@@ -101,6 +101,8 @@ secureRoute.post('/stories/add', async (req, res) => {
   const token = req.cookies[cookie_name]
   const user = await db.user_token(token)
   user.joined.push(story._id)
+  user.stories.push(story._id)
+  await db.update_user(user)
   const fin = await db.create_story(
     story.title,
     story.owner,
@@ -194,9 +196,9 @@ secureRoute.put('/stories/join', async (req, res) => {
     user.joined.push(story._id)
 
     await db.update_user(user)
-    await db.update_story(story)
+    await db.update_story('', story, user)
 
-    res.status(200).send('Okey-dokey, looks all good here...')
+    res.status(200).send(JSON.stringify(story))
   } catch (err) {
     console.log(err)
     res.status(500).send(JSON.stringify(err))
