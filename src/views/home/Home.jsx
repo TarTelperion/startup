@@ -13,6 +13,8 @@ const Home = () => {
   const { user } = useUser()
 
   const paperStyles = {
+    height: '100%',
+    width: '100%',
     display: 'flex',
     flexDirection: 'column',
     flex: '1 1 auto',
@@ -20,7 +22,7 @@ const Home = () => {
   }
 
   return (
-    <>
+    <Flex flexColumn pb={3}>
       <ViewHeader>
         <Typography variant="h6" component="div">
           User Home
@@ -48,7 +50,7 @@ const Home = () => {
           </Flex>
         </Flex>
       </Flex>
-    </>
+    </Flex>
   )
 }
 

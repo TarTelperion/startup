@@ -7,9 +7,9 @@ const OwnedDashboard = ({ user }) => {
   const { stories: ownedStories } = useOwnedStories(user._id)
 
   return (
-    <Flex flexColumn overflow="hidden">
+    <Flex flexColumn>
       <DashHeader title="Owned Stories" />
-      <Flex flexColumn overflowY="scroll" overflow>
+      <Flex flexColumn sx={{ overflowX: 'hidden', overflowY: 'scroll' }}>
         {ownedStories.map((story) => (
           <MiniStoryRow story={story} key={story._id} />
         ))}
