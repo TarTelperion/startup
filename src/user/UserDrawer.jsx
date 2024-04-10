@@ -1,17 +1,7 @@
-import {
-  Drawer,
-  Paper,
-  Button,
-  Typography,
-  Card,
-  CardContent,
-  Box,
-} from '@mui/material'
+import { Box, Button, Card, Drawer, Typography } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
-import { useNavigate } from 'react-router-dom'
-import { DrawerContent } from '../layout'
 import { useUser } from '../hooks/useUser'
-import { Flex } from '../layout'
+import { DrawerContent, Flex } from '../layout'
 
 const UserDrawer = ({ open, setOpen }) => {
   const theme = useTheme()

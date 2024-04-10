@@ -10,7 +10,7 @@ export const useGlobalStories = () => {
   )
 
   return {
-    globalStories: data || [],
+    stories: data || [],
     isLoading: !isLoading && !data,
     isFetching: isValidating,
     isError: error,

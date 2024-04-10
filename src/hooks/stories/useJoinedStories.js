@@ -8,6 +8,7 @@ export const useJoinedStories = () => {
     '/user/stories',
     fetcher
   )
+  console.log('stat', data)
 
   return {
     stories: data || [],
