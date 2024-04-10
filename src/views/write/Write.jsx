@@ -2,6 +2,7 @@ import { Typography } from '@mui/material'
 import { useParams } from 'react-router-dom'
 import { useStory } from '../../hooks/stories/useStory'
 import { EdgyPaper, Flex, ViewHeader } from '../../layout'
+import WriteOptions from './WriteOptions'
 
 const Write = () => {
   const params = useParams()
@@ -24,24 +25,26 @@ const Write = () => {
   }
 
   return (
-    <Flex flexColumn>
-      <ViewHeader>
-        <Typography variant="h6" component="div">
-          Write
-        </Typography>
-        <Typography variant="h5" component="div">
-          <i>{story?.title}</i>
-        </Typography>
-      </ViewHeader>
-      <Flex flexColumn id="write-main">
-        <EdgyPaper sx={{ width: '100%' }} elevation={4}>
-          <Flex flexColumn p={3} id="edgy-paper-child">
-            <textarea style={paperStyle}></textarea>
-          </Flex>
-        </EdgyPaper>
+    <>
+      <Flex flexColumn>
+        <ViewHeader>
+          <Typography variant="h6" component="div">
+            Write
+          </Typography>
+          <Typography variant="h6" component="div">
+            {story?.title}
+          </Typography>
+        </ViewHeader>
+        <Flex flexColumn id="write-main">
+          <EdgyPaper sx={{ width: '100%' }} elevation={4}>
+            <Flex flexColumn p={3} id="edgy-paper-child">
+              <textarea style={paperStyle}></textarea>
+            </Flex>
+          </EdgyPaper>
+        </Flex>
       </Flex>
-      {/* <WriteOptions /> */}
-    </Flex>
+      <WriteOptions />
+    </>
   )
 }
 export default Write

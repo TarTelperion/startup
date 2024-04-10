@@ -6,10 +6,16 @@ import SpeedDialIcon from '@mui/material/SpeedDialIcon'
 export default function WriteOptions() {
   return (
     <Box
-      sx={{ height: 'min-content', transform: 'translateZ(0px)', flexGrow: 1 }}
+      sx={{
+        transform: 'translateZ(0px)',
+        flexGrow: 1,
+        zIndex: 1500,
+        height: 'min-content',
+      }}
+      flexGrow={0}
     >
       <SpeedDial
-        ariaLabel="Story Options"
+        ariaLabel="Write Options"
         sx={{ position: 'absolute', bottom: 16, right: 16 }}
         icon={<SpeedDialIcon />}
       >
