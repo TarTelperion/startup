@@ -22,6 +22,7 @@ const EdgyPaper = ({
   sx.paddingBottom = '50vh'
   sx.marginBottom = '-50vh'
   if (transition) {
+    sx.borderRadius = '10px'
     return (
       <Slide direction="up" in={open} sx={sx} mountOnEnter unmountOnExit>
         <Paper elevation={elevation}>{children}</Paper>

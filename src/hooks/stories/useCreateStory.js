@@ -6,9 +6,9 @@ export const useCreateStory = () => {
 
   const create = async ({ title, genre, prompt }) => {
     const payload = {
-      title,
-      genre,
-      prompt,
+      title: title,
+      genre: genre,
+      prompt: prompt,
       owner: user._id,
       joined: [user._id],
     }
