@@ -58,6 +58,8 @@ async function createUser(mail, pass, name) {
   }
 
   const passwordHash = await bcrypt.hash(pass, 10)
+  const timestamp = getNow()
+
   const user = {
     mail: mail,
     pass: passwordHash,
@@ -66,7 +68,8 @@ async function createUser(mail, pass, name) {
     stories: [],
     notifications: [],
     token: uuid.v4(),
-    createdAt: getNow(),
+    createdAt: timestamp,
+    updatedAt: timestamp,
   }
 
   await userCollection.insertOne(user)
@@ -75,6 +78,8 @@ async function createUser(mail, pass, name) {
 }
 
 async function create_story(title, author, genre, id = null, joined, prompt) {
+  const timestamp = getNow()
+
   const story = {
     _id: id ?? Math.floor(Math.random() * 9000) + 1000,
     title: title,
@@ -86,7 +91,8 @@ async function create_story(title, author, genre, id = null, joined, prompt) {
     writer: author,
     joined: [...joined],
     prompt: prompt,
-    createdAt: getNow(),
+    createdAt: timestamp,
+    updatedAt: timestamp,
   }
 
   await storyCollection.insertOne(story)
@@ -128,13 +134,15 @@ async function get_story(story_id) {
 }
 
 async function update_story(story, socket_id) {
+  console.log('socketId', socket_id)
   const randomIndex = Math.floor(Math.random() * story.joined.length)
+  const timestamp = getNow()
 
   await storyCollection.replaceOne(
     { _id: story._id },
     {
       ...story,
-      updatedAt: getNow(),
+      updatedAt: timestamp,
       writer: story.joined[randomIndex],
     }
   )
@@ -164,14 +172,16 @@ async function update_user(user) {
 }
 
 async function remove(story_id, socket_id) {
+  console.log('socketId', socket_id)
   try {
-    let story = await get_story(story_id)
+    // let story = await get_story(story_id)
 
     await storyCollection.deleteOne({ _id: story_id })
     await userCollection.updateMany({}, { $pull: { joined: story_id } })
     await userCollection.updateMany({}, { $pull: { stories: story_id } })
   } catch (err) {
     console.log(`delete failed due to: ${err}`)
+    throw err
   }
 }
 
