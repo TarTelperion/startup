@@ -1,6 +1,5 @@
 import styled from '@emotion/styled'
 import CottageIcon from '@mui/icons-material/Cottage'
-import DeveloperModeIcon from '@mui/icons-material/DeveloperMode'
 import GroupAddIcon from '@mui/icons-material/GroupAdd'
 import HistoryEduIcon from '@mui/icons-material/HistoryEdu'
 import LoginIcon from '@mui/icons-material/Login'
@@ -8,11 +7,11 @@ import MenuBookIcon from '@mui/icons-material/MenuBook'
 import {
   Divider,
   List,
+  ListItem,
   ListItemButton,
   ListItemIcon,
   ListItemText,
   Drawer as MuiDrawer,
-  ListItem as MuiListItem,
 } from '@mui/material'
 import { useLocation, useNavigate } from 'react-router-dom'
 
@@ -23,8 +22,8 @@ const drawerWidth = 240
 const navItems = [
   { text: 'Home', icon: <CottageIcon />, route: '/home' },
   { text: 'My Stories', icon: <MenuBookIcon />, route: '/stories/joined' },
+  { text: 'Join a Story', icon: <GroupAddIcon />, route: '/stories/find' },
   { text: 'Create', icon: <HistoryEduIcon />, route: '/create' },
-  { text: 'Temporary Write', icon: <DeveloperModeIcon />, route: '/write' },
 ]
 
 const Drawer = styled(MuiDrawer, {
@@ -42,12 +41,6 @@ const Drawer = styled(MuiDrawer, {
     ...closedMixin(theme),
     '& .MuiDrawer-paper': closedMixin(theme),
   }),
-}))
-
-const ListItem = styled(MuiListItem)(({ theme }) => ({
-  '&:hover': {
-    backgroundColor: theme.palette.action.hover,
-  },
 }))
 
 const openedMixin = (theme) => ({
@@ -109,34 +102,6 @@ const AppSidebar = ({ openModal, user }) => {
       <Divider />
       <List>
         {/* JUST NOTING, I REMOVED THE AUTH VARIABLE IN THE FOLLOWING CONDITIONALS AND REPLACED IT WITH FALSE. */}
-        <ListItem disablePadding sx={{ display: 'block' }} key="More Stories">
-          <ListItemButton
-            sx={{
-              minHeight: 48,
-              justifyContent: open ? 'initial' : 'center',
-              px: 2.5,
-            }}
-            disabled={!user}
-            onClick={() => {
-              navigate('/stories/join')
-            }}
-          >
-            <ListItemIcon
-              sx={{
-                minWidth: 0,
-                mr: open ? 3 : 'auto',
-                justifyContent: 'center',
-              }}
-            >
-              {' '}
-              <GroupAddIcon />
-            </ListItemIcon>
-            <ListItemText
-              sx={{ opacity: open ? 1 : 0 }}
-              primary="Find Stories"
-            />
-          </ListItemButton>
-        </ListItem>
         {user ? (
           ''
         ) : (

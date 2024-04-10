@@ -1,5 +1,6 @@
 import AddCircleIcon from '@mui/icons-material/AddCircle'
 import CloseIcon from '@mui/icons-material/Close'
+import EditNoteIcon from '@mui/icons-material/EditNote'
 import GroupsIcon from '@mui/icons-material/Groups'
 import PersonIcon from '@mui/icons-material/Person'
 import {
@@ -13,6 +14,7 @@ import {
   Typography,
 } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
+import { useNavigate } from 'react-router-dom'
 import { useJoinStory } from '../../hooks/stories/useJoinStory'
 import { EdgyPaper, Flex, ViewHeader } from '../../layout'
 
@@ -22,8 +24,46 @@ const StoryListModal = ({
   paperOpen,
   currentStory,
 }) => {
+  const navigate = useNavigate()
   const theme = useTheme()
   const { join } = useJoinStory()
+
+  const canJoin =
+    currentStory && !currentStory?.isOwner && !currentStory?.isJoined
+
+  const canWrite =
+    (currentStory && currentStory?.isOwner) || currentStory?.isJoined
+
+  let actions = []
+  if (canJoin) {
+    actions = [
+      <Button
+        key="join"
+        variant="contained"
+        color="secondary"
+        endIcon={<AddCircleIcon />}
+        onClick={() => {
+          join(currentStory._id)
+        }}
+      >
+        Join
+      </Button>,
+    ]
+  } else if (canWrite) {
+    actions = [
+      <Button
+        key="write"
+        variant="contained"
+        color="primary"
+        endIcon={<EditNoteIcon />}
+        onClick={() => {
+          navigate(`/stories/write/${currentStory._id}`)
+        }}
+      >
+        Write
+      </Button>,
+    ]
+  }
 
   return (
     <Modal
@@ -77,18 +117,13 @@ const StoryListModal = ({
                     : `${currentStory?.authors} Authors`
                 }
               />
-              {currentStory && !currentStory.isCurrentUser && (
-                <Button
-                  variant="contained"
-                  color="secondary"
-                  endIcon={<AddCircleIcon />}
-                  onClick={() => {
-                    join(currentStory._id)
-                  }}
-                >
-                  Join
-                </Button>
-              )}
+              <Flex>
+                {actions.map((action, index) => (
+                  <Box key={index} ml={1}>
+                    {action}
+                  </Box>
+                ))}
+              </Flex>
             </Flex>
             <Flex flexDirection="column">
               <Typography variant="subtitle2">Genre</Typography>
