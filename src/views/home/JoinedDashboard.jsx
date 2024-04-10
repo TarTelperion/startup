@@ -1,6 +1,6 @@
 // External Dependencies
 // Absolute Dependencies
-
+import { List } from '@mui/material'
 // Relative Dependencies
 
 import { useMyStories } from '../../hooks/stories/useMyStories'
@@ -10,15 +10,19 @@ import { DashHeader } from './DashHeader'
 
 const JoinedDashboard = ({ user }) => {
   const { stories: joinedStories } = useMyStories(user._id)
-
   return (
     <Flex flexColumn overflow="hidden">
       <DashHeader title="Joined Stories" />
-      <Flex flexColumn overflowY="scroll">
+      <List
+        sx={{
+          overflow: 'scroll',
+          maxHeight: 500,
+        }}
+      >
         {joinedStories.map((story) => (
           <MiniStoryRow story={story} key={story._id} showTurn />
         ))}
-      </Flex>
+      </List>
     </Flex>
   )
 }

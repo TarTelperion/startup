@@ -9,7 +9,7 @@ const OwnedDashboard = ({ user }) => {
   return (
     <Flex flexColumn overflow="hidden">
       <DashHeader title="Owned Stories" />
-      <Flex flexColumn overflowY="scroll">
+      <Flex flexColumn overflowY="scroll" overflow>
         {ownedStories.map((story) => (
           <MiniStoryRow story={story} key={story._id} />
         ))}
