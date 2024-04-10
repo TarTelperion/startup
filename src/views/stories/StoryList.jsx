@@ -1,13 +1,10 @@
-import { Chip, Paper, Typography } from '@mui/material'
-import { useTheme } from '@mui/material/styles'
 import { useEffect, useState } from 'react'
 import { Flex } from '../../layout'
 import StoryListModal from './StoryListModal'
+import StoryRow from './StoryRow'
 import { useSelectedStoryStore } from './hooks/selectedStoryStore'
 
 const StoryList = ({ stories }) => {
-  const theme = useTheme()
-
   const selectedStory = useSelectedStoryStore((state) => state.selectedStory)
   const setSelectedStory = useSelectedStoryStore(
     (state) => state.setSelectedStory
@@ -36,52 +33,8 @@ const StoryList = ({ stories }) => {
 
   return (
     <Flex flexColumn width="100%" spacing={1}>
-      {stories.map((story, index) => (
-        <Paper
-          variant="outlined"
-          key={index}
-          sx={{
-            display: 'flex',
-            height: 'auto',
-            width: '100%',
-            px: 3,
-            py: 2,
-            '&:hover': {
-              backgroundColor: theme.palette.grey[100],
-              cursor: 'pointer',
-            },
-          }}
-          onClick={() => handleSelectStory(story)}
-        >
-          <Flex
-            flexRow
-            width="100%"
-            key={index}
-            justifyContent="space-between"
-            overflow="hidden"
-          >
-            <Flex flexColumn>
-              <Typography variant="subtitle2" sx={{ marginBottom: 1 }}>
-                {story.title}
-              </Typography>
-              <Chip
-                label={story.genre}
-                size="small"
-                sx={{
-                  width: 'min-content',
-                  backgroundColor: 'secondary.light',
-                  color: 'white',
-                  fontWeight: 'bold',
-                }}
-              />
-            </Flex>
-            <Flex flexColumn alignItems="flex-end">
-              <Typography variant="subtitle2">
-                {story.authors === 1 ? '1 Author' : `${story.authors} Authors`}
-              </Typography>
-            </Flex>
-          </Flex>
-        </Paper>
+      {stories.map((story) => (
+        <StoryRow key={story._id} story={story} onSelect={handleSelectStory} />
       ))}
       <StoryListModal
         onRequestClose={handleClearStory}

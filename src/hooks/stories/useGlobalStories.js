@@ -7,8 +7,8 @@ export const useGlobalStories = (userId) => {
     async (url) => {
       const stories = await get(url)
       return stories.map((story) => {
-        story.isCurrentUser =
-          userId === story.owner || story.joined.includes(userId)
+        story.isOwner = userId === story.owner
+        story.isJoined = story.joined.includes(userId)
         return story
       })
     }

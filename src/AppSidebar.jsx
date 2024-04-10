@@ -8,13 +8,13 @@ import MenuBookIcon from '@mui/icons-material/MenuBook'
 import {
   Divider,
   List,
-  ListItem,
   ListItemButton,
   ListItemIcon,
   ListItemText,
   Drawer as MuiDrawer,
+  ListItem as MuiListItem,
 } from '@mui/material'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 import { AppHeader } from './layout'
 
@@ -44,6 +44,12 @@ const Drawer = styled(MuiDrawer, {
   }),
 }))
 
+const ListItem = styled(MuiListItem)(({ theme }) => ({
+  '&:hover': {
+    backgroundColor: theme.palette.action.hover,
+  },
+}))
+
 const openedMixin = (theme) => ({
   width: drawerWidth,
   transition: theme.transitions.create('width', {
@@ -66,6 +72,7 @@ const closedMixin = (theme) => ({
 })
 
 const AppSidebar = ({ openModal, user }) => {
+  const location = useLocation()
   const navigate = useNavigate()
 
   return (
@@ -83,6 +90,7 @@ const AppSidebar = ({ openModal, user }) => {
               }}
               disabled={!user}
               onClick={() => navigate(route)}
+              selected={location.pathname.startsWith(route)}
             >
               <ListItemIcon
                 sx={{

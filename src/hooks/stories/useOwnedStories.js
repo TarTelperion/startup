@@ -1,9 +1,9 @@
 import { useGlobalStories } from './useGlobalStories'
 
-export const useJoinedStories = (userId) => {
+export const useOwnedStories = (userId) => {
   const result = useGlobalStories(userId)
   return {
     ...result,
-    stories: result.stories.filter((story) => story.isOwner),
+    stories: result.stories.filter((story) => story.owner === userId),
   }
 }

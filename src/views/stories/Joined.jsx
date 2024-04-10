@@ -1,6 +1,6 @@
 import { Button, Typography } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
-import { useJoinedStories } from '../../hooks/stories/useJoinedStories'
+import { useMyStories } from '../../hooks/stories/useMyStories'
 import { useUser } from '../../hooks/useUser'
 import { Flex, ViewHeader } from '../../layout'
 import StoryList from './StoryList'
@@ -8,7 +8,7 @@ import StoryList from './StoryList'
 const Owned = () => {
   const navigate = useNavigate()
   const { user } = useUser()
-  const { stories } = useJoinedStories(user._id)
+  const { stories } = useMyStories(user._id)
 
   return (
     <>
