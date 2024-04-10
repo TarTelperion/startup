@@ -8,7 +8,7 @@ export const useGlobalStories = (userId) => {
       const stories = await get(url)
       return stories.map((story) => {
         story.isOwner = userId === story.owner
-        story.isJoined = story.joined.includes(userId)
+        story.isJoined = !story.isOwner && story.joined.includes(userId)
         return story
       })
     }

@@ -5,9 +5,6 @@ const RecentDashboard = ({ user }) => {
   return (
     <Flex flexColumn overflow="hidden">
       <DashHeader title="Recent Activity" />
-      <Flex flexColumn overflowY="scroll">
-        {null}
-      </Flex>
     </Flex>
   )
 }

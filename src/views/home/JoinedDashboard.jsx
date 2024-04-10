@@ -2,18 +2,18 @@
 // Absolute Dependencies
 // Relative Dependencies
 
-import { useMyStories } from '../../hooks/stories/useMyStories'
+import { useJoinedStories } from '../../hooks/stories/useJoinedStories'
 import { Flex } from '../../layout'
 import MiniStoryRow from '../stories/MiniStoryRow'
 import { DashHeader } from './DashHeader'
 
 const JoinedDashboard = ({ user }) => {
-  const { stories: joinedStories } = useMyStories(user._id)
+  const { stories } = useJoinedStories(user._id)
   return (
     <Flex flexColumn>
       <DashHeader title="Joined Stories" />
       <Flex flexColumn sx={{ overflowX: 'hidden', overflowY: 'scroll' }}>
-        {joinedStories.map((story) => (
+        {stories.map((story) => (
           <MiniStoryRow story={story} key={story._id} showTurn />
         ))}
       </Flex>

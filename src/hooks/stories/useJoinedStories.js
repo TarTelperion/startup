@@ -4,6 +4,6 @@ export const useJoinedStories = (userId) => {
   const result = useGlobalStories(userId)
   return {
     ...result,
-    stories: result.stories.filter((story) => story.isOwner),
+    stories: result.stories.filter((story) => story.isJoined),
   }
 }

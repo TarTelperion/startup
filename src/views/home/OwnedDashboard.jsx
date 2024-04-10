@@ -4,13 +4,13 @@ import MiniStoryRow from '../stories/MiniStoryRow'
 import { DashHeader } from './DashHeader'
 
 const OwnedDashboard = ({ user }) => {
-  const { stories: ownedStories } = useOwnedStories(user._id)
+  const { stories } = useOwnedStories(user._id)
 
   return (
     <Flex flexColumn>
       <DashHeader title="Owned Stories" />
       <Flex flexColumn sx={{ overflowX: 'hidden', overflowY: 'scroll' }}>
-        {ownedStories.map((story) => (
+        {stories.map((story) => (
           <MiniStoryRow story={story} key={story._id} />
         ))}
       </Flex>

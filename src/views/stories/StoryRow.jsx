@@ -1,5 +1,6 @@
 import { Chip, Paper, Typography } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
+import { DateTime } from 'luxon'
 import { Flex } from '../../layout'
 
 const StoryRow = ({ story, onSelect }) => {
@@ -28,9 +29,18 @@ const StoryRow = ({ story, onSelect }) => {
         overflow="hidden"
       >
         <Flex flexColumn>
-          <Typography variant="subtitle2" sx={{ mb: 1, ml: 0.5 }}>
-            {story.title}
-          </Typography>
+          <Flex alignItems="baseline">
+            <Typography variant="subtitle2" sx={{ mb: 1, ml: 0.5 }}>
+              {story.title}
+            </Typography>
+            <Typography
+              variant="caption"
+              sx={{ ml: 1, fontWeight: 700 }}
+              color={theme.palette.grey[500]}
+            >
+              {DateTime.fromISO(story.updatedAt).toRelative()}
+            </Typography>
+          </Flex>
           <Chip
             label={story.genre}
             size="small"
@@ -43,7 +53,7 @@ const StoryRow = ({ story, onSelect }) => {
             }}
           />
         </Flex>
-        <Flex flexColumn alignItems="flex-end">
+        <Flex flexDirection="column" flex="0 0 80px" alignItems="flex-end">
           <Typography variant="subtitle2">
             {story.authors === 1 ? '1 Author' : `${story.authors} Authors`}
           </Typography>
