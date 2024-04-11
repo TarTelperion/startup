@@ -82,18 +82,19 @@ const StoryListModal = ({
         Write
       </Button>,
     ]
-  } else if (canLeave) {
+  }
+  if (canLeave) {
     actions.push(
       <Button
         key="leave"
         variant="contained"
-        color="primary"
+        color="secondary"
         endIcon={<DirectionsRunIcon />}
         onClick={() => {
           leave(currentStory._id)
         }}
       >
-        Join
+        Leave
       </Button>
     )
   }

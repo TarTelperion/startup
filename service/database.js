@@ -128,7 +128,7 @@ async function getJoinedStories(userId) {
 }
 
 async function get_story(story_id) {
-  const story = await storyCollection.findOne({ _id: story_id })
+  const story = await storyCollection.findOne({ _id: Number(story_id) })
 
   return story
 }
