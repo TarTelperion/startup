@@ -16,6 +16,7 @@ import {
 } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
 import { useNavigate } from 'react-router-dom'
+import { mutate } from 'swr'
 import { useJoinStory } from '../../hooks/stories/useJoinStory'
 import { useLeaveStory } from '../../hooks/stories/useLeaveStory'
 import { useUser } from '../../hooks/useUser'
@@ -29,6 +30,7 @@ const StoryListModal = ({
 }) => {
   const navigate = useNavigate()
   const theme = useTheme()
+
   const { join } = useJoinStory()
   const { leave } = useLeaveStory()
   const { user } = useUser()
@@ -54,8 +56,10 @@ const StoryListModal = ({
         variant="contained"
         color="secondary"
         endIcon={<AddCircleIcon />}
-        onClick={() => {
-          join(currentStory._id)
+        onClick={async () => {
+          await join(currentStory._id)
+          await mutate('/stories/global')
+          onRequestClose()
         }}
       >
         Join
@@ -70,6 +74,8 @@ const StoryListModal = ({
         endIcon={<EditNoteIcon />}
         onClick={() => {
           navigate(`/stories/write/${currentStory._id}`)
+          console.log('wtite!')
+          onRequestClose()
         }}
       >
         Write
