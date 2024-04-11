@@ -3,12 +3,14 @@ import SaveIcon from '@mui/icons-material/Save'
 import { Box, SpeedDial, SpeedDialAction } from '@mui/material'
 import SpeedDialIcon from '@mui/material/SpeedDialIcon'
 
-export default function WriteOptions() {
+const WriteOptions = ({ onClickSave, onClickSkip }) => {
   return (
     <Box
       sx={{
+        position: 'fixed',
+        bottom: 1,
+        right: '24px',
         transform: 'translateZ(0px)',
-        flexGrow: 1,
         zIndex: 1500,
         height: 'min-content',
       }}
@@ -23,13 +25,17 @@ export default function WriteOptions() {
           key={'save'}
           icon={<SaveIcon />}
           tooltipTitle={'Save'}
+          onClick={onClickSave}
         />
         <SpeedDialAction
           key={'pass-turn'}
           icon={<ArrowForwardIosIcon />}
           tooltipTitle={'Pass Turn'}
+          onClick={onClickSkip}
         />
       </SpeedDial>
     </Box>
   )
 }
+
+export default WriteOptions

@@ -3,15 +3,22 @@ import { get, put } from '../../fetch'
 
 const fetcher = async (url) => get(url)
 
-export const useStory = (id) => {
+export const useStory = ({ storyId }) => {
   const { data, error, isLoading, isValidating } = useSWR(
-    `/stories?id=${id}`,
+    `/stories?id=${storyId}`,
     fetcher,
     { shouldRetryOnError: false }
   )
 
-  const update = async (payload, id) => {
-    const response = await put(`/stories/update?id=${id}`, payload)
+  const update = async ({ content }) => {
+    const response = await put(`/stories/update/${storyId}`, {
+      content,
+    })
+    return response
+  }
+
+  const skip = async () => {
+    const response = await put(`/stories/skip/${storyId}`)
     return response
   }
 
@@ -21,5 +28,6 @@ export const useStory = (id) => {
     isLoading: (!error && !data) || isLoading,
     isError: error,
     update,
+    skip,
   }
 }

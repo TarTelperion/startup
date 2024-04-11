@@ -92,43 +92,6 @@ const MiniStoryRow = ({ story, onSelect, showTurn }) => {
                 Write!
               </Button>
             </>
-            // <ButtonBase
-            //   color="primary"
-            //   sx={{
-            //     display: 'flex',
-            //     flexDirection: 'column',
-            //     justifyContent: 'space-between',
-            //     backgroundColor: alpha(theme.palette.primary.main, 0.6),
-            //     color: 'white',
-            //     borderRadius: 2,
-            //     width: '80px',
-            //     height: '100%',
-            //     alignItems: 'center',
-            //     p: 0.75,
-            //     border: '1px solid',
-            //     borderColor: theme.palette.primary.main,
-            //     '&:hover': {
-            //       transition: 'background-color 0.2s',
-            //       backgroundColor: alpha(theme.palette.primary.main, 0.8),
-            //     },
-            //     transition: 'background-color 0.2s',
-            //   }}
-            // >
-            //   <Typography
-            //     fontSize="0.75rem"
-            //     fontWeight={700}
-            //     variant="body2"
-            //     color="inherit"
-            //   >
-            //     My Turn!
-            //   </Typography>
-            //   <EditNoteIcon color="inherit" />
-            // </ButtonBase>
-          )}
-          {!showTurn && (
-            <Typography variant="body2" mt={0.25}>
-              {story.authors === 1 ? '1 Author' : `${story.authors} Authors`}
-            </Typography>
           )}
         </Flex>
       </Flex>

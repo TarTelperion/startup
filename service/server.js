@@ -209,10 +209,9 @@ secureRoute.put('/stories/join', async (req, res) => {
     const token = req.cookies[cookie_name]
     const user = await db.user_token(token)
     const story_id = req.body.id
-    console.log('id', story_id)
+
     const story = await db.get_story(story_id)
-    console.log('user', user)
-    console.log('story', story)
+
     if (story.joined.includes(user._id) || user.joined.includes(story._id)) {
       throw new Error('User Loser. You already joined that story.')
     }

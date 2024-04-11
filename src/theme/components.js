@@ -19,6 +19,15 @@ export const components = {
       }),
     },
   },
+  MuiModal: {
+    styleOverrides: {
+      root: {
+        '&:focus': {
+          outline: 'none !important',
+        },
+      },
+    },
+  },
   MuiListItemButton: {
     styleOverrides: {
       root: ({ theme }) => ({

@@ -136,6 +136,7 @@ async function get_story(story_id) {
 async function update_story(content = '', idOrStory, user) {
   let story = undefined
   let id = undefined
+
   if (idOrStory instanceof Number) {
     story = await get_story(idOrStory)
     id = idOrStory
@@ -143,17 +144,22 @@ async function update_story(content = '', idOrStory, user) {
     story = idOrStory
     id = story._id
   }
+
   const timestamp = getNow()
   const randomIndex = Math.floor(Math.random() * story.joined.length)
+
   if (content !== '') {
     const recentChange = {
       content: content,
       updatedAt: timestamp,
-      author: user._id,
+      authorId: user._id,
+      authorName: user.name,
     }
+
     story.additions.push(recentChange)
     story.updatedAt = timestamp
   }
+
   story.writer = story.joined[randomIndex]
   await storyCollection.replaceOne({ _id: id }, story)
 

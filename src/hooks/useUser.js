@@ -1,5 +1,5 @@
 import useSWR from 'swr'
-import { get, del, post } from '../fetch'
+import { del, get, post } from '../fetch'
 
 const fetcher = async (url) => get(url)
 
