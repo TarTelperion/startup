@@ -9,7 +9,6 @@ const Owned = () => {
   const navigate = useNavigate()
   const { user } = useUser()
   const { stories } = useMyStories(user._id)
-
   return (
     <>
       <ViewHeader>

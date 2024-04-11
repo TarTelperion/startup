@@ -2,8 +2,8 @@ import ClassIcon from '@mui/icons-material/Class'
 import EditNoteIcon from '@mui/icons-material/EditNote'
 import GroupsIcon from '@mui/icons-material/Groups'
 import PersonIcon from '@mui/icons-material/Person'
-import { ButtonBase, Chip, Paper, Typography } from '@mui/material'
-import { alpha, useTheme } from '@mui/material/styles'
+import { Button, Chip, Paper, Typography } from '@mui/material'
+import { useTheme } from '@mui/material/styles'
 import { Flex } from '../../layout'
 
 const MiniStoryRow = ({ story, onSelect, showTurn }) => {
@@ -73,40 +73,57 @@ const MiniStoryRow = ({ story, onSelect, showTurn }) => {
             />
           </Flex>
         </Flex>
-        <Flex flexDirection="column" alignItems="flex-end">
+        <Flex
+          flexDirection="column"
+          alignItems="flex-end"
+          justifyContent="space-between"
+        >
           {showTurn && (
-            <ButtonBase
-              color="primary"
-              sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'space-between',
-                backgroundColor: alpha(theme.palette.primary.main, 0.6),
-                color: 'white',
-                borderRadius: 2,
-                width: '80px',
-                height: '100%',
-                alignItems: 'center',
-                p: 0.75,
-                border: '1px solid',
-                borderColor: theme.palette.primary.main,
-                '&:hover': {
-                  transition: 'background-color 0.2s',
-                  backgroundColor: alpha(theme.palette.primary.main, 0.8),
-                },
-                transition: 'background-color 0.2s',
-              }}
-            >
-              <Typography
-                fontSize="0.75rem"
-                fontWeight={700}
-                variant="body2"
-                color="inherit"
-              >
-                My Turn!
+            <>
+              <Typography variant="caption" fontWeight={700}>
+                {"It's your turn!"}
               </Typography>
-              <EditNoteIcon color="inherit" />
-            </ButtonBase>
+              <Button
+                color="primary"
+                variant="contained"
+                size="small"
+                endIcon={<EditNoteIcon color="inherit" />}
+              >
+                Write!
+              </Button>
+            </>
+            // <ButtonBase
+            //   color="primary"
+            //   sx={{
+            //     display: 'flex',
+            //     flexDirection: 'column',
+            //     justifyContent: 'space-between',
+            //     backgroundColor: alpha(theme.palette.primary.main, 0.6),
+            //     color: 'white',
+            //     borderRadius: 2,
+            //     width: '80px',
+            //     height: '100%',
+            //     alignItems: 'center',
+            //     p: 0.75,
+            //     border: '1px solid',
+            //     borderColor: theme.palette.primary.main,
+            //     '&:hover': {
+            //       transition: 'background-color 0.2s',
+            //       backgroundColor: alpha(theme.palette.primary.main, 0.8),
+            //     },
+            //     transition: 'background-color 0.2s',
+            //   }}
+            // >
+            //   <Typography
+            //     fontSize="0.75rem"
+            //     fontWeight={700}
+            //     variant="body2"
+            //     color="inherit"
+            //   >
+            //     My Turn!
+            //   </Typography>
+            //   <EditNoteIcon color="inherit" />
+            // </ButtonBase>
           )}
           {!showTurn && (
             <Typography variant="body2" mt={0.25}>

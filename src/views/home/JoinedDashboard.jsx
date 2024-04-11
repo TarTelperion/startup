@@ -10,9 +10,12 @@ import { DashHeader } from './DashHeader'
 const JoinedDashboard = ({ user }) => {
   const { stories } = useJoinedStories(user._id)
   return (
-    <Flex flexColumn>
+    <Flex flexColumn width="100%">
       <DashHeader title="Joined Stories" />
-      <Flex flexColumn sx={{ overflowX: 'hidden', overflowY: 'scroll' }}>
+      <Flex
+        flexColumn
+        sx={{ width: '100%', overflowX: 'hidden', overflowY: 'scroll' }}
+      >
         {stories.map((story) => (
           <MiniStoryRow story={story} key={story._id} showTurn />
         ))}
