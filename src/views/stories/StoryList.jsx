@@ -32,7 +32,15 @@ const StoryList = ({ stories }) => {
   }
 
   return (
-    <Flex flexColumn width="100%" spacing={1}>
+    <Flex
+      id="story-list"
+      flexColumn
+      width="100%"
+      spacing={1}
+      sx={{
+        overflowY: 'scroll',
+      }}
+    >
       {stories.map((story) => (
         <StoryRow key={story._id} story={story} onSelect={handleSelectStory} />
       ))}

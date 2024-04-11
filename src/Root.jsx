@@ -12,6 +12,8 @@ const theme = createTheme({
   components,
 })
 
+console.log('theme', theme)
+
 const App = () => {
   return (
     <React.Fragment>
