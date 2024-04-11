@@ -109,6 +109,7 @@ const StoryListModal = ({
         justifyContent: 'center',
         mt: 2,
         mx: 10,
+        outline: 0,
       }}
       closeAfterTransition
       hideBackdrop
@@ -119,6 +120,7 @@ const StoryListModal = ({
           transition={true}
           sx={{
             position: 'relative',
+            outline: 0,
           }}
         >
           <Box
