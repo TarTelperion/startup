@@ -42,7 +42,12 @@ const StoryList = ({ stories }) => {
       }}
     >
       {stories.map((story) => (
-        <StoryRow key={story._id} story={story} onSelect={handleSelectStory} />
+        <StoryRow
+          key={story._id}
+          story={story}
+          onSelect={handleSelectStory}
+          onJoin={handleClearStory}
+        />
       ))}
       <StoryListModal
         onRequestClose={handleClearStory}

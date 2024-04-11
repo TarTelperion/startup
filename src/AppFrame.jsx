@@ -38,7 +38,7 @@ const AppFrame = () => {
         }}
       >
         <AppHeader sx={{ backgroundColor: 'transparent' }} />
-        <Flex flexColumn width="100%" overflow="hidden">
+        <Flex flexColumn width="100%">
           {isLoggedIn && <Waiting>{!isLoading && <MainRoutes />}</Waiting>}
         </Flex>
       </Box>

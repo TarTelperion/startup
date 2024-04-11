@@ -7,6 +7,7 @@ import StoryList from './StoryList'
 
 const Join = () => {
   const navigate = useNavigate()
+
   const { user } = useUser()
   const { stories } = useUnjoinedStories(user._id)
 
