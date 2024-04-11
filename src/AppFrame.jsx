@@ -4,7 +4,7 @@ import AppBar from './AppBar'
 import AppSidebar from './AppSidebar'
 import MainRoutes from './MainRoutes'
 import { useUser } from './hooks/useUser'
-import { AppHeader, Waiting } from './layout'
+import { AppHeader, Flex, Waiting } from './layout'
 import LoginModal from './user/AuthModal'
 
 import '@fontsource/spectral'
@@ -32,14 +32,15 @@ const AppFrame = () => {
           display: 'flex',
           flexDirection: 'column',
           flex: '1 1 auto',
-          height: '100%',
           width: '100%',
           overflow: 'hidden',
           px: 3,
         }}
       >
         <AppHeader sx={{ backgroundColor: 'transparent' }} />
-        {isLoggedIn && <Waiting>{!isLoading && <MainRoutes />}</Waiting>}
+        <Flex flexColumn width="100%" overflow="hidden">
+          {isLoggedIn && <Waiting>{!isLoading && <MainRoutes />}</Waiting>}
+        </Flex>
       </Box>
       <LoginModal
         open={open}
