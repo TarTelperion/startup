@@ -1,5 +1,5 @@
 const OpenAI = require('openai')
-const config = require('../dbConfig.json')
+const config = require('./dbConfig.json')
 
 const openai = new OpenAI({ apiKey: config.chatKey })
 
