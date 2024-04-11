@@ -1,5 +1,6 @@
 import AddCircleIcon from '@mui/icons-material/AddCircle'
 import CloseIcon from '@mui/icons-material/Close'
+import DirectionsRunIcon from '@mui/icons-material/DirectionsRun'
 import EditNoteIcon from '@mui/icons-material/EditNote'
 import GroupsIcon from '@mui/icons-material/Groups'
 import PersonIcon from '@mui/icons-material/Person'
@@ -16,6 +17,8 @@ import {
 import { useTheme } from '@mui/material/styles'
 import { useNavigate } from 'react-router-dom'
 import { useJoinStory } from '../../hooks/stories/useJoinStory'
+import { useLeaveStory } from '../../hooks/stories/useLeaveStory'
+import { useUser } from '../../hooks/useUser'
 import { EdgyPaper, Flex, ViewHeader } from '../../layout'
 
 const StoryListModal = ({
@@ -27,12 +30,22 @@ const StoryListModal = ({
   const navigate = useNavigate()
   const theme = useTheme()
   const { join } = useJoinStory()
+  const { leave } = useLeaveStory()
+  const { user } = useUser()
+
+  console.log('user', user)
 
   const canJoin =
     currentStory && !currentStory?.isOwner && !currentStory?.isJoined
 
   const canWrite =
     (currentStory && currentStory?.isOwner) || currentStory?.isJoined
+
+  const canLeave =
+    currentStory &&
+    (currentStory?.isOwner ||
+      currentStory.joined.includes(user._id) ||
+      user.joined.includes(currentStory._id))
 
   let actions = []
   if (canJoin) {
@@ -63,6 +76,20 @@ const StoryListModal = ({
         Write
       </Button>,
     ]
+  } else if (canLeave) {
+    actions.push(
+      <Button
+        key="leave"
+        variant="contained"
+        color="primary"
+        endIcon={<DirectionsRunIcon />}
+        onClick={() => {
+          leave(currentStory._id)
+        }}
+      >
+        Join
+      </Button>
+    )
   }
 
   return (
