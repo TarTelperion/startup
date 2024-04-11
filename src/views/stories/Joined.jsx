@@ -20,7 +20,7 @@ const Owned = () => {
             color="secondary"
             variant="outlined"
             onClick={() => {
-              navigate('/stories/join')
+              navigate('/stories/find')
             }}
           >
             Find Story

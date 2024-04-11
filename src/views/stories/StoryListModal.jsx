@@ -35,8 +35,6 @@ const StoryListModal = ({
   const { leave } = useLeaveStory()
   const { user } = useUser()
 
-  console.log('user', user)
-
   const canJoin =
     currentStory && !currentStory?.isOwner && !currentStory?.isJoined
 
