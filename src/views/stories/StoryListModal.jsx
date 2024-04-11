@@ -45,8 +45,8 @@ const StoryListModal = ({
 
   const canLeave =
     currentStory &&
-    (currentStory?.isOwner ||
-      currentStory.joined.includes(user._id) ||
+    !currentStory?.isOwner &&
+    (currentStory.joined.includes(user._id) ||
       user.joined.includes(currentStory._id))
 
   let actions = []
