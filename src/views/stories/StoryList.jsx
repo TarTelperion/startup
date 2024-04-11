@@ -4,7 +4,7 @@ import StoryListModal from './StoryListModal'
 import StoryRow from './StoryRow'
 import { useSelectedStoryStore } from './hooks/selectedStoryStore'
 
-const StoryList = ({ stories }) => {
+const StoryList = ({ stories, user }) => {
   const selectedStory = useSelectedStoryStore((state) => state.selectedStory)
   const setSelectedStory = useSelectedStoryStore(
     (state) => state.setSelectedStory
@@ -47,6 +47,7 @@ const StoryList = ({ stories }) => {
           story={story}
           onSelect={handleSelectStory}
           onJoin={handleClearStory}
+          isMyTurn={story.writer === user._id}
         />
       ))}
       <StoryListModal

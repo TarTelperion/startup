@@ -23,6 +23,7 @@ import { useJoinStory } from '../../hooks/stories/useJoinStory'
 import { useLeaveStory } from '../../hooks/stories/useLeaveStory'
 import { useUser } from '../../hooks/useUser'
 import { EdgyPaper, Flex, ViewHeader } from '../../layout'
+import StoryAddition from './StoryAddition'
 
 const StoryListModal = ({
   modalOpen,
@@ -80,7 +81,6 @@ const StoryListModal = ({
         endIcon={<EditNoteIcon />}
         onClick={() => {
           navigate(`/stories/write/${currentStory._id}`)
-          console.log('wtite!')
           onRequestClose()
         }}
       >
@@ -206,9 +206,11 @@ const StoryListModal = ({
             </Flex>
           )}
           {currentStory?.content !== ' ' && (
-            <Flex flexColumn alignItems="flex-start" px={4}>
+            <Flex flexColumn alignItems="flex-start" px={4} spacing={1}>
               <Typography variant="subtitle2">Story</Typography>
-              <Typography>{currentStory?.content}</Typography>
+              {currentStory?.additions?.map((addition) => (
+                <StoryAddition addition={addition} key={addition.updatedAt} />
+              ))}
             </Flex>
           )}
         </EdgyPaper>

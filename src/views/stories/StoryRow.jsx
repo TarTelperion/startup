@@ -1,9 +1,10 @@
+import GradeIcon from '@mui/icons-material/Grade'
 import { Chip, Paper, Typography } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
 import { DateTime } from 'luxon'
 import { Flex } from '../../layout'
 
-const StoryRow = ({ story, onSelect }) => {
+const StoryRow = ({ story, onSelect, isMyTurn }) => {
   const theme = useTheme()
 
   return (
@@ -28,7 +29,7 @@ const StoryRow = ({ story, onSelect }) => {
         justifyContent="space-between"
         overflow="hidden"
       >
-        <Flex flexColumn>
+        <Flex flexColumn justifyContent="space-between">
           <Flex alignItems="baseline">
             <Typography variant="subtitle2" sx={{ mb: 1, ml: 0.5 }}>
               {story.title}
@@ -53,10 +54,24 @@ const StoryRow = ({ story, onSelect }) => {
             }}
           />
         </Flex>
-        <Flex flexDirection="column" flex="0 0 80px" alignItems="flex-end">
-          <Typography variant="subtitle2">
+        <Flex
+          flexDirection="column"
+          flex="0 0 100px"
+          alignItems="flex-end"
+          justifyContent="space-between"
+        >
+          <Typography variant="subtitle2" mr={1}>
             {story.authors === 1 ? '1 Author' : `${story.authors} Authors`}
           </Typography>
+          {isMyTurn && (
+            <Chip
+              color="success"
+              icon={<GradeIcon />}
+              label={'My Turn!'}
+              sx={{ px: 0.5, fontWeight: 700, color: 'white' }}
+              size="small"
+            />
+          )}
         </Flex>
       </Flex>
     </Paper>
