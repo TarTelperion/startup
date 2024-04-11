@@ -129,7 +129,6 @@ async function getJoinedStories(userId) {
 
 async function get_story(story_id) {
   const story = await storyCollection.findOne({ _id: Number(story_id) })
-
   return story
 }
 
@@ -137,14 +136,15 @@ async function update_story(content = '', idOrStory, user) {
   let story = undefined
   let id = undefined
 
-  if (idOrStory instanceof Number) {
-    story = await get_story(idOrStory)
-    id = idOrStory
+  const maybeNumber = Number(idOrStory)
+
+  if (typeof maybeNumber === 'number' && !isNaN(maybeNumber)) {
+    story = await get_story(maybeNumber)
+    id = story._id
   } else {
     story = idOrStory
     id = story._id
   }
-
   const timestamp = getNow()
   const randomIndex = Math.floor(Math.random() * story.joined.length)
 

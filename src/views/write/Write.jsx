@@ -11,10 +11,12 @@ const Write = () => {
   const navigate = useNavigate()
   const theme = useTheme()
   const params = useParams()
+
   const storyId = params.storyId
 
   const { user } = useUser()
   const { story, update, skip } = useStory({ userId: user._id, storyId })
+  const isMyTurn = story?.turn === user._id
 
   const [storyContent, setStoryContent] = useState('')
 
@@ -60,7 +62,6 @@ const Write = () => {
                 <Flex flexColumn p={3} id="edgy-paper-child">
                   <StoryDetails story={story} />
                   <Flex flexColumn mt={3}>
-                    <Typography></Typography>
                     <Flex
                       id="textarea-container"
                       flexColumn
@@ -71,7 +72,12 @@ const Write = () => {
                       }}
                     >
                       <textarea
-                        placeholder="Write some wise words here..."
+                        disabled={!isMyTurn}
+                        placeholder={
+                          isMyTurn
+                            ? 'Write some wise words here...'
+                            : 'Waiting for other contributions...'
+                        }
                         style={textareaStyle}
                         value={storyContent}
                         onChange={(e) => setStoryContent(e.target.value)}
@@ -81,7 +87,11 @@ const Write = () => {
                 </Flex>
               </EdgyPaper>
             </Flex>
-            <WriteOptions onClickSave={handleSave} onClickSkip={handleSkip} />
+            <WriteOptions
+              onClickSave={handleSave}
+              onClickSkip={handleSkip}
+              disabled={!isMyTurn}
+            />
           </>
         )}
       </Waiting>
