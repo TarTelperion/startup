@@ -155,10 +155,13 @@ secureRoute.get('/stories/global', async (req, res) => {
 })
 
 secureRoute.delete('/stories', async (req, res) => {
-  let id = Number(req.body.id)
-  await db.remove(id)
-
-  res.send()
+  try {
+    let id = Number(req.body.id)
+    await db.remove(id)
+    res.status(200).send('Delete successful')
+  } catch (err) {
+    res.status(500).send(JSON.stringify(err))
+  }
 })
 
 secureRoute.put('/stories/leave/:storyId', async (req, res) => {
