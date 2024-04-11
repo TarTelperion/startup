@@ -112,13 +112,13 @@ async function addUser(user_id, story_id) {
 }
 
 async function get_pop_stories() {
-  const query = { authors: { $gt: 0, $lt: 900 } }
   const options = {
     sort: { authors: -1 },
   }
 
-  const stories = storyCollection.find(query, options)
+  const stories = storyCollection.find({}, options)
   const array = await stories.toArray()
+  console.log(array)
 
   return array
 }
@@ -128,8 +128,9 @@ async function getJoinedStories(userId) {
 }
 
 async function get_story(story_id) {
-  const story = await storyCollection.findOne({ _id: story_id })
-
+  console.log('dbstoryid', story_id)
+  const story = await storyCollection.findOne({ _id: Number(story_id) })
+  console.log('db', story)
   return story
 }
 

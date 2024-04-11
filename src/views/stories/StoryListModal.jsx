@@ -33,19 +33,18 @@ const StoryListModal = ({
   const { leave } = useLeaveStory()
   const { user } = useUser()
 
-  console.log('user', user)
-
   const canJoin =
     currentStory && !currentStory?.isOwner && !currentStory?.isJoined
 
   const canWrite =
     (currentStory && currentStory?.isOwner) || currentStory?.isJoined
 
+  console.log(user._id)
+  console.log('second condition', currentStory?.joined.includes(user._id))
   const canLeave =
     currentStory &&
-    (currentStory?.isOwner ||
-      currentStory.joined.includes(user._id) ||
-      user.joined.includes(currentStory._id))
+    (currentStory?.isOwner || currentStory.joined.includes(user._id))
+  console.log('leave', canLeave)
 
   let actions = []
   if (canJoin) {
@@ -76,21 +75,23 @@ const StoryListModal = ({
         Write
       </Button>,
     ]
-  } else if (canLeave) {
+  }
+  if (canLeave) {
     actions.push(
       <Button
         key="leave"
         variant="contained"
-        color="primary"
+        color="secondary"
         endIcon={<DirectionsRunIcon />}
         onClick={() => {
           leave(currentStory._id)
         }}
       >
-        Join
+        Leave
       </Button>
     )
   }
+  console.log('actions', actions)
 
   return (
     <Modal
@@ -148,6 +149,7 @@ const StoryListModal = ({
                 {actions.map((action, index) => (
                   <Box key={index} ml={1}>
                     {action}
+                    {console.log(action)}
                   </Box>
                 ))}
               </Flex>

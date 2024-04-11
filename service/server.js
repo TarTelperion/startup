@@ -165,6 +165,7 @@ secureRoute.delete('/stories', async (req, res) => {
 
 secureRoute.put('/stories/leave/:storyId', async (req, res) => {
   const id = req.params.storyId
+  console.log(id)
   const token = req.cookies[cookie_name]
   const user = await db.user_token(token)
   const story = await db.get_story(id)
