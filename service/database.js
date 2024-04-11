@@ -181,11 +181,9 @@ async function update_user(user) {
   return usEr
 }
 
-async function remove(story_id, socket_id) {
-  console.log('socketId', socket_id)
+async function remove(story_id) {
   try {
     // let story = await get_story(story_id)
-
     await storyCollection.deleteOne({ _id: story_id })
     await userCollection.updateMany({}, { $pull: { joined: story_id } })
     await userCollection.updateMany({}, { $pull: { stories: story_id } })

@@ -1,5 +1,6 @@
 import AddCircleIcon from '@mui/icons-material/AddCircle'
 import CloseIcon from '@mui/icons-material/Close'
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
 import DirectionsRunIcon from '@mui/icons-material/DirectionsRun'
 import EditNoteIcon from '@mui/icons-material/EditNote'
 import GroupsIcon from '@mui/icons-material/Groups'
@@ -17,6 +18,7 @@ import {
 import { useTheme } from '@mui/material/styles'
 import { useNavigate } from 'react-router-dom'
 import { mutate } from 'swr'
+import { useDeleteStory } from '../../hooks/stories/useDeleteStory'
 import { useJoinStory } from '../../hooks/stories/useJoinStory'
 import { useLeaveStory } from '../../hooks/stories/useLeaveStory'
 import { useUser } from '../../hooks/useUser'
@@ -33,6 +35,7 @@ const StoryListModal = ({
 
   const { join } = useJoinStory()
   const { leave } = useLeaveStory()
+  const { remove } = useDeleteStory()
   const { user } = useUser()
 
   console.log('user', user)
@@ -48,6 +51,8 @@ const StoryListModal = ({
     !currentStory?.isOwner &&
     (currentStory.joined.includes(user._id) ||
       user.joined.includes(currentStory._id))
+
+  const canDelete = currentStory && currentStory?.isOwner
 
   let actions = []
   if (canJoin) {
@@ -95,6 +100,21 @@ const StoryListModal = ({
         }}
       >
         Leave
+      </Button>
+    )
+  }
+  if (canDelete) {
+    actions.push(
+      <Button
+        key="delete"
+        variant="contained"
+        color="error"
+        endIcon={<DeleteForeverIcon />}
+        onClick={() => {
+          remove(currentStory._id)
+        }}
+      >
+        Delete
       </Button>
     )
   }

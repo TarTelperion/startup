@@ -155,10 +155,8 @@ secureRoute.get('/stories/global', async (req, res) => {
 })
 
 secureRoute.delete('/stories', async (req, res) => {
-  let socket_id = req.params.ws
-  let id = parseInt(req.query.id)
-
-  await db.remove(id, socket_id)
+  let id = Number(req.body.id)
+  await db.remove(id)
 
   res.send()
 })
