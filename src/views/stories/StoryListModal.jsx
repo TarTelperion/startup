@@ -146,8 +146,10 @@ const StoryListModal = ({
                   currentStory?.authors > 1 ? <GroupsIcon /> : <PersonIcon />
                 }
                 label={
-                  currentStory?.authors === 1
-                    ? '1 Author'
+                  currentStory?.authors <= 1
+                    ? currentStory.authors === 1
+                      ? '1 Author'
+                      : '0 Authors'
                     : `${currentStory?.authors} Authors`
                 }
               />

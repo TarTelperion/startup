@@ -5,7 +5,7 @@ export const useUnjoinedStories = (userId) => {
   return {
     ...result,
     stories: result.stories.filter(
-      (story) => !story.isJoined && !story.isOwner
+      (story) => (!story.isJoined && !story.isOwner) || story.authors === 0
     ),
   }
 }
