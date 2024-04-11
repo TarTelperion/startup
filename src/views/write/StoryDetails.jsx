@@ -1,11 +1,13 @@
 import LightBulbIcon from '@mui/icons-material/EmojiObjects'
-import { Chip, Paper, Popover, Typography } from '@mui/material'
-import { DateTime } from 'luxon'
+import { Chip, Paper, Popover, Typography, useTheme } from '@mui/material'
 import { useState } from 'react'
 import { Flex } from '../../layout'
+import StoryAddition from '../stories/StoryAddition'
 
 const StoryDetails = ({ story }) => {
   const { additions } = story
+
+  const theme = useTheme()
 
   const [anchorEl, setAnchorEl] = useState(null)
   const open = Boolean(anchorEl)
@@ -13,9 +15,9 @@ const StoryDetails = ({ story }) => {
 
   return (
     <Flex flexDirection="column">
-      <Flex width="100%" justifyContent="space-between" mb={1}>
+      <Flex width="100%" justifyContent="space-between" mb={0}>
         <Typography variant="subtitle2" ml={0.5}>
-          Recent Additions
+          Recent Addition
         </Typography>
         <Chip
           color="secondary"
@@ -25,24 +27,23 @@ const StoryDetails = ({ story }) => {
           onClick={handleOpen}
         />
       </Flex>
-      {additions.map(({ authorName, updatedAt, content }) => {
-        return (
-          <Paper
-            key={content.createdAt}
-            variant="outlined"
-            sx={{ display: 'flex', flexDirection: 'column', py: 1, px: 2 }}
-          >
-            <Typography
-              variant="caption"
-              fontWeight={700}
-              gutterBottom
-            >{`${authorName} wrote ${DateTime.fromISO(updatedAt).toRelative()}:`}</Typography>
-            <Typography variant="caption" fontSize="0.95rem">
-              {content}
-            </Typography>
-          </Paper>
-        )
-      })}
+      {additions.length > 0 && (
+        <>
+          <Typography
+            variant="caption"
+            fontWeight={700}
+            color={theme.palette.grey[500]}
+            ml={0.5}
+          >{`Plus ${additions.length - 1} prior addition${additions.length - 1 > 1 ? 's' : ''}...`}</Typography>
+          <Flex flexDirection="column" spacing={1}>
+            {additions.slice(-1).map((addition) => {
+              return (
+                <StoryAddition addition={addition} key={addition.updatedAt} />
+              )
+            })}
+          </Flex>
+        </>
+      )}
       {additions.length === 0 && (
         <Typography
           variant="body1"

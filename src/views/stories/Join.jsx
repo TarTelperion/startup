@@ -28,7 +28,7 @@ const Join = () => {
           </Button>
         </Flex>
       </ViewHeader>
-      <StoryList stories={stories} />
+      <StoryList stories={stories} user={user} />
     </>
   )
 }

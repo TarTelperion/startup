@@ -7,8 +7,10 @@ import StoryList from './StoryList'
 
 const Owned = () => {
   const navigate = useNavigate()
+
   const { user } = useUser()
   const { stories } = useMyStories(user._id)
+
   return (
     <>
       <ViewHeader>
@@ -26,7 +28,7 @@ const Owned = () => {
           </Button>
         </Flex>
       </ViewHeader>
-      <StoryList stories={stories} />
+      <StoryList stories={stories} user={user} />
     </>
   )
 }
