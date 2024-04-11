@@ -116,17 +116,23 @@ secureRoute.post('/stories/add', async (req, res) => {
 })
 
 // Update content of a story. Send in the content of the story in the request body
-secureRoute.put('/stories/update', async (req, res) => {
+secureRoute.put('/stories/update/:id', async (req, res) => {
   let storyId = req.params.id
   const token = req.cookies[cookie_name]
   const user = await db.user_token(token)
-  let story = await db.update_story(req.body, storyId, user)
+  let story = await db.update_story(req.body.content, storyId, user)
 
   if (story) {
     res.send(story)
   } else {
     res.status(404).send('Story not found')
   }
+})
+
+secureRoute.put('/stories/skip/:storyId', async (req, res) => {
+  const storyId = req.params.storyId
+  await db.shuffle(storyId)
+  res.status(200).send('shuffled')
 })
 
 // Add author

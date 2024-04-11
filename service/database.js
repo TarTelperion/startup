@@ -181,6 +181,15 @@ async function update_user(user) {
   return usEr
 }
 
+async function shuffle(storyId) {
+  const story = await get_story(storyId)
+  const randomIndex = Math.floor(Math.random() * story.joined.length)
+
+  story.writer = story.joined[randomIndex]
+
+  await storyCollection.replaceOne({ _id: storyId }, story)
+}
+
 async function remove(story_id) {
   try {
     // let story = await get_story(story_id)
@@ -206,4 +215,5 @@ module.exports = {
   remove,
   update_user,
   getJoinedStories,
+  shuffle,
 }
