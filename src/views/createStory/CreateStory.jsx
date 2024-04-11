@@ -1,6 +1,7 @@
 import AutoIcon from '@mui/icons-material/AutoFixHigh'
 import { Autocomplete, Button, Chip, Stack, TextField } from '@mui/material'
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { useCreateStory } from '../../hooks/stories/useCreateStory'
 import { useStreamPrompt } from '../../hooks/stories/useStreamPrompt'
 import { EdgyPaper, Flex, ViewHeader } from '../../layout'
@@ -8,21 +9,23 @@ import { genreOptions } from './genreOptions'
 
 const Create = () => {
   const { create } = useCreateStory()
-
+  const navigate = useNavigate()
   const [prompt, setPrompt] = useState('')
   const [title, setTitle] = useState('')
   const [genre, setGenre] = useState('')
 
   const [bind, { start, isStarted, isComplete }] = useStreamPrompt(setPrompt)
 
-  const isValid = Boolean(prompt && title && genre)
+  let isValid = Boolean(prompt && title && genre)
 
-  const handleCreate = () => {
-    create({
+  const handleCreate = async () => {
+    isValid = false
+    const story = await create({
       title,
       genre,
       prompt,
     })
+    navigate(`/stories/write/${story._id}`)
   }
 
   return (

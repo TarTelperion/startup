@@ -16,6 +16,5 @@ export const useCreateStory = () => {
     const response = await post('/stories/add', payload)
     return response
   }
-
   return { create }
 }

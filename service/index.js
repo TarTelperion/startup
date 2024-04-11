@@ -116,7 +116,7 @@ secureRoute.post('/stories/add', async (req, res) => {
     story.prompt
   )
 
-  res.status(200).send(fin)
+  res.status(200).send(JSON.stringify(fin))
 })
 
 // Update content of a story. Send in the content of the story in the request body
