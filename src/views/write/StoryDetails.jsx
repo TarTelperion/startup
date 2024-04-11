@@ -1,5 +1,6 @@
 import LightBulbIcon from '@mui/icons-material/EmojiObjects'
 import { Chip, Paper, Popover, Typography } from '@mui/material'
+import { DateTime } from 'luxon'
 import { useState } from 'react'
 import { Flex } from '../../layout'
 
@@ -12,8 +13,10 @@ const StoryDetails = ({ story }) => {
 
   return (
     <Flex flexDirection="column">
-      <Flex width="100%" justifyContent="space-between">
-        <Typography variant="subtitle2">Recent Additions</Typography>
+      <Flex width="100%" justifyContent="space-between" mb={1}>
+        <Typography variant="subtitle2" ml={0.5}>
+          Recent Additions
+        </Typography>
         <Chip
           color="secondary"
           icon={<LightBulbIcon />}
@@ -22,13 +25,24 @@ const StoryDetails = ({ story }) => {
           onClick={handleOpen}
         />
       </Flex>
-      {additions.map((content) => (
-        <Paper
-          key={content.createdAt}
-          variant="outlined"
-          sx={{ display: 'flex', flexDirection: 'column' }}
-        ></Paper>
-      ))}
+      {additions.map(({ authorName, updatedAt, content }) => {
+        return (
+          <Paper
+            key={content.createdAt}
+            variant="outlined"
+            sx={{ display: 'flex', flexDirection: 'column', py: 1, px: 2 }}
+          >
+            <Typography
+              variant="caption"
+              fontWeight={700}
+              gutterBottom
+            >{`${authorName} wrote ${DateTime.fromISO(updatedAt).toRelative()}:`}</Typography>
+            <Typography variant="caption" fontSize="0.95rem">
+              {content}
+            </Typography>
+          </Paper>
+        )
+      })}
       {additions.length === 0 && (
         <Typography
           variant="body1"
