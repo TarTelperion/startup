@@ -6,7 +6,7 @@ import { Button, Chip, Paper, Typography } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
 import { Flex } from '../../layout'
 
-const MiniStoryRow = ({ story, onSelect, showTurn }) => {
+const MiniStoryRow = ({ story, onClickWrite, showTurn }) => {
   const theme = useTheme()
 
   return (
@@ -88,6 +88,7 @@ const MiniStoryRow = ({ story, onSelect, showTurn }) => {
                 variant="contained"
                 size="small"
                 endIcon={<EditNoteIcon color="inherit" />}
+                onClick={() => onClickWrite(story._id)}
               >
                 Write!
               </Button>

@@ -16,7 +16,7 @@ const Write = () => {
 
   const { user } = useUser()
   const { story, update, skip } = useStory({ userId: user._id, storyId })
-  const isMyTurn = story?.turn === user._id
+  const isMyTurn = story?.writer === user._id
 
   const [storyContent, setStoryContent] = useState('')
 
