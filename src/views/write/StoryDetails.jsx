@@ -12,7 +12,7 @@ const StoryDetails = ({ story }) => {
   const handleOpen = (event) => setAnchorEl(event.currentTarget)
 
   return (
-    <Flex flexDirection="column">
+    <Flex flexColumn>
       <Flex width="100%" justifyContent="space-between" mb={1}>
         <Typography variant="subtitle2" ml={0.5}>
           Recent Additions

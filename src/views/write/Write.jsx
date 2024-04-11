@@ -57,7 +57,7 @@ const Write = () => {
       <Waiting>
         {story && (
           <>
-            <Flex flexColumn id="write-main">
+            <Flex flexColumn key={Math.random()} id="write-main">
               <EdgyPaper sx={{ width: '100%' }} elevation={4}>
                 <Flex flexColumn p={3} id="edgy-paper-child">
                   <StoryDetails story={story} />
