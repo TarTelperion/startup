@@ -46,8 +46,7 @@ apiRoute.get('/auth', async (req, res) => {
   if (user) {
     res.send(JSON.stringify(user))
   } else {
-    res.status(401)
-    return
+    res.status(401).send('unknown')
   }
 })
 
@@ -62,14 +61,12 @@ apiRoute.post('/auth/login', async (req, res) => {
     }
   }
 
-  res.status(401)
-  return
+  res.status(401).send('unauthorized')
 })
 
 apiRoute.delete('/auth/logout', (req, res) => {
   res.clearCookie(cookie_name)
-  res.status(204)
-  return
+  res.status(204).send('cookie eaten')
 })
 
 let secureRoute = express.Router()
@@ -82,8 +79,7 @@ secureRoute.use(async (req, res, next) => {
   if (user) {
     next()
   } else {
-    res.status(401)
-    return
+    res.status(401).send('unauthorized')
   }
 })
 
@@ -130,14 +126,14 @@ secureRoute.put('/stories/update/:id', async (req, res) => {
   if (story) {
     res.send(story)
   } else {
-    res.status(404).json('Story not found')
+    res.status(404).send('Story not found')
   }
 })
 
 secureRoute.put('/stories/skip/:storyId', async (req, res) => {
   const storyId = req.params.storyId
   await db.shuffle(storyId)
-  res.status(200).json('shuffled')
+  res.status(200).send('shuffled')
 })
 
 // Add author
@@ -155,7 +151,7 @@ secureRoute.put('/stories/authors', async (req, res) => {
     let new_story = await db.update_story(story)
     res.send(new_story)
   } else {
-    res.status(404).json('story not found...')
+    res.status(404).send('story not found...')
   }
 })
 
@@ -171,7 +167,7 @@ secureRoute.delete('/stories', async (req, res) => {
     await db.remove(id)
     res.status(200).send('Delete successful')
   } catch (err) {
-    res.status(500).json(JSON.stringify(err))
+    res.status(500).send(JSON.stringify(err))
   }
 })
 
@@ -191,7 +187,7 @@ secureRoute.put('/stories/leave/:storyId', async (req, res) => {
   await db.update_user(user)
   await db.update_story('', story, user)
 
-  res.status(200).json('Story left')
+  res.status(200).send('Story left')
 })
 
 secureRoute.put('/users/update', async (req, res) => {
@@ -206,7 +202,7 @@ secureRoute.get('/user/stories', async (req, res) => {
 
   const payload = await db.getJoinedStories(user._id.toString())
 
-  res.status(200).json(JSON.stringify(payload))
+  res.status(200).send(JSON.stringify(payload))
 })
 
 secureRoute.put('/stories/join', async (req, res) => {
@@ -228,10 +224,10 @@ secureRoute.put('/stories/join', async (req, res) => {
     await db.update_user(user)
     await db.update_story('', story, user)
 
-    res.status(200).json(JSON.stringify(story))
+    res.status(200).send(JSON.stringify(story))
   } catch (err) {
     console.log(err)
-    res.status(500).json(JSON.stringify(err))
+    res.status(500).send(JSON.stringify(err))
   }
 })
 
