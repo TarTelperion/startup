@@ -1,5 +1,5 @@
 import FormatQuoteIcon from '@mui/icons-material/FormatQuote'
-import { Typography } from '@mui/material'
+import { Box, Typography } from '@mui/material'
 import { useJoinedStories } from '../../hooks/stories/useJoinedStories'
 import { Flex } from '../../layout'
 import { DashHeader } from './DashHeader'
@@ -21,13 +21,26 @@ const RecentDashboard = ({ user }) => {
   return (
     <Flex flexColumn overflow="hidden">
       <DashHeader title="Recent Activity" />
-      <Flex flexRow>
-        <FormatQuoteIcon color="secondary" sx={{ marginLeft: 2, marginY: 2 }} />
-        <Typography sx={{ marginX: 1, marginY: 3 }}>
-          {mostRecent.additions.length === 0
-            ? `${mostRecent.title} was created`
-            : mostRecent?.additions[mostRecent.additions.length - 1].content}
-        </Typography>
+      <Flex marginY={2} flexRow>
+        <Box
+          sx={{
+            marginLeft: 2,
+            borderRadius: 2,
+            width: 0.1,
+            height: 0.07,
+            bgcolor: 'secondary.main',
+          }}
+          component="div"
+        >
+          <FormatQuoteIcon sx={{ color: 'white' }} />
+        </Box>
+        {mostRecent && (
+          <Typography sx={{ marginX: 1 }}>
+            {mostRecent?.additions?.length === 0
+              ? `${mostRecent.title} was created`
+              : mostRecent?.additions[mostRecent.additions.length - 1]?.content}
+          </Typography>
+        )}
       </Flex>
     </Flex>
   )
