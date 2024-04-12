@@ -1,12 +1,14 @@
 import { io } from 'socket.io-client'
 let client
 
-const getSocketConnection = async () => {
+const getSocketConnection = () => {
   if (client) {
     return client
   }
   client = io('ws://localhost:4000')
-  client.emit('handshake', 'connection established')
+  client.on('connect', () => {
+    console.log('client side connection')
+  })
   return client
 }
 
