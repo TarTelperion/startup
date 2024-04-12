@@ -1,3 +1,4 @@
+import { io } from 'socket.io-client'
 let client
 
 const getSocketConnection = async () => {
@@ -5,13 +6,8 @@ const getSocketConnection = async () => {
     return client
   }
 
-  const protocol = window.location.protocol === 'http:' ? 'ws' : 'wss'
-  client = new WebSocket(`${protocol}://${window.location.host}/ws`)
-
-  client.onopen = () => {
-    console.log('socket connection opened!')
-  }
-
+  client = io('ws://localhost:4000')
+  client.emit('handshake', 'connection established')
   return client
 }
 

@@ -3,12 +3,22 @@ const cors = require('cors')
 const bodyParser = require('body-parser')
 const cookie_parser = require('cookie-parser')
 const path = require('path')
-
-const { websocket } = require('./websocket.js')
+const { createServer } = require('http')
+const { Server } = require('socket.io')
 
 const port = process.argv.length > 2 ? process.argv[2] : 4000
 
 const app = express()
+const httpServer = createServer(app)
+
+const io = new Server(httpServer, {
+  cors: { origin: '*' },
+})
+
+io.on('connection', (socket) => {
+  console.log('socket connected')
+  socket.emit('handshake', 'socket successful')
+})
 
 const bcrypt = require('bcrypt')
 const { generatePrompt } = require('./generate.js')
@@ -48,6 +58,7 @@ function bake_cookie(res, token) {
 
 apiRouter.get('/auth', async (req, res) => {
   const user = await db.user_token(req.cookies.token)
+  io.emit('auth', 'auth checked...')
   if (user) {
     res.send(JSON.stringify(user))
   } else {
@@ -243,10 +254,10 @@ secureRouter.put('/stories/join', async (req, res) => {
   }
 })
 
-secureRouter.post('/generate-prompt', generatePrompt)
-
-const httpService = app.listen(port, () => {
-  console.log(`Listening on port ${port}`)
+app.get('*', (req, res) => {
+  res.sendFile('/index.html')
 })
 
-websocket(httpService)
+secureRouter.post('/generate-prompt', generatePrompt)
+
+httpServer.listen(port)
