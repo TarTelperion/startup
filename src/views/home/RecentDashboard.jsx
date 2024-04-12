@@ -42,7 +42,7 @@ const RecentDashboard = ({ user }) => {
           />
         </Box>
         {mostRecent && (
-          <Typography ml={2} mt={2} sx={{ textOverflow: 'ellipsis' }}>
+          <Typography ml={2} mt={2}>
             {mostRecent?.additions?.length === 0
               ? `${mostRecent.title} was created`
               : mostRecent?.additions[mostRecent.additions.length - 1]?.content}
@@ -50,8 +50,20 @@ const RecentDashboard = ({ user }) => {
         )}
       </Box>
       {mostRecent && (
-        <Box display="flex" flexDirection="row" ml={2} mt={2}>
-          <Typography>
+        <Box
+          display="flex"
+          flexDirection="row"
+          ml={2}
+          mt={2}
+          sx={{ maxWidth: 'calc(100% - 32px)' }}
+        >
+          <Typography
+            sx={{
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              whiteSpace: 'nowrap',
+            }}
+          >
             {`--Written ${DateTime.fromISO(mostRecent.updatedAt).toRelative()} by ${mostRecent.additions[mostRecent.additions.length - 1]?.authorName}`}
           </Typography>
         </Box>
