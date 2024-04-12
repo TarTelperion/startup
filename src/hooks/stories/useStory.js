@@ -13,7 +13,6 @@ export const useStory = ({ storyId }, options) => {
   )
 
   let story = data
-  console.log('story', story)
   if (story) {
     story.isOwner = user?._id === story.owner
     story.isJoined = !story.isOwner && story.joined.includes(user?._id)
