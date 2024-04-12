@@ -5,12 +5,18 @@ import React from 'react'
 import { BrowserRouter } from 'react-router-dom'
 import AppFrame from './AppFrame'
 import { components, palette, typography } from './theme'
+import createWebsocket from './ws/createWebsocket'
 
 const theme = createTheme({
   palette,
   typography,
   components,
 })
+
+let client = createWebsocket()
+client.open = () => {
+  client.send('opened')
+}
 
 console.log('theme', theme)
 
