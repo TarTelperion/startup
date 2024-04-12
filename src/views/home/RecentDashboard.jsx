@@ -1,5 +1,6 @@
 import FormatQuoteIcon from '@mui/icons-material/FormatQuote'
 import { Box, Typography } from '@mui/material'
+import { DateTime } from 'luxon'
 import { useMyStories } from '../../hooks/stories/useMyStories'
 import { Flex } from '../../layout'
 import { DashHeader } from './DashHeader'
@@ -31,7 +32,7 @@ const RecentDashboard = ({ user }) => {
             padding: 1,
             alignSelf: 'flex-start',
             ml: 2,
-            mt: 1,
+            mt: 2,
           }}
         >
           <FormatQuoteIcon
@@ -41,7 +42,7 @@ const RecentDashboard = ({ user }) => {
           />
         </Box>
         {mostRecent && (
-          <Typography ml={2} mt={1} sx={{ textOverflow: 'ellipsis' }}>
+          <Typography ml={2} mt={2} sx={{ textOverflow: 'ellipsis' }}>
             {mostRecent?.additions?.length === 0
               ? `${mostRecent.title} was created`
               : mostRecent?.additions[mostRecent.additions.length - 1]?.content}
@@ -49,9 +50,9 @@ const RecentDashboard = ({ user }) => {
         )}
       </Box>
       {mostRecent && (
-        <Box display="flex" flexDirection="row">
-          <Typography variant="subtitle2">
-            {mostRecent.additions[mostRecent.additions.length - 1]?.authorName}
+        <Box display="flex" flexDirection="row" ml={2} mt={2}>
+          <Typography>
+            {`--Written ${DateTime.fromISO(mostRecent.updatedAt).toRelative()} by ${mostRecent.additions[mostRecent.additions.length - 1]?.authorName}`}
           </Typography>
         </Box>
       )}
