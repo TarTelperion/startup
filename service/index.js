@@ -58,7 +58,6 @@ function bake_cookie(res, token) {
 
 apiRouter.get('/auth', async (req, res) => {
   const user = await db.user_token(req.cookies.token)
-  io.emit('auth', 'auth checked...')
   if (user) {
     res.send(JSON.stringify(user))
   } else {
@@ -129,7 +128,7 @@ secureRouter.post('/stories/add', async (req, res) => {
     story.joined,
     story.prompt
   )
-
+  io.emit('create', JSON.stringify(fin))
   res.status(200).send(JSON.stringify(fin))
 })
 
@@ -142,6 +141,7 @@ secureRouter.put('/stories/update/:id', async (req, res) => {
   let story = await db.update_story(req.body.content, storyId, user)
 
   if (story) {
+    io.emit('edit', JSON.stringify(story))
     res.send(story)
   } else {
     res.status(404).send('Story not found')
@@ -155,7 +155,7 @@ secureRouter.put('/stories/skip/:storyId', async (req, res) => {
   const user = await db.user_token(token)
 
   await db.shuffle(storyId, user)
-
+  io.emit('skipTurn', storyId)
   res.status(200).json('shuffled')
 })
 
@@ -188,6 +188,7 @@ secureRouter.delete('/stories', async (req, res) => {
   try {
     let id = Number(req.body.id)
     await db.remove(id)
+    io.emit('deleted', id)
     res.status(200).send({ id })
   } catch (err) {
     res.status(500).send(JSON.stringify(err))
