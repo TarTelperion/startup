@@ -1,16 +1,19 @@
 import LightBulbIcon from '@mui/icons-material/EmojiObjects'
+import WavingHandIcon from '@mui/icons-material/WavingHand'
 import { Chip, Paper, Popover, Typography, useTheme } from '@mui/material'
 import { useState } from 'react'
+import { usePesterAuthor } from '../../hooks/stories/usePesterAuthor'
 import { Flex } from '../../layout'
 import StoryAddition from '../stories/StoryAddition'
 
-const StoryDetails = ({ story }) => {
+const StoryDetails = ({ story, isMyTurn }) => {
   const { additions } = story
 
   const theme = useTheme()
 
   const [anchorEl, setAnchorEl] = useState(null)
   const open = Boolean(anchorEl)
+  const { pester } = usePesterAuthor()
   const handleOpen = (event) => setAnchorEl(event.currentTarget)
 
   return (
@@ -19,13 +22,29 @@ const StoryDetails = ({ story }) => {
         <Typography variant="subtitle2" ml={0.5}>
           Recent Addition
         </Typography>
-        <Chip
-          color="secondary"
-          icon={<LightBulbIcon />}
-          label={'View Story Details'}
-          sx={{ fontWeight: 700, fontSize: '0.9rem', px: 1, color: 'white' }}
-          onClick={handleOpen}
-        />
+        <Flex flexDirection="column">
+          <Chip
+            color="secondary"
+            icon={<LightBulbIcon />}
+            label={'View Story Details'}
+            sx={{ fontWeight: 700, fontSize: '0.9rem', px: 1, color: 'white' }}
+            onClick={handleOpen}
+          />
+          <Chip
+            color="success"
+            icon={<WavingHandIcon />}
+            label={'Pester The Author'}
+            sx={{
+              fontWeight: 700,
+              fontSize: '0.9rem',
+              px: 1,
+              color: 'white',
+              mt: 1,
+            }}
+            onClick={() => pester(story._id)}
+            disabled={isMyTurn}
+          />
+        </Flex>
       </Flex>
       {additions.length > 0 && (
         <>

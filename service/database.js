@@ -226,6 +226,15 @@ async function remove(story_id) {
   }
 }
 
+async function pester(user, storyId) {
+  const story = await storyCollection.findOne({ _id: Number(storyId) })
+
+  user.notifications.push(`${user.name} pestered you to finish ${story.title}`)
+
+  await update_user(user)
+  return story
+}
+
 module.exports = {
   testConnection,
   user,
@@ -240,4 +249,5 @@ module.exports = {
   update_user,
   getJoinedStories,
   shuffle,
+  pester,
 }

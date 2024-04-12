@@ -60,7 +60,7 @@ const Write = () => {
             <Flex flexColumn key={story._id} id="write-main">
               <EdgyPaper sx={{ width: '100%' }} elevation={4}>
                 <Flex flexColumn p={3} id="edgy-paper-child">
-                  <StoryDetails story={story} />
+                  <StoryDetails story={story} isMyTurn={isMyTurn} />
                   <Flex flexColumn mt={3}>
                     <Flex
                       id="textarea-container"
