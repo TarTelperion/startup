@@ -17,12 +17,9 @@ import {
 } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
 import { useNavigate } from 'react-router-dom'
-import { mutate } from 'swr'
-import { useDeleteStory } from '../../hooks/stories/useDeleteStory'
-import { useJoinStory } from '../../hooks/stories/useJoinStory'
-import { useLeaveStory } from '../../hooks/stories/useLeaveStory'
+import { useStory } from '../../hooks/stories/useStory'
 import { useUser } from '../../hooks/useUser'
-import { EdgyPaper, Flex, ViewHeader } from '../../layout'
+import { EdgyPaper, Flex, ViewHeader, Waiting } from '../../layout'
 import StoryAddition from './StoryAddition'
 
 const StoryListModal = ({
@@ -30,30 +27,26 @@ const StoryListModal = ({
   onRequestClose,
   paperOpen,
   currentStory,
-  handleClearStory,
 }) => {
   const navigate = useNavigate()
   const theme = useTheme()
-  const { join } = useJoinStory()
-  const { leave } = useLeaveStory()
-  const { remove } = useDeleteStory()
+
   const { user } = useUser()
+  const { story, join, leave, remove } = useStory(
+    { storyId: currentStory?._id },
+    { fallbackData: currentStory }
+  )
 
-  console.log('user', user)
+  const canJoin = story && !story?.isOwner && !story?.isJoined
 
-  const canJoin =
-    currentStory && !currentStory?.isOwner && !currentStory?.isJoined
-
-  const canWrite =
-    (currentStory && currentStory?.isOwner) || currentStory?.isJoined
+  const canWrite = (story && story?.isOwner) || story?.isJoined
 
   const canLeave =
-    currentStory &&
-    !currentStory?.isOwner &&
-    (currentStory.joined.includes(user._id) ||
-      user.joined.includes(currentStory._id))
+    story &&
+    !story?.isOwner &&
+    (story.joined.includes(user._id) || user.joined.includes(story._id))
 
-  const canDelete = currentStory && currentStory?.isOwner
+  const canDelete = story && story?.isOwner
 
   let actions = []
   if (canJoin) {
@@ -64,9 +57,9 @@ const StoryListModal = ({
         color="secondary"
         endIcon={<AddCircleIcon />}
         onClick={async () => {
-          await join(currentStory._id)
-          await mutate('/stories/global')
+          await join(story._id)
           onRequestClose()
+          navigate('/stories/joined')
         }}
       >
         Join
@@ -80,7 +73,7 @@ const StoryListModal = ({
         color="primary"
         endIcon={<EditNoteIcon />}
         onClick={() => {
-          navigate(`/stories/write/${currentStory._id}`)
+          navigate(`/stories/write/${story._id}`)
           onRequestClose()
         }}
       >
@@ -95,8 +88,8 @@ const StoryListModal = ({
         variant="contained"
         color="secondary"
         endIcon={<DirectionsRunIcon />}
-        onClick={() => {
-          leave(currentStory._id)
+        onClick={async () => {
+          await leave(story._id)
         }}
       >
         Leave
@@ -110,9 +103,9 @@ const StoryListModal = ({
         variant="contained"
         color="error"
         endIcon={<DeleteForeverIcon />}
-        onClick={() => {
-          remove(currentStory._id)
-          handleClearStory()
+        onClick={async () => {
+          await remove(story._id)
+          onRequestClose()
         }}
       >
         Delete
@@ -158,70 +151,79 @@ const StoryListModal = ({
               backgroundColor: theme.palette.success.light,
             }}
           >
-            <ViewHeader>{currentStory?.title}</ViewHeader>
+            <ViewHeader>{story?.title}</ViewHeader>
           </Flex>
           <Divider />
-          <Stack spacing={2} pt={2} px={4} pb={2}>
-            <Flex alignItems="center" justifyContent="space-between">
-              <Chip
-                size="large"
-                icon={
-                  currentStory?.authors > 1 ? <GroupsIcon /> : <PersonIcon />
-                }
-                label={
-                  currentStory?.authors <= 1
-                    ? currentStory.authors === 1
-                      ? '1 Author'
-                      : '0 Authors'
-                    : `${currentStory?.authors} Authors`
-                }
-              />
-              <Flex>
-                {actions.map((action, index) => (
-                  <Box key={index} ml={1}>
-                    {action}
-                  </Box>
-                ))}
-              </Flex>
-            </Flex>
-            <Flex flexDirection="column">
-              <Typography variant="subtitle2">Genre</Typography>
-              <Typography variant="body">{currentStory?.genre}</Typography>
-            </Flex>
-            <Flex flexDirection="column">
-              <Typography variant="subtitle2">Prompt</Typography>
-              <Typography variant="body">
-                {currentStory?.prompt
-                  ? currentStory?.prompt
-                  : 'This story was generated without a prompt'}
-              </Typography>
-            </Flex>
-          </Stack>
-          {currentStory?.content === ' ' && (
-            <Flex flexColumn alignItems="center">
-              <Typography fontWeight="700" mt={6}>
-                {
-                  'This story is empty. Click "Join" to change this unfortunate situation.'
-                }
-              </Typography>
-            </Flex>
-          )}
-          {currentStory?.content !== ' ' && (
-            <Flex
-              flexColumn
-              alignItems="flex-start"
-              px={4}
-              spacing={1}
-              overflow="scroll"
-            >
-              <Typography variant="subtitle2" overflow={'scroll'}>
-                Story
-              </Typography>
-              {currentStory?.additions?.map((addition) => (
-                <StoryAddition addition={addition} key={addition.updatedAt} />
-              ))}
-            </Flex>
-          )}
+          <Waiting loading={!story}>
+            {story && (
+              <>
+                <Stack spacing={2} pt={2} px={4} pb={2}>
+                  <Flex alignItems="center" justifyContent="space-between">
+                    <Chip
+                      size="large"
+                      icon={
+                        story?.authors > 1 ? <GroupsIcon /> : <PersonIcon />
+                      }
+                      label={
+                        story?.authors <= 1
+                          ? story.authors === 1
+                            ? '1 Author'
+                            : '0 Authors'
+                          : `${story?.authors} Authors`
+                      }
+                    />
+                    <Flex>
+                      {actions.map((action, index) => (
+                        <Box key={index} ml={1}>
+                          {action}
+                        </Box>
+                      ))}
+                    </Flex>
+                  </Flex>
+                  <Flex flexDirection="column">
+                    <Typography variant="subtitle2">Genre</Typography>
+                    <Typography variant="body">{story?.genre}</Typography>
+                  </Flex>
+                  <Flex flexDirection="column">
+                    <Typography variant="subtitle2">Prompt</Typography>
+                    <Typography variant="body">
+                      {story?.prompt
+                        ? story?.prompt
+                        : 'This story was generated without a prompt'}
+                    </Typography>
+                  </Flex>
+                </Stack>
+                {story?.content === ' ' && (
+                  <Flex flexColumn alignItems="center">
+                    <Typography fontWeight="700" mt={6}>
+                      {
+                        'This story is empty. Click "Join" to change this unfortunate situation.'
+                      }
+                    </Typography>
+                  </Flex>
+                )}
+                {story?.content !== ' ' && (
+                  <Flex
+                    flexColumn
+                    alignItems="flex-start"
+                    px={4}
+                    spacing={1}
+                    overflow="scroll"
+                  >
+                    <Typography variant="subtitle2" overflow={'scroll'}>
+                      Story
+                    </Typography>
+                    {story?.additions?.map((addition) => (
+                      <StoryAddition
+                        addition={addition}
+                        key={addition.updatedAt}
+                      />
+                    ))}
+                  </Flex>
+                )}
+              </>
+            )}
+          </Waiting>
         </EdgyPaper>
       </Flex>
     </Modal>

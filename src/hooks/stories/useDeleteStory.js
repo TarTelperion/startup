@@ -1,3 +1,4 @@
+import { mutate } from 'swr'
 import { del } from '../../fetch'
 
 export const useDeleteStory = () => {
@@ -7,6 +8,8 @@ export const useDeleteStory = () => {
     }
 
     const response = await del('/stories', payload)
+    await mutate('/stories/global')
+
     return response
   }
 

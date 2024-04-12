@@ -177,7 +177,7 @@ secureRouter.delete('/stories', async (req, res) => {
   try {
     let id = Number(req.body.id)
     await db.remove(id)
-    res.status(200).send('Delete successful')
+    res.status(200).send({ id })
   } catch (err) {
     res.status(500).send(JSON.stringify(err))
   }

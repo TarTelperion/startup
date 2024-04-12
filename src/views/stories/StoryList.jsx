@@ -55,7 +55,6 @@ const StoryList = ({ stories, user }) => {
         modalOpen={modalOpen}
         paperOpen={paperOpen}
         currentStory={selectedStory}
-        handleClearStory={handleClearStory}
       />
     </Flex>
   )
