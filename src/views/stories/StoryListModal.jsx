@@ -207,8 +207,16 @@ const StoryListModal = ({
             </Flex>
           )}
           {currentStory?.content !== ' ' && (
-            <Flex flexColumn alignItems="flex-start" px={4} spacing={1}>
-              <Typography variant="subtitle2">Story</Typography>
+            <Flex
+              flexColumn
+              alignItems="flex-start"
+              px={4}
+              spacing={1}
+              overflow="scroll"
+            >
+              <Typography variant="subtitle2" overflow={'scroll'}>
+                Story
+              </Typography>
               {currentStory?.additions?.map((addition) => (
                 <StoryAddition addition={addition} key={addition.updatedAt} />
               ))}
