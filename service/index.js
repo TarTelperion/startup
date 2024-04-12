@@ -2,6 +2,7 @@ const express = require('express')
 const cors = require('cors')
 const bodyParser = require('body-parser')
 const cookie_parser = require('cookie-parser')
+const path = require('path')
 
 const { websocket } = require('./websocket.js')
 
@@ -17,17 +18,17 @@ let cookie_name = 'token'
 
 app.use(cors())
 app.use(express.static('public'))
+
 app.use(cookie_parser())
 
-let apiRoute = express.Router()
+let apiRouter = express.Router()
 
-app.use('/api', apiRoute)
-apiRoute.use(bodyParser.json())
+app.use('/api', apiRouter)
 
-console.log('loggy')
+apiRouter.use(bodyParser.json())
 
 // Retrieve story by ID and send by JSON stringify
-apiRoute.post('/auth/create', async (req, res) => {
+apiRouter.post('/auth/create', async (req, res) => {
   if (await db.user(req.body.mail)) {
     res.status(409).send('Preexisting user')
   } else {
@@ -45,7 +46,7 @@ function bake_cookie(res, token) {
   })
 }
 
-apiRoute.get('/auth', async (req, res) => {
+apiRouter.get('/auth', async (req, res) => {
   const user = await db.user_token(req.cookies.token)
   if (user) {
     res.send(JSON.stringify(user))
@@ -54,7 +55,7 @@ apiRoute.get('/auth', async (req, res) => {
   }
 })
 
-apiRoute.post('/auth/login', async (req, res) => {
+apiRouter.post('/auth/login', async (req, res) => {
   const usr = await db.user(req.body.name)
 
   if (usr) {
@@ -68,15 +69,15 @@ apiRoute.post('/auth/login', async (req, res) => {
   res.status(401).send('unauthorized')
 })
 
-apiRoute.delete('/auth/logout', (req, res) => {
+apiRouter.delete('/auth/logout', (req, res) => {
   res.clearCookie(cookie_name)
   res.status(204).send('cookie eaten')
 })
 
-let secureRoute = express.Router()
-apiRoute.use(secureRoute)
+let secureRouter = express.Router()
+apiRouter.use(secureRouter)
 
-secureRoute.use(async (req, res, next) => {
+secureRouter.use(async (req, res, next) => {
   let token = req.cookies[cookie_name]
   const user = await db.user_token(token)
 
@@ -87,7 +88,7 @@ secureRoute.use(async (req, res, next) => {
   }
 })
 
-secureRoute.get('/stories', async (req, res) => {
+secureRouter.get('/stories', async (req, res) => {
   let id = parseInt(req.query.id)
   let story = await db.get_story(id)
 
@@ -99,13 +100,15 @@ secureRoute.get('/stories', async (req, res) => {
 })
 
 // Add story
-secureRoute.post('/stories/add', async (req, res) => {
+secureRouter.post('/stories/add', async (req, res) => {
   // let socket_id = req.params.ws
   const story = req.body
   const token = req.cookies[cookie_name]
   const user = await db.user_token(token)
+
   user.joined.push(story._id)
   user.stories.push(story._id)
+
   await db.update_user(user)
   const fin = await db.create_story(
     story.title,
@@ -120,7 +123,7 @@ secureRoute.post('/stories/add', async (req, res) => {
 })
 
 // Update content of a story. Send in the content of the story in the request body
-secureRoute.put('/stories/update/:id', async (req, res) => {
+secureRouter.put('/stories/update/:id', async (req, res) => {
   let storyId = req.params.id
   const token = req.cookies[cookie_name]
 
@@ -134,7 +137,7 @@ secureRoute.put('/stories/update/:id', async (req, res) => {
   }
 })
 
-secureRoute.put('/stories/skip/:storyId', async (req, res) => {
+secureRouter.put('/stories/skip/:storyId', async (req, res) => {
   const storyId = Number(req.params.storyId)
   const token = req.cookies[cookie_name]
 
@@ -146,7 +149,7 @@ secureRoute.put('/stories/skip/:storyId', async (req, res) => {
 })
 
 // Add author
-secureRoute.put('/stories/authors', async (req, res) => {
+secureRouter.put('/stories/authors', async (req, res) => {
   const id = parseInt(req.query.id)
   const usr = req.query.usr
   const ct = parseInt(req.query.ct)
@@ -165,12 +168,12 @@ secureRoute.put('/stories/authors', async (req, res) => {
 })
 
 // returns all of the stories currently in the globe
-secureRoute.get('/stories/global', async (req, res) => {
+secureRouter.get('/stories/global', async (req, res) => {
   let stories = await db.get_pop_stories()
   res.json(stories)
 })
 
-secureRoute.delete('/stories', async (req, res) => {
+secureRouter.delete('/stories', async (req, res) => {
   try {
     let id = Number(req.body.id)
     await db.remove(id)
@@ -180,7 +183,7 @@ secureRoute.delete('/stories', async (req, res) => {
   }
 })
 
-secureRoute.put('/stories/leave/:storyId', async (req, res) => {
+secureRouter.put('/stories/leave/:storyId', async (req, res) => {
   const id = Number(req.params.storyId)
   const token = req.cookies[cookie_name]
   const user = await db.user_token(token)
@@ -199,13 +202,13 @@ secureRoute.put('/stories/leave/:storyId', async (req, res) => {
   res.status(200).json('Story left')
 })
 
-secureRoute.put('/users/update', async (req, res) => {
+secureRouter.put('/users/update', async (req, res) => {
   let neuUser = await db.update_user(req.body)
 
   res.send(neuUser)
 })
 
-secureRoute.get('/user/stories', async (req, res) => {
+secureRouter.get('/user/stories', async (req, res) => {
   let token = req.cookies[cookie_name]
   let user = await db.user_token(token)
 
@@ -214,7 +217,7 @@ secureRoute.get('/user/stories', async (req, res) => {
   res.status(200).send(JSON.stringify(payload))
 })
 
-secureRoute.put('/stories/join', async (req, res) => {
+secureRouter.put('/stories/join', async (req, res) => {
   try {
     const token = req.cookies[cookie_name]
     const user = await db.user_token(token)
@@ -240,7 +243,7 @@ secureRoute.put('/stories/join', async (req, res) => {
   }
 })
 
-secureRoute.post('/generate-prompt', generatePrompt)
+secureRouter.post('/generate-prompt', generatePrompt)
 
 const httpService = app.listen(port, () => {
   console.log(`Listening on port ${port}`)

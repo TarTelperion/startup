@@ -112,12 +112,12 @@ async function addUser(user_id, story_id) {
 }
 
 async function get_pop_stories() {
-  const query = { authors: { $gt: 0, $lt: 900 } }
+  const query = {}
   const options = {
-    sort: { authors: -1 },
+    sort: { updatedAt: -1 },
   }
 
-  const stories = storyCollection.find(query, options)
+  const stories = storyCollection.find({}, options)
   const array = await stories.toArray()
 
   return array
@@ -195,21 +195,23 @@ async function shuffle(storyId, user) {
   }
   if (story.joined.length === 2) {
     const index = story.joined.indexOf(user._id)
-    index === 1
-      ? (story.writer = story.joined[0])
-      : (story.writer = story.joined[1])
+    const otherIndex = index === 0 ? 1 : 0
+
+    await storyCollection.updateOne(
+      { _id: storyId },
+      { $set: { writer: story.joined[otherIndex] } }
+    )
     return
   }
 
-  let randomIndex = Math.floor(Math.random() * story.joined.length)
+  const possibleIndices = story.joined.filter((id) => id !== user._id)
+  const randomIndex = Math.floor(Math.random() * possibleIndices.length)
+  const newWriter = possibleIndices[randomIndex]
 
-  while (story.joined[randomIndex] === user._id) {
-    randomIndex = Math.floor(Math.random() * story.joined.length)
-  }
-
-  story.writer = story.joined[randomIndex]
-
-  await storyCollection.replaceOne({ _id: storyId }, story)
+  await storyCollection.updateOne(
+    { _id: storyId },
+    { $set: { writer: newWriter } }
+  )
 }
 
 async function remove(story_id) {

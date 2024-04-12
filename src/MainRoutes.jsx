@@ -17,6 +17,7 @@ const MainRoutes = () => {
       <Route path="/create" element={<Create />} />
       <Route path="/stories/*" element={<StoryRoutes />} />
       <Route path="/" exact element={<Navigate replace to="/home" />} />
+      <Route path="*" exact element={<Navigate replace to="/home" />} />
     </Routes>
   )
 }
