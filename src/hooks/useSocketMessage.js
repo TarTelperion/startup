@@ -5,11 +5,11 @@ export const useSocketMessage = (handler, actionName) => {
   const socket = useSocket()
 
   const subscription = useCallback(
-    (payload, from) => {
-      console.log('socket action:', actionName)
-      handler(payload, from)
+    (payload) => {
+      handler(payload)
     },
-    [actionName, handler]
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [actionName]
   )
 
   useEffect(() => {
