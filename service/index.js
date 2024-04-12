@@ -135,9 +135,14 @@ secureRoute.put('/stories/update/:id', async (req, res) => {
 })
 
 secureRoute.put('/stories/skip/:storyId', async (req, res) => {
-  const storyId = req.params.storyId
-  await db.shuffle(storyId)
-  res.status(200).send('shuffled')
+  const storyId = Number(req.params.storyId)
+  const token = req.cookies[cookie_name]
+
+  const user = await db.user_token(token)
+
+  await db.shuffle(storyId, user)
+
+  res.status(200).json('shuffled')
 })
 
 // Add author

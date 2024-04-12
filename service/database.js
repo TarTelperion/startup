@@ -187,9 +187,25 @@ async function update_user(user) {
   return usEr
 }
 
-async function shuffle(storyId) {
+async function shuffle(storyId, user) {
   const story = await get_story(storyId)
-  const randomIndex = Math.floor(Math.random() * story.joined.length)
+
+  if (story.joined.length === 1) {
+    return
+  }
+  if (story.joined.length === 2) {
+    const index = story.joined.indexOf(user._id)
+    index === 1
+      ? (story.writer = story.joined[0])
+      : (story.writer = story.joined[1])
+    return
+  }
+
+  let randomIndex = Math.floor(Math.random() * story.joined.length)
+
+  while (story.joined[randomIndex] === user._id) {
+    randomIndex = Math.floor(Math.random() * story.joined.length)
+  }
 
   story.writer = story.joined[randomIndex]
 
