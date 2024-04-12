@@ -30,10 +30,10 @@ const StoryListModal = ({
   onRequestClose,
   paperOpen,
   currentStory,
+  handleClearStory,
 }) => {
   const navigate = useNavigate()
   const theme = useTheme()
-
   const { join } = useJoinStory()
   const { leave } = useLeaveStory()
   const { remove } = useDeleteStory()
@@ -112,6 +112,7 @@ const StoryListModal = ({
         endIcon={<DeleteForeverIcon />}
         onClick={() => {
           remove(currentStory._id)
+          handleClearStory()
         }}
       >
         Delete
