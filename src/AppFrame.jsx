@@ -3,6 +3,7 @@ import { useState } from 'react'
 import AppBar from './AppBar'
 import AppSidebar from './AppSidebar'
 import MainRoutes from './MainRoutes'
+import { useSocketMessage } from './hooks/useSocketMessage'
 import { useUser } from './hooks/useUser'
 import { AppHeader, Flex, Waiting } from './layout'
 import LoginModal from './user/AuthModal'
@@ -15,6 +16,11 @@ const AppFrame = () => {
   const [open, setOpen] = useState(false)
   const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
+
+  useSocketMessage((payload, from) => {
+    console.log('new message from:', from)
+    console.log('message:', payload)
+  }, 'story-create')
 
   return (
     <Box
