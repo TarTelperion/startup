@@ -96,4 +96,13 @@ This deliverable slides into a database and does some epic things there.
   - **Backend listens for WebSocket connection** -- Complete, and a bunch of brand new bugs added to allow users to take turns.
   - **Frontend makes WebSocket connection** -- Done! and aformentioned bugs are swept under the carpet.
   - **Data sent over WebSocket connection** -- Completed! Users are sent notifications, and in case they miss them, they're saved to the profile page
-  - **WebSocket data displayed** -- Beautiful little alerts will appear on the page in different colors like little disappearing beetles. 
+  - **WebSocket data displayed** -- Beautiful little alerts will appear on the page in different colors like little disappearing beetles.
+ 
+    ### React Deliverable:
+
+    This deliverable polishes up a tasty website using React for TA's to delight in
+
+    - **Bundled and Transpiled** -- This app was bundled and transplied using Vite and its weird and slightly irritating sorcery.
+    - **Components** -- Basically everything is separated into components. For some small examples, the login modal, signup modal, home page joined paper, additions paper, and my stories paper are all separate components (and the list items in the papers are all also separate components)
+    - **Router** -- A nested react router handles main requests and then requests to story specific components.
+    - **Hooks** -- useState and useEffect are used thoughout the app to give top-notch preformance, as well as several custom-made hooks for api calls and other small tasks thoughout the website. An example of the use of hooks are within the story modal component, which keeps track of the selected story, open paper, and open modal states to deliver a smooth animation. 
