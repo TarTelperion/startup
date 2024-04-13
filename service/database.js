@@ -226,13 +226,15 @@ async function remove(story_id) {
   }
 }
 
-async function pester(user, storyId) {
+async function pester(storyId) {
   const story = await storyCollection.findOne({ _id: Number(storyId) })
+  const id = story.additions[story.additions.length - 1].userId
+  const user = userCollection.findOne({ _id: id })
 
   user.notifications.push(`${user.name} pestered you to finish ${story.title}`)
 
   await update_user(user)
-  return story
+  return { story, user }
 }
 
 module.exports = {

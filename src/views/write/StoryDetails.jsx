@@ -38,6 +38,7 @@ const StoryDetails = ({ story, isMyTurn }) => {
               fontWeight: 700,
               fontSize: '0.9rem',
               px: 1,
+              backgroundColor: '#66AB95',
               color: 'white',
               mt: 1,
             }}

@@ -278,14 +278,19 @@ secureRouter.put('/stories/join', async (req, res) => {
 
 secureRouter.post('/stories/pester/:storyId', async (req, res) => {
   const token = req.cookies[cookie_name]
-  const user = await db.user_token(token)
 
-  const story = await db.pester(user, req.params.storyId)
+  const { story, user } = await db.pester(req.params.storyId)
   io.emit(
     'story-pester',
     JSON.stringify({
       user: { name: user.name, token: user.token },
-      data: { story },
+      data: {
+        story: story,
+        target: {
+          name: user.name,
+          id: user._id,
+        },
+      },
     })
   )
   res.status(200).json('pestered')
