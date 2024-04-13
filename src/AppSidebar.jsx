@@ -14,6 +14,8 @@ import {
   ListItemIcon,
   ListItemText,
   Drawer as MuiDrawer,
+  alpha,
+  useTheme,
 } from '@mui/material'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { AppHeader } from './layout'
@@ -66,6 +68,7 @@ const closedMixin = (theme) => ({
 })
 
 const AppSidebar = ({ openModal, user }) => {
+  const theme = useTheme()
   const location = useLocation()
   const navigate = useNavigate()
 
@@ -136,12 +139,17 @@ const AppSidebar = ({ openModal, user }) => {
       </List>
       <Button
         variant="text"
-        size="small"
+        size="large"
         sx={{
+          height: 60,
           width: 240,
           position: 'fixed',
           bottom: 0,
           left: 0,
+          backgroundColor: alpha(theme.palette.primary.light, 0.1),
+          '&:hover': {
+            backgroundColor: alpha(theme.palette.primary.light, 0.2),
+          },
         }}
         onClick={() => {
           window.open(
