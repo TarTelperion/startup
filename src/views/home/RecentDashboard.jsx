@@ -37,55 +37,59 @@ const RecentDashboard = ({ user }) => {
   return (
     <Flex flexColumn overflow="hidden">
       <DashHeader title="Recent Activity" />
-      <Flex maxHeight={300} overflow={'scroll'} flexColumn>
+      <Flex overflow={'scroll'} flexColumn>
         {mostRecentArray.map((mostRecent, index) => {
           return (
-            <Flex key={index} overflow="hidden" padding={1}>
-              <Flex display="flex" flexDirection="row">
-                <Flex
-                  bgcolor="secondary.main"
-                  borderRadius={2}
-                  sx={{
-                    display: 'flex',
-                    padding: 1,
-                    alignSelf: 'flex-start',
-                    ml: 2,
-                    mt: 2,
-                  }}
-                >
-                  <FormatQuoteIcon
+            <Flex
+              key={index}
+              flexRow
+              padding={1}
+              overflow="hidden"
+              height="200px"
+              maxHeight="200px"
+            >
+              <Flex
+                bgcolor="secondary.main"
+                borderRadius={2}
+                sx={{
+                  display: 'flex',
+                  padding: 1,
+                  alignSelf: 'flex-start',
+                  ml: 2,
+                  mt: 2,
+                }}
+              >
+                <FormatQuoteIcon sx={{ fill: 'white' }} fontSize="large" />
+              </Flex>
+              <Flex flexDirection="column">
+                <Flex flexDirection="column" sx={{ mt: 2, ml: 1 }} mb={0}>
+                  <Typography
+                    variant="body"
                     sx={{
-                      fill: 'white',
+                      fontWeight: 'bold',
+                      '&:hover': { cursor: 'pointer' },
                     }}
-                    fontSize="large"
-                  />
-                </Flex>
-                <Flex flexDirection="column">
-                  <Flex flexDirection="column" sx={{ mt: 2, ml: 1 }} mb={0}>
-                    <Typography
-                      variant="body"
-                      sx={{
-                        fontWeight: 'bold',
-                        '&:hover': { cursor: 'pointer' },
-                      }}
-                      onClick={() =>
-                        navigate(`/stories/write/${mostRecent._id}`)
-                      }
-                    >
-                      {mostRecent.title}
+                    onClick={() => navigate(`/stories/write/${mostRecent._id}`)}
+                  >
+                    {mostRecent.title}
+                  </Typography>
+                  <Flex flexDirection="row" mt={0}>
+                    <Typography variant="caption">
+                      {`${
+                        mostRecent.additions[mostRecent.additions.length - 1]
+                          ?.authorName ?? user.name
+                      }, ${DateTime.fromISO(mostRecent.updatedAt).toRelative()} `}
                     </Typography>
-                    <Flex flexDirection="row" mt={0}>
-                      <Typography variant="caption">
-                        {`${
-                          mostRecent.additions[mostRecent.additions.length - 1]
-                            ?.authorName ?? user.name
-                        }, ${DateTime.fromISO(mostRecent.updatedAt).toRelative()} `}
-                      </Typography>
-                    </Flex>
                   </Flex>
-                  <Flex ml={2} mt={2} sx={{ paddingRight: 2 }} flexRow>
-                    <Typography>{mostRecentText(mostRecent)}</Typography>
-                  </Flex>
+                </Flex>
+                <Flex
+                  ml={2}
+                  mt={2}
+                  sx={{ paddingRight: 2 }}
+                  flexRow
+                  overflow="hidden"
+                >
+                  <Typography>{mostRecentText(mostRecent)}</Typography>
                 </Flex>
               </Flex>
             </Flex>
