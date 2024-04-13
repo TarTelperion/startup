@@ -1,10 +1,12 @@
 import styled from '@emotion/styled'
 import CottageIcon from '@mui/icons-material/Cottage'
+import GitHubIcon from '@mui/icons-material/GitHub'
 import GroupAddIcon from '@mui/icons-material/GroupAdd'
 import HistoryEduIcon from '@mui/icons-material/HistoryEdu'
 import LoginIcon from '@mui/icons-material/Login'
 import MenuBookIcon from '@mui/icons-material/MenuBook'
 import {
+  Button,
   Divider,
   List,
   ListItem,
@@ -131,6 +133,26 @@ const AppSidebar = ({ openModal, user }) => {
           </ListItem>
         )}
       </List>
+      <Button
+        variant="text"
+        size="small"
+        sx={{
+          width: 240,
+          position: 'fixed',
+          bottom: 0,
+          left: 0,
+        }}
+        onClick={() => {
+          window.open(
+            'https://github.com/TarTelperion/startup',
+            '_blank',
+            'noreferrer'
+          )
+        }}
+        startIcon={<GitHubIcon />}
+      >
+        Tar Telperion
+      </Button>
     </Drawer>
   )
 }
