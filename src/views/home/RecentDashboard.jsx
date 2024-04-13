@@ -1,5 +1,5 @@
 import FormatQuoteIcon from '@mui/icons-material/FormatQuote'
-import { Box, Typography } from '@mui/material'
+import { Typography } from '@mui/material'
 import { DateTime } from 'luxon'
 import { useNavigate } from 'react-router-dom'
 import { useMyStories } from '../../hooks/stories/useMyStories'
@@ -37,12 +37,12 @@ const RecentDashboard = ({ user }) => {
   return (
     <Flex flexColumn overflow="hidden">
       <DashHeader title="Recent Activity" />
-      <Box maxHeight={300} overflow={'scroll'}>
+      <Flex maxHeight={300} overflow={'scroll'} flexColumn>
         {mostRecentArray.map((mostRecent, index) => {
           return (
-            <Box key={index}>
-              <Box display="flex" flexDirection="row">
-                <Box
+            <Flex key={index} overflow="hidden" padding={1}>
+              <Flex display="flex" flexDirection="row">
+                <Flex
                   bgcolor="secondary.main"
                   borderRadius={2}
                   sx={{
@@ -59,9 +59,9 @@ const RecentDashboard = ({ user }) => {
                     }}
                     fontSize="large"
                   />
-                </Box>
-                <Box flexDirection="column">
-                  <Box flexDirection="column" sx={{ mt: 2, ml: 1 }} mb={0}>
+                </Flex>
+                <Flex flexDirection="column">
+                  <Flex flexDirection="column" sx={{ mt: 2, ml: 1 }} mb={0}>
                     <Typography
                       variant="body"
                       sx={{
@@ -74,30 +74,24 @@ const RecentDashboard = ({ user }) => {
                     >
                       {mostRecent.title}
                     </Typography>
-                    <Box flexDirection="row" mt={0}>
+                    <Flex flexDirection="row" mt={0}>
                       <Typography variant="caption">
                         {`${
                           mostRecent.additions[mostRecent.additions.length - 1]
-                            ?.authorName
+                            ?.authorName ?? user.name
                         }, ${DateTime.fromISO(mostRecent.updatedAt).toRelative()} `}
                       </Typography>
-                    </Box>
-                  </Box>
-                  <Box
-                    display="flex"
-                    flexDirection="row"
-                    ml={2}
-                    mt={2}
-                    sx={{ maxWidth: 'calc(100% - 32px)' }}
-                  >
+                    </Flex>
+                  </Flex>
+                  <Flex ml={2} mt={2} sx={{ paddingRight: 2 }} flexRow>
                     <Typography>{mostRecentText(mostRecent)}</Typography>
-                  </Box>
-                </Box>
-              </Box>
-            </Box>
+                  </Flex>
+                </Flex>
+              </Flex>
+            </Flex>
           )
         })}
-      </Box>
+      </Flex>
     </Flex>
   )
 }
