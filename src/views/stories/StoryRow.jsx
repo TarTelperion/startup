@@ -16,7 +16,9 @@ const StoryRow = ({ story, onSelect, isMyTurn }) => {
         width: '100%',
         px: 3,
         py: 2,
+        transition: 'background-color 0.3s',
         '&:hover': {
+          transition: 'background-color 0.3s',
           backgroundColor: theme.palette.grey[100],
           cursor: 'pointer',
         },

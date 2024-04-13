@@ -1,12 +1,12 @@
 import ClassIcon from '@mui/icons-material/Class'
-import EditNoteIcon from '@mui/icons-material/EditNote'
+import GradeIcon from '@mui/icons-material/Grade'
 import GroupsIcon from '@mui/icons-material/Groups'
 import PersonIcon from '@mui/icons-material/Person'
-import { Button, Chip, Paper, Typography } from '@mui/material'
+import { Chip, Paper, Typography } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
 import { Flex } from '../../layout'
 
-const MiniStoryRow = ({ story, onClickWrite, showTurn }) => {
+const MiniStoryRow = ({ story, onClickRow, showTurn }) => {
   const theme = useTheme()
 
   return (
@@ -19,7 +19,14 @@ const MiniStoryRow = ({ story, onClickWrite, showTurn }) => {
         px: 2,
         py: 2,
         overflow: 'hidden',
+        transition: 'background-color 0.3s',
+        '&:hover': {
+          transition: 'background-color 0.3s',
+          backgroundColor: theme.palette.grey[100],
+          cursor: 'pointer',
+        },
       }}
+      onClick={onClickRow ? () => onClickRow(story) : undefined}
     >
       <Flex
         flexRow
@@ -41,21 +48,19 @@ const MiniStoryRow = ({ story, onClickWrite, showTurn }) => {
               size="small"
               icon={
                 story?.authors > 1 ? (
-                  <GroupsIcon color="inherit" />
+                  <GroupsIcon color="inherit" sx={{ mb: '1px' }} />
                 ) : (
-                  <PersonIcon color="inherit" />
+                  <PersonIcon color="inherit" sx={{ mb: '1px' }} />
                 )
               }
-              label={
-                story?.authors === 1 ? '1 Author' : `${story?.authors} Authors`
-              }
+              label={String(story?.authors ?? 0)}
               sx={{
                 backgroundColor: 'info.light',
                 color: 'white',
-                fontWeight: 'bold',
+                fontWeight: 700,
                 px: 0.5,
-                fontSize: '0.75rem',
-                width: '98px',
+                fontSize: '0.78rem',
+                width: '52px',
               }}
             />
             <Chip
@@ -68,7 +73,7 @@ const MiniStoryRow = ({ story, onClickWrite, showTurn }) => {
                 fontWeight: 'bold',
                 px: 0.5,
                 fontSize: '0.75rem',
-                maxWidth: '150px',
+                maxWidth: '120px',
               }}
             />
           </Flex>
@@ -79,20 +84,13 @@ const MiniStoryRow = ({ story, onClickWrite, showTurn }) => {
           justifyContent="space-between"
         >
           {showTurn && (
-            <>
-              <Typography variant="caption" fontWeight={700}>
-                {"It's your turn!"}
-              </Typography>
-              <Button
-                color="primary"
-                variant="contained"
-                size="small"
-                endIcon={<EditNoteIcon color="inherit" />}
-                onClick={() => onClickWrite(story._id)}
-              >
-                Write!
-              </Button>
-            </>
+            <Chip
+              color="success"
+              icon={<GradeIcon />}
+              label={'My Turn!'}
+              sx={{ px: 0.5, fontWeight: 700, color: 'white' }}
+              size="small"
+            />
           )}
         </Flex>
       </Flex>
