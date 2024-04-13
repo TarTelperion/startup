@@ -299,7 +299,7 @@ secureRouter.post('/stories/pester/:storyId', async (req, res) => {
 })
 
 app.get('*', (req, res) => {
-  res.sendFile('/index.html')
+  res.sendFile('./index.html')
 })
 
 secureRouter.post('/generate-prompt', generatePrompt)

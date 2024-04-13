@@ -7,7 +7,7 @@ const getSocketConnection = () => {
     return client
   }
 
-  client = io('http://localhost:4000')
+  client = io()
   client.emit('handshake', 'connection established')
 
   return client
