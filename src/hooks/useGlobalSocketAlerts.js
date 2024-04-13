@@ -27,7 +27,7 @@ export const useGlobalSocketAlerts = (userId) => {
   }, 'story-edit')
 
   useSocketMessage((payload, from) => {
-    const target = payload.target.userId
+    const target = payload.target.id
     if (userId !== target) return
 
     enqueueSnackbar(
