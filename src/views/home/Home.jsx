@@ -20,6 +20,7 @@ const Home = () => {
     flexDirection: 'column',
     flex: '1 1 auto',
     overflow: 'hidden',
+    minWidth: '310px',
   }
 
   return (

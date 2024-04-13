@@ -35,6 +35,7 @@ const AppSnackbar = () => {
       Components={{
         success: StyledMaterialDesignContent,
         error: StyledMaterialDesignContent,
+        info: StyledMaterialDesignContent,
       }}
     />
   )

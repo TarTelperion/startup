@@ -36,8 +36,8 @@ const MiniStoryRow = ({ story, onClickRow, showTurn }) => {
             {story.title}
           </Typography>
         </Flex>
-        <Flex>
-          <RelativeTime value={story.updatedAt} />
+        <Flex minWidth="50px" justifyContent="flex-end">
+          <RelativeTime value={story.updatedAt} suffix="" />
         </Flex>
       </Flex>
       <Flex alignItems="center" justifyContent="space-between">
