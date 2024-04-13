@@ -30,7 +30,11 @@ const UserNotifications = ({ user, open, anchor, setOpen }) => {
         </Typography>
         <List>
           {user?.notifications.map((notification, index) => {
-            return <ListItem key={index}>{notification}</ListItem>
+            return (
+              <ListItem
+                key={index}
+              >{`${notification.user.name} asked you to finish ${notification.data.story.title}`}</ListItem>
+            )
           })}
         </List>
       </Paper>
