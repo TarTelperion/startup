@@ -298,8 +298,8 @@ secureRouter.post('/stories/pester/:storyId', async (req, res) => {
   res.status(200).json('pestered')
 })
 
-app.get('*', (req, res) => {
-  res.sendFile('./index.html')
+app.use((_req, res) => {
+  res.sendFile('index.html', { root: 'public' })
 })
 
 secureRouter.post('/generate-prompt', generatePrompt)
