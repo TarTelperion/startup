@@ -16,37 +16,51 @@ import {
   Typography,
 } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useStory } from '../../hooks/stories/useStory'
 import { useUser } from '../../hooks/useUser'
 import { EdgyPaper, Flex, ViewHeader, Waiting } from '../../layout'
 import StoryAddition from './StoryAddition'
+import { useSelectedStoryStore } from './hooks/selectedStoryStore'
 
-const StoryListModal = ({
-  modalOpen,
-  onRequestClose,
-  paperOpen,
-  currentStory,
-}) => {
+const StoryListModal = ({ onClose }) => {
   const navigate = useNavigate()
   const theme = useTheme()
 
   const { user } = useUser()
+
+  const selectedStory = useSelectedStoryStore((state) => state.selectedStory)
+  const setSelectedStory = useSelectedStoryStore(
+    (state) => state.setSelectedStory
+  )
+  const clearStory = () => setSelectedStory(null)
+
+  const [modalOpen, setModalOpen] = useState(false)
+  const [paperOpen, setPaperOpen] = useState(false)
+
+  useEffect(() => {
+    if (selectedStory) {
+      setModalOpen(true)
+      setPaperOpen(true)
+    } else {
+      setPaperOpen(false)
+      setTimeout(() => setModalOpen(false), 250)
+    }
+  }, [selectedStory])
+
   const { story, join, leave, remove } = useStory(
-    { storyId: currentStory?._id },
-    { fallbackData: currentStory }
+    { storyId: selectedStory?._id },
+    { fallbackData: selectedStory }
   )
 
   const canJoin = story && !story?.isOwner && !story?.isJoined
-
   const canWrite = (story && story?.isOwner) || story?.isJoined
-
+  const canDelete = story && story?.isOwner
   const canLeave =
     story &&
     !story?.isOwner &&
     (story.joined.includes(user._id) || user.joined.includes(story._id))
-
-  const canDelete = story && story?.isOwner
 
   let actions = []
   if (canJoin) {
@@ -58,8 +72,8 @@ const StoryListModal = ({
         endIcon={<AddCircleIcon />}
         onClick={async () => {
           await join(story._id)
-          onRequestClose()
-          navigate('/stories/joined')
+          clearStory()
+          onClose?.()
         }}
       >
         Join
@@ -74,7 +88,8 @@ const StoryListModal = ({
         endIcon={<EditNoteIcon />}
         onClick={() => {
           navigate(`/stories/write/${story._id}`)
-          onRequestClose()
+          clearStory()
+          onClose?.()
         }}
       >
         Write
@@ -90,6 +105,8 @@ const StoryListModal = ({
         endIcon={<DirectionsRunIcon />}
         onClick={async () => {
           await leave(story._id)
+          clearStory()
+          onClose?.()
         }}
       >
         Leave
@@ -105,7 +122,8 @@ const StoryListModal = ({
         endIcon={<DeleteForeverIcon />}
         onClick={async () => {
           await remove(story._id)
-          onRequestClose()
+          clearStory()
+          onClose?.()
         }}
       >
         Delete
@@ -116,7 +134,10 @@ const StoryListModal = ({
   return (
     <Modal
       open={modalOpen}
-      onClose={onRequestClose}
+      onClose={() => {
+        clearStory()
+        onClose?.()
+      }}
       sx={{
         display: 'flex',
         alignItems: 'stretch',
@@ -141,7 +162,13 @@ const StoryListModal = ({
             position="absolute"
             sx={{ top: '18px', right: '18px', zIndex: 1500 }}
           >
-            <IconButton size="small" onClick={onRequestClose}>
+            <IconButton
+              size="small"
+              onClick={() => {
+                clearStory()
+                onClose?.()
+              }}
+            >
               <CloseIcon />
             </IconButton>
           </Box>

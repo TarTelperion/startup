@@ -1,8 +1,7 @@
 import GradeIcon from '@mui/icons-material/Grade'
 import { Chip, Paper, Typography } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
-import { DateTime } from 'luxon'
-import { Flex } from '../../layout'
+import { Flex, RelativeTime } from '../../layout'
 
 const StoryRow = ({ story, onSelect, isMyTurn }) => {
   const theme = useTheme()
@@ -36,13 +35,7 @@ const StoryRow = ({ story, onSelect, isMyTurn }) => {
             <Typography variant="subtitle2" sx={{ mb: 1, ml: 0.5 }}>
               {story.title}
             </Typography>
-            <Typography
-              variant="caption"
-              sx={{ ml: 1, fontWeight: 700 }}
-              color={theme.palette.grey[500]}
-            >
-              {DateTime.fromISO(story.updatedAt).toRelative()}
-            </Typography>
+            <RelativeTime value={story.updatedAt} />
           </Flex>
           <Chip
             label={story.genre}

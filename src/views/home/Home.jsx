@@ -5,6 +5,7 @@ import { Paper, Typography } from '@mui/material'
 // Relative Dependencies
 import { useUser } from '../../hooks/useUser'
 import { Flex, ViewHeader } from '../../layout'
+import StoryListModal from '../stories/StoryListModal'
 import JoinedDashboard from './JoinedDashboard'
 import OwnedDashboard from './OwnedDashboard'
 import RecentDashboard from './RecentDashboard'
@@ -50,6 +51,7 @@ const Home = () => {
           </Flex>
         </Flex>
       </Flex>
+      <StoryListModal />
     </Flex>
   )
 }

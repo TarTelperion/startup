@@ -1,19 +1,15 @@
-// External Dependencies
-// Absolute Dependencies
-// Relative Dependencies
-import { useNavigate } from 'react-router-dom'
 import { useJoinedStories } from '../../hooks/stories/useJoinedStories'
 import { Flex } from '../../layout'
 import MiniStoryRow from '../stories/MiniStoryRow'
+import { useSelectedStoryStore } from '../stories/hooks/selectedStoryStore'
 import { DashHeader } from './DashHeader'
 
 const JoinedDashboard = ({ user }) => {
-  const navigate = useNavigate()
   const { stories } = useJoinedStories(user._id)
 
-  const handleClickWrite = (storyId) => {
-    navigate(`/stories/write/${storyId}`)
-  }
+  const setSelectedStory = useSelectedStoryStore(
+    (store) => store.setSelectedStory
+  )
 
   return (
     <Flex flexColumn width="100%">
@@ -24,10 +20,10 @@ const JoinedDashboard = ({ user }) => {
       >
         {stories.map((story) => (
           <MiniStoryRow
-            story={story}
             key={story._id}
+            story={story}
             showTurn={story.writer === user._id}
-            onClickWrite={handleClickWrite}
+            onClickRow={setSelectedStory}
           />
         ))}
       </Flex>
