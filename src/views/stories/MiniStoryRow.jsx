@@ -4,7 +4,7 @@ import GroupsIcon from '@mui/icons-material/Groups'
 import PersonIcon from '@mui/icons-material/Person'
 import { Chip, Paper, Typography } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
-import { Flex } from '../../layout'
+import { Flex, RelativeTime } from '../../layout'
 
 const MiniStoryRow = ({ story, onClickRow, showTurn }) => {
   const theme = useTheme()
@@ -14,6 +14,8 @@ const MiniStoryRow = ({ story, onClickRow, showTurn }) => {
       elevation={0}
       sx={{
         display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
         width: '100%',
         minHeight: '90px',
         px: 2,
@@ -28,66 +30,68 @@ const MiniStoryRow = ({ story, onClickRow, showTurn }) => {
       }}
       onClick={onClickRow ? () => onClickRow(story) : undefined}
     >
-      <Flex
-        flexRow
-        width="100%"
-        justifyContent="space-between"
-        overflow="hidden"
-      >
-        <Flex flexColumn justifyContent="space-between">
-          <Typography
-            variant="subtitle2"
-            fontWeight={700}
-            lineHeight="1rem"
-            sx={{ mb: 1, ml: 0.5 }}
-          >
+      <Flex alignItems="center" justifyContent="space-between" px={0.5}>
+        <Flex>
+          <Typography variant="subtitle2" fontWeight={700} lineHeight="1rem">
             {story.title}
           </Typography>
-          <Flex spacing={0.5} mb={0.5}>
-            <Chip
-              size="small"
-              icon={
-                story?.authors > 1 ? (
-                  <GroupsIcon color="inherit" sx={{ mb: '1px' }} />
-                ) : (
-                  <PersonIcon color="inherit" sx={{ mb: '1px' }} />
-                )
-              }
-              label={String(story?.authors ?? 0)}
-              sx={{
-                backgroundColor: 'info.light',
-                color: 'white',
-                fontWeight: 700,
-                px: 0.5,
-                fontSize: '0.78rem',
-                width: '52px',
-              }}
-            />
-            <Chip
-              label={story.genre}
-              size="small"
-              icon={<ClassIcon color="inherit" />}
-              sx={{
-                backgroundColor: 'secondary.light',
-                color: 'white',
-                fontWeight: 'bold',
-                px: 0.5,
-                fontSize: '0.75rem',
-                maxWidth: '120px',
-              }}
-            />
-          </Flex>
         </Flex>
-        <Flex
-          flexDirection="column"
-          alignItems="flex-end"
-          justifyContent="space-between"
-        >
+        <Flex>
+          <RelativeTime value={story.updatedAt} />
+        </Flex>
+      </Flex>
+      <Flex alignItems="center" justifyContent="space-between">
+        <Flex flexDirection="row" spacing={0.5}>
+          <Chip
+            size="small"
+            icon={
+              story?.authors > 1 ? (
+                <GroupsIcon color="inherit" sx={{ mb: '1px' }} />
+              ) : (
+                <PersonIcon color="inherit" sx={{ mb: '1px' }} />
+              )
+            }
+            label={
+              <Typography
+                component="div"
+                variant="caption"
+                color="inherit"
+                fontSize="inherit"
+                fontWeight="inherit"
+                sx={{ mt: '2px' }}
+              >
+                {story.authors}
+              </Typography>
+            }
+            sx={{
+              backgroundColor: 'info.light',
+              color: 'white',
+              fontWeight: 700,
+              px: 0.5,
+              fontSize: '0.78rem',
+              width: '52px',
+            }}
+          />
+          <Chip
+            label={story.genre}
+            size="small"
+            icon={<ClassIcon color="inherit" />}
+            sx={{
+              backgroundColor: 'secondary.light',
+              color: 'white',
+              fontWeight: 'bold',
+              px: 0.5,
+              fontSize: '0.75rem',
+              maxWidth: '120px',
+            }}
+          />
+        </Flex>
+        <Flex>
           {showTurn && (
             <Chip
               color="success"
               icon={<GradeIcon />}
-              label={'My Turn!'}
+              label={'My Turn'}
               sx={{ px: 0.5, fontWeight: 700, color: 'white' }}
               size="small"
             />
