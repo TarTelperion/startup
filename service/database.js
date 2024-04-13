@@ -228,9 +228,16 @@ async function remove(story_id) {
 
 async function pester(storyId) {
   const story = await storyCollection.findOne({ _id: Number(storyId) })
-  const id = story.additions[story.additions.length - 1].userId
-  const user = userCollection.findOne({ _id: id })
+  const id = story.additions[story.additions.length - 1].authorId
 
+  console.log('id', id)
+
+  const user = await userCollection.findOne({ _id: id })
+  console.log('user', user)
+
+  if (user.notifications.length > 5) {
+    user.notifications.splice(0, 1)
+  }
   user.notifications.push(`${user.name} pestered you to finish ${story.title}`)
 
   await update_user(user)
