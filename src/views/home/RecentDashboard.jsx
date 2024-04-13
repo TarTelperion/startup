@@ -26,7 +26,11 @@ const RecentDashboard = ({ user }) => {
         0,
         150
       ) ?? ''
-    letters += '...'
+    if (letters !== '') {
+      letters += '...'
+    } else {
+      letters = 'This story was created mere moments ago'
+    }
     return letters
   }
 
