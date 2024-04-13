@@ -18,7 +18,7 @@ const RecentDashboard = ({ user }) => {
     return array.sort((a, b) => sortArray(a, b))
   }
 
-  const mostRecentArray = stories.slice(-2)
+  const mostRecentArray = findMostRecent(stories).slice(-2)
 
   const mostRecentText = (mostRecent) => {
     let letters =
