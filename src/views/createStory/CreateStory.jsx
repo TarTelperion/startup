@@ -85,7 +85,7 @@ const Create = () => {
                       label="Generate"
                       color="primary"
                       variant="outlined"
-                      onClick={async () => await start(genre)}
+                      onClick={async () => await start({ genre, title })}
                       sx={{
                         '& > svg': {
                           marginLeft: '8px !important',

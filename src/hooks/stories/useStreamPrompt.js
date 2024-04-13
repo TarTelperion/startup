@@ -19,7 +19,7 @@ export const useStreamPrompt = (onComplete) => {
   }, [])
 
   const start = useCallback(
-    async (genre) => {
+    async ({ genre, title }) => {
       setStarted(true)
       updateValue('')
 
@@ -32,7 +32,7 @@ export const useStreamPrompt = (onComplete) => {
         const response = await fetch(`${API.url}/generate-prompt`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ genre: genre || '' }),
+          body: JSON.stringify({ genre: genre || '', title }),
         })
 
         const reader = response.body.getReader()
