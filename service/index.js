@@ -128,7 +128,13 @@ secureRouter.post('/stories/add', async (req, res) => {
     story.joined,
     story.prompt
   )
-  io.emit('story-create', JSON.stringify(fin))
+  io.emit(
+    'story-create',
+    JSON.stringify({
+      user: { name: user.name, _id: user._id },
+      data: { story },
+    })
+  )
   res.status(200).send(JSON.stringify(fin))
 })
 
@@ -141,7 +147,13 @@ secureRouter.put('/stories/update/:id', async (req, res) => {
   let story = await db.update_story(req.body.content, storyId, user)
 
   if (story) {
-    io.emit('story-edit', JSON.stringify(story))
+    io.emit(
+      'story-edit',
+      JSON.stringify({
+        user: { name: user.name, _id: user._id },
+        data: { story },
+      })
+    )
     res.send(story)
   } else {
     res.status(404).send('Story not found')
@@ -150,12 +162,19 @@ secureRouter.put('/stories/update/:id', async (req, res) => {
 
 secureRouter.put('/stories/skip/:storyId', async (req, res) => {
   const storyId = Number(req.params.storyId)
+  const story = await db.get_story(storyId)
   const token = req.cookies[cookie_name]
 
   const user = await db.user_token(token)
 
   await db.shuffle(storyId, user)
-  io.emit('skipTurn', storyId)
+  io.emit(
+    'skipTurn',
+    JSON.stringify({
+      user: { name: user.name, _id: user._id },
+      data: { story },
+    })
+  )
   res.status(200).json('shuffled')
 })
 
@@ -187,7 +206,9 @@ secureRouter.get('/stories/global', async (req, res) => {
 secureRouter.delete('/stories', async (req, res) => {
   try {
     let id = Number(req.body.id)
+    const story = await db.get_story
     await db.remove(id)
+
     io.emit('story-delete', id)
     res.status(200).send({ id })
   } catch (err) {

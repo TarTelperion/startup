@@ -1,4 +1,6 @@
-import { Box, CssBaseline } from '@mui/material'
+import CloseIcon from '@mui/icons-material/Close'
+import { Box, CssBaseline, IconButton } from '@mui/material'
+import { SnackbarProvider, closeSnackbar, enqueueSnackbar } from 'notistack'
 import { useState } from 'react'
 import AppBar from './AppBar'
 import AppSidebar from './AppSidebar'
@@ -17,9 +19,8 @@ const AppFrame = () => {
   const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
 
-  useSocketMessage((payload, from) => {
-    console.log('new message from:', from)
-    console.log('message:', payload)
+  useSocketMessage((payload) => {
+    enqueueSnackbar(`New story: ${payload.title}`, { variant: 'success' })
   }, 'story-create')
 
   return (
@@ -52,6 +53,13 @@ const AppFrame = () => {
         open={open}
         setClosed={handleClose}
         onLoginSuccess={handleClose}
+      />
+      <SnackbarProvider
+        action={(snackbarId) => (
+          <IconButton onClick={() => closeSnackbar(snackbarId)}>
+            <CloseIcon />
+          </IconButton>
+        )}
       />
     </Box>
   )

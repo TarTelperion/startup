@@ -6,7 +6,13 @@ export const useSocketMessage = (handler, actionName) => {
 
   const subscription = useCallback(
     (payload) => {
-      handler(payload)
+      let result
+      try {
+        result = JSON.parse(payload)
+      } catch (err) {
+        result = {}
+      }
+      handler(result)
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [actionName]
