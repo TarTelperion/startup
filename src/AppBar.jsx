@@ -10,13 +10,14 @@ import { styled } from '@mui/material/styles'
 import { useCallback, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import UserNotifications from './UserNotifications'
+import cover from './assets/funky-lines.png'
 import { Flex } from './layout'
 import UserDrawer from './user/UserDrawer'
 
 const drawerWidth = 240
 
 const StyledBar = styled(MuiAppBar, {
-  shouldForwardProp: (prop) => prop !== 'open',
+  shouldForwardProp: (prop) => prop !== 'open' && prop !== 'funkyLines',
 })(({ theme, open }) => ({
   zIndex: theme.zIndex.drawer,
   transition: theme.transitions.create(['width', 'margin'], {
@@ -33,7 +34,7 @@ const StyledBar = styled(MuiAppBar, {
   }),
 }))
 
-const AppBar = ({ user }) => {
+const AppBar = ({ user, funkyLines }) => {
   const [userDrawerOpen, setUserDrawerOpen] = useState(false)
   const [notificationOpen, setNotificationOpen] = useState(false)
   const [anchor, setAnchor] = useState(null)
@@ -66,46 +67,58 @@ const AppBar = ({ user }) => {
   const navigate = useNavigate()
 
   return (
-    <StyledBar position="fixed" open elevation={1}>
-      <Toolbar>
-        <Flex flexRow justifyContent="space-between" alignItems="center">
-          <Flex alignItems="center">
-            <Typography
-              variant="h6"
-              noWrap
-              component="div"
-              sx={{
-                '&:hover': {
-                  cursor: 'pointer',
-                },
-              }}
-              onClick={() => navigate('/home')}
-            >
-              {"Writers' Block"}
-            </Typography>
+    <StyledBar position="fixed" open elevation={1} funkyLines={funkyLines}>
+      <Flex
+        flexRow
+        width="100%"
+        sx={{
+          ...(funkyLines && {
+            backgroundImage: `url(${cover})`,
+            backgroundRepeat: 'no-repeat',
+            backgroundSize: 'cover',
+          }),
+        }}
+      >
+        <Toolbar sx={{ width: '100%' }}>
+          <Flex flexRow justifyContent="space-between" alignItems="center">
+            <Flex alignItems="center">
+              <Typography
+                variant="h6"
+                noWrap
+                component="div"
+                sx={{
+                  '&:hover': {
+                    cursor: 'pointer',
+                  },
+                }}
+                onClick={() => navigate('/home')}
+              >
+                {"Writers' Block"}
+              </Typography>
+            </Flex>
           </Flex>
-        </Flex>
-        {user?.notifications?.length > 0 && (
-          <IconButton
-            color="inherit"
-            onClick={(e) => {
-              handleNotificationOpen(e)
-            }}
-          >
-            <CircleNotificationsIcon />
-          </IconButton>
-        )}
-        {isLoggedIn && (
-          <IconButton
-            color="inherit"
-            onClick={() => {
-              setUserDrawer()
-            }}
-          >
-            <AccountCircleIcon />
-          </IconButton>
-        )}
-      </Toolbar>
+          {user?.notifications?.length > 0 && (
+            <IconButton
+              color="inherit"
+              onClick={(e) => {
+                handleNotificationOpen(e)
+              }}
+            >
+              <CircleNotificationsIcon />
+            </IconButton>
+          )}
+          {isLoggedIn && (
+            <IconButton
+              color="inherit"
+              onClick={() => {
+                setUserDrawer()
+              }}
+            >
+              <AccountCircleIcon />
+            </IconButton>
+          )}
+        </Toolbar>
+      </Flex>
       {isLoggedIn && (
         <UserDrawer open={userDrawerOpen} setOpen={setUserDrawerOpen} />
       )}

@@ -1,5 +1,6 @@
 import styled from '@emotion/styled'
 import { useTheme } from '@mui/material/styles'
+import cover from '../assets/funky-lines.png'
 import Flex from './Flex'
 
 const Header = styled(Flex)(({ theme }) => ({
@@ -9,14 +10,24 @@ const Header = styled(Flex)(({ theme }) => ({
   ...theme.mixins.toolbar,
 }))
 
-const AppHeader = ({ isBar, ...props }) => {
+const AppHeader = ({ isBar, children, sx, funkyLines, ...props }) => {
   const theme = useTheme()
+
+  const styles = {
+    ...sx,
+    backgroundColor: isBar ? theme.palette.primary.main : 'inherit',
+  }
+
+  if (funkyLines) {
+    sx.backgroundImage = `url(${cover})`
+    sx.backgroundRepeat = 'no-repeat'
+    sx.backgroundSize = 'cover'
+  }
+
   return (
-    <Header
-      {...props}
-      sx={{ backgroundColor: isBar ? theme.palette.primary.main : 'inherit' }}
-      {...(isBar ? { boxShadow: 1 } : {})}
-    />
+    <Header {...props} {...(isBar ? { boxShadow: 1 } : {})} sx={styles}>
+      {children}
+    </Header>
   )
 }
 

@@ -16,7 +16,7 @@ import {
   Drawer as MuiDrawer,
 } from '@mui/material'
 import { useLocation, useNavigate } from 'react-router-dom'
-
+import logo from './assets/writersblock.png'
 import { AppHeader } from './layout'
 
 const drawerWidth = 240
@@ -72,7 +72,9 @@ const AppSidebar = ({ openModal, user }) => {
 
   return (
     <Drawer variant="permanent" open={open} ModalProps={{ keepMounted: true }}>
-      <AppHeader isBar />
+      <AppHeader isBar sx={{ pt: '12px !important' }}>
+        <img src={logo} alt="logo" style={{ width: 42, height: 42 }} />
+      </AppHeader>
       <Divider />
       <List>
         {navItems.map(({ text, icon, route }) => (
