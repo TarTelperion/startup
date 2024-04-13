@@ -238,9 +238,19 @@ async function pester(oldUser, storyId) {
   if (user.notifications.length > 5) {
     user.notifications.shift()
   }
-  user.notifications.push(
-    `${oldUser.name} pestered you to finish ${story.title}`
-  )
+
+  const pesterObj = {
+    user: { name: oldUser.name, token: oldUser.token },
+    data: {
+      story: story,
+      target: {
+        name: user.name,
+        id: user._id,
+      },
+    },
+  }
+
+  user.notifications.push(pesterObj)
 
   await update_user(user)
   return { story, user }
