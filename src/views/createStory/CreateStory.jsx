@@ -57,6 +57,9 @@ const Create = () => {
               onChange={(e, value) => {
                 setGenre(value || '')
               }}
+              onBlur={(e) => {
+                setGenre(e.target.value || '')
+              }}
               options={genreOptions}
               fullWidth
               renderInput={(params) => (
