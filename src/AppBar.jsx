@@ -1,16 +1,17 @@
-import { useState, useCallback } from 'react'
-import { styled } from '@mui/material/styles'
+import AccountCircleIcon from '@mui/icons-material/AccountCircle'
+import CircleNotificationsIcon from '@mui/icons-material/CircleNotifications'
 import {
+  IconButton,
   AppBar as MuiAppBar,
   Toolbar,
   Typography,
-  IconButton,
 } from '@mui/material'
-import AccountCircleIcon from '@mui/icons-material/AccountCircle'
-import CircleNotificationsIcon from '@mui/icons-material/CircleNotifications'
+import { styled } from '@mui/material/styles'
+import { useCallback, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import UserNotifications from './UserNotifications'
 import { Flex } from './layout'
 import UserDrawer from './user/UserDrawer'
-import UserNotifications from './UserNotifications'
 
 const drawerWidth = 240
 
@@ -62,12 +63,24 @@ const AppBar = ({ user }) => {
     [setUserDrawerOpen, userDrawerOpen]
   )
 
+  const navigate = useNavigate()
+
   return (
     <StyledBar position="fixed" open elevation={1}>
       <Toolbar>
         <Flex flexRow justifyContent="space-between" alignItems="center">
           <Flex alignItems="center">
-            <Typography variant="h6" noWrap component="div">
+            <Typography
+              variant="h6"
+              noWrap
+              component="div"
+              sx={{
+                '&:hover': {
+                  cursor: 'pointer',
+                },
+              }}
+              onClick={() => navigate('/home')}
+            >
               {"Writers' Block"}
             </Typography>
           </Flex>

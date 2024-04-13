@@ -10,9 +10,9 @@ export const useSocketMessage = (handler, actionName) => {
       try {
         result = JSON.parse(payload)
       } catch (err) {
-        result = {}
+        result = { user: {}, data: {} }
       }
-      handler(result)
+      handler(result.data, result.user)
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [actionName]

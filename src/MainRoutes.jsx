@@ -1,5 +1,6 @@
 // External Dependencies
 import { Navigate, Route, Routes } from 'react-router-dom'
+import { useGlobalSocketAlerts } from './hooks/useGlobalSocketAlerts'
 import Create from './views/createStory/CreateStory'
 import Home from './views/home/Home'
 import StoryRoutes from './views/stories/StoryRoutes'
@@ -9,7 +10,9 @@ import Write from './views/write/Write'
 
 // Relative Dependencies
 
-const MainRoutes = () => {
+const MainRoutes = ({ userId }) => {
+  useGlobalSocketAlerts(userId)
+
   return (
     <Routes>
       <Route path="/home" element={<Home />} />

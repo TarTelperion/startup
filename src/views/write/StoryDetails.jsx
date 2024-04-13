@@ -20,7 +20,7 @@ const StoryDetails = ({ story, isMyTurn }) => {
     <Flex flexColumn>
       <Flex width="100%" justifyContent="space-between" mb={0}>
         <Typography variant="subtitle2" ml={0.5}>
-          Recent Addition
+          Recent Additions
         </Typography>
         <Flex flexDirection="column">
           <Chip
@@ -55,7 +55,7 @@ const StoryDetails = ({ story, isMyTurn }) => {
             ml={0.5}
           >{`Plus ${additions.length - 1} prior addition${additions.length - 1 > 1 ? 's' : ''}...`}</Typography>
           <Flex flexDirection="column" spacing={1}>
-            {additions.slice(-1).map((addition) => {
+            {additions.slice(-2).map((addition) => {
               return (
                 <StoryAddition addition={addition} key={addition.updatedAt} />
               )
@@ -70,7 +70,7 @@ const StoryDetails = ({ story, isMyTurn }) => {
           fontWeight={700}
           color="secondary"
         >
-          No recent additions
+          No contributions yet
         </Typography>
       )}
       <Popover

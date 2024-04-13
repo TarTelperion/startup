@@ -1,3 +1,4 @@
+import { enqueueSnackbar } from 'notistack'
 import useSWR, { mutate as globalMutate } from 'swr'
 import { del, get, put } from '../../fetch'
 import { useUser } from '../useUser'
@@ -23,12 +24,14 @@ export const useStory = ({ storyId }, options) => {
       content,
     })
     mutate()
+    enqueueSnackbar('Story updated!', { variant: 'success' })
     return response
   }
 
   const skip = async () => {
     const response = await put(`/stories/skip/${storyId}`)
     mutate()
+    enqueueSnackbar('Story skipped!', { variant: 'success' })
     return response
   }
 
@@ -36,6 +39,7 @@ export const useStory = ({ storyId }, options) => {
     const response = await put('/stories/join', { id: storyId })
     await globalMutate('/stories/global')
     await mutate()
+    enqueueSnackbar('Story joined!', { variant: 'success' })
     return response
   }
 
@@ -43,7 +47,7 @@ export const useStory = ({ storyId }, options) => {
     const response = await put(`/stories/leave/${storyId}`)
     await globalMutate('/stories/global')
     await mutate()
-
+    enqueueSnackbar('You left the story!', { variant: 'success' })
     return response
   }
 
@@ -51,7 +55,7 @@ export const useStory = ({ storyId }, options) => {
     const response = await del('/stories', { id: storyId })
     await globalMutate('/stories/global')
     await mutate()
-
+    enqueueSnackbar('Story deleted!', { variant: 'success' })
     return response
   }
 
