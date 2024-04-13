@@ -1,4 +1,4 @@
-const { MongoClient } = require('mongodb')
+const { MongoClient, ObjectId } = require('mongodb')
 const bcrypt = require('bcrypt')
 const uuid = require('uuid')
 const config = require('./dbConfig.json')
@@ -226,9 +226,9 @@ async function remove(story_id) {
   }
 }
 
-async function pester(storyId) {
+async function pester(oldUser, storyId) {
   const story = await storyCollection.findOne({ _id: Number(storyId) })
-  const id = story.additions[story.additions.length - 1].authorId
+  const id = new ObjectId(story.writer)
 
   console.log('id', id)
 
@@ -236,9 +236,11 @@ async function pester(storyId) {
   console.log('user', user)
 
   if (user.notifications.length > 5) {
-    user.notifications.splice(0, 1)
+    user.notifications.shift()
   }
-  user.notifications.push(`${user.name} pestered you to finish ${story.title}`)
+  user.notifications.push(
+    `${oldUser.name} pestered you to finish ${story.title}`
+  )
 
   await update_user(user)
   return { story, user }

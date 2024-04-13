@@ -278,8 +278,10 @@ secureRouter.put('/stories/join', async (req, res) => {
 
 secureRouter.post('/stories/pester/:storyId', async (req, res) => {
   const token = req.cookies[cookie_name]
+  const oldUser = await db.user_token(token)
 
-  const { story, user } = await db.pester(req.params.storyId)
+  const { story, user } = await db.pester(oldUser, req.params.storyId)
+
   io.emit(
     'story-pester',
     JSON.stringify({
