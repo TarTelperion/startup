@@ -21,9 +21,11 @@ const RecentDashboard = ({ user }) => {
   const mostRecentArray = stories.slice(-2)
 
   const mostRecentText = (mostRecent) => {
-    let letters = mostRecent.additions[
-      mostRecent.additions.length - 1
-    ].content.slice(0, 150)
+    let letters =
+      mostRecent?.additions?.[mostRecent.additions.length - 1]?.content?.slice(
+        0,
+        150
+      ) ?? ''
     letters += '...'
     return letters
   }
