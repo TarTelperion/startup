@@ -1,5 +1,6 @@
 import AccountCircleIcon from '@mui/icons-material/AccountCircle'
 import CircleNotificationsIcon from '@mui/icons-material/CircleNotifications'
+import SearchIcon from '@mui/icons-material/Search'
 import {
   IconButton,
   AppBar as MuiAppBar,
@@ -97,6 +98,9 @@ const AppBar = ({ user, funkyLines }) => {
               </Typography>
             </Flex>
           </Flex>
+          <IconButton color="inherit" onClick={() => navigate('/search')}>
+            <SearchIcon />
+          </IconButton>
           {user?.notifications?.length > 0 && (
             <IconButton
               color="inherit"
