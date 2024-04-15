@@ -21,7 +21,10 @@ const Search = () => {
     return stories.filter((story) => {
       const searchTerms = search.toLowerCase().split(' ')
       return searchTerms.every((term) => {
-        return story.title.toLowerCase().includes(term)
+        return (
+          story.title.toLowerCase().includes(term) ||
+          story.genre.toLowerCase().includes(term)
+        )
       })
     })
   }, [stories, search])
